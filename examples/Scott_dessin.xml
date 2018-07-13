@@ -1,0 +1,89 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="arduino_functions" id="=L=55RK(Zv;MrW{!Mwd*" x="71" y="-1">
+    <statement name="SETUP_FUNC">
+      <block type="scott_crayon" id="1![e:We{uBaPMe=aGr65">
+        <field name="PEN">Lever</field>
+        <next>
+          <block type="scott_rotation" id="uHLTUI3c]R_I,+eEDkty">
+            <field name="DIR">droite</field>
+            <field name="VALUE">90</field>
+            <next>
+              <block type="scott_deplacement" id="qO?@WR9}n@[aPnn_Fq0I">
+                <field name="DIR">Avancer</field>
+                <field name="VALUE">100</field>
+                <next>
+                  <block type="scott_rotation" id="]?J}_t%q79fp;xvaHr1M">
+                    <field name="DIR">droite</field>
+                    <field name="VALUE">180</field>
+                    <next>
+                      <block type="scott_crayon" id="63+g=Qt_v=K)S2r5(-U]">
+                        <field name="PEN">Descendre</field>
+                        <next>
+                          <block type="scott_deplacement" id="DyobN[|jB%DKwE7s1~Xk">
+                            <field name="DIR">Avancer</field>
+                            <field name="VALUE">100</field>
+                            <next>
+                              <block type="scott_rotation" id=".NpdG.h!`92OLLG~%m_^">
+                                <field name="DIR">droite</field>
+                                <field name="VALUE">90</field>
+                                <next>
+                                  <block type="controls_repeat_ext" id="%h;aFc,#15hKl=F?0TnX">
+                                    <value name="TIMES">
+                                      <block type="math_number" id="7QLQNeZ^S.Uj4tanVG?[">
+                                        <field name="NUM">5</field>
+                                      </block>
+                                    </value>
+                                    <statement name="DO">
+                                      <block type="scott_deplacement" id="vi:u3!_7j+gi~:CO~mkd">
+                                        <field name="DIR">Avancer</field>
+                                        <field name="VALUE">10</field>
+                                        <next>
+                                          <block type="scott_rotation" id="sUIt`7TC.q9uD(N7o2E:">
+                                            <field name="DIR">gauche</field>
+                                            <field name="VALUE">90</field>
+                                            <next>
+                                              <block type="scott_deplacement" id="2eiv}M;bgXX2Od36c]Yl">
+                                                <field name="DIR">Avancer</field>
+                                                <field name="VALUE">10</field>
+                                                <next>
+                                                  <block type="scott_rotation" id="A.jMwXwkALrj_W:6WDN*">
+                                                    <field name="DIR">droite</field>
+                                                    <field name="VALUE">90</field>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </statement>
+                                    <next>
+                                      <block type="scott_rotation" id="{@mAvTmJD5U5+*0]:cOt">
+                                        <field name="DIR">gauche</field>
+                                        <field name="VALUE">90</field>
+                                        <next>
+                                          <block type="scott_deplacement" id="2_;fR5oD=={.0Ha|-,vv">
+                                            <field name="DIR">Avancer</field>
+                                            <field name="VALUE">100</field>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

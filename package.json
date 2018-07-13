@@ -1,0 +1,23 @@
+{
+  "name": "botly-studio",
+  "version": "0.0.0",
+  "description": "Botly-Studio desktop application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/LaMachinerie/BotlyStudio-App",
+  "keywords": [
+    "Electron",
+    "Blockly",
+    "Javascript"
+  ],
+  "author": "Jules Topart",
+  "license": "Public domain",
+  "devDependencies": {
+    "electron": "^1.8.4"
+  },
+  "dependencies": {
+    "avrgirl-arduino": "^2.2.9"
+  }
+}

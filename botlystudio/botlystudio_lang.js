@@ -9,7 +9,7 @@
 /** Create a namespace for the application. */
 var BotlyStudio = BotlyStudio || {};
 
-/** Lookup for names of supported languages. Keys in ISO 639 format. */
+/** Lookup for names of supported languages. Keys in ISO 639 format. */ 
 BotlyStudio.LANGUAGE_NAME = {
   'fr': 'Français',
   'en': 'English',
@@ -122,7 +122,7 @@ BotlyStudio.injectLanguageJsSources = function(langKey) {
 
   // Retrieve and inject BotlyStudio translations synchronously
   var appLangJsLoad = document.createElement('script');
-  var request = BotlyStudioServer.createAjaxRequest();
+  var request = BotlyStudioIPC.createAjaxRequest();
   var appLangJdPath = 'msg/' + langKey + '.js';
   try {
     request.open('GET', appLangJdPath, false);

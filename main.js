@@ -17,7 +17,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1280, height: 720, frame: false});
+  mainWindow = new BrowserWindow({width: 1280, height: 720, frame: true});
 
 
   // and load the index.html of the app.
@@ -47,11 +47,31 @@ function createWindow () {
 
 function initIpc (){
 //Example
-  ipc.on('sketches', function(event, arg) {
+  ipc.on('openIDE', function(event, arg) {
     master.listSketches(function(list) {
         event.sender.send('sketches',list);
+        var child = require('child_process').execFile;
+        var executablePath = "arduino/arduino-builder.exe";
+        var parameters = [""];
+
+        child(executablePath, parameters, function(err, data) {
+            console.log(err)
+            console.log(data.toString());
+        });
     });
   });
+
+
+  ipc.on('code', function(event, arg) {
+      var fs = require('fs');
+      try { fs.writeFileSync('arduino/sketch/sketch.ino', arg, 'utf-8'); }
+      catch(e) { alert('Failed to save the file !'); }
+  });
+
+
+
+
+
 }
 
 

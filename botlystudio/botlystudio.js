@@ -74,18 +74,16 @@ BotlyStudio.bindActionFunctions = function() {
   BotlyStudio.bindClick_('button_toggle_toolbox', BotlyStudio.toogleToolbox);
 
   // Settings modal input field listeners
-/*   
+   
     BotlyStudio.bindClick_('setCompilerLocationButton', function() {
-    BotlyStudioServer.requestNewCompilerLocation(
+    BotlyStudioIPC.requestNewCompilerLocation(
         BotlyStudio.setCompilerLocationHtml);
   }); 
-  */
-  /*
+  
   BotlyStudio.bindClick_('setSketchLocationButton', function() {
-    BotlyStudioServer.requestNewSketchLocation(
+    BotlyStudioIPC.requestNewSketchLocation(
         BotlyStudio.setSketchLocationHtml);
   });
-  */
 };
 
 /** Sets the BotlyStudio server IDE setting to upload and sends the code. */
@@ -141,7 +139,7 @@ BotlyStudio.initialiseIdeButtons = function() {
       BotlyStudio.getLocalStr('verifySketch');
   document.getElementById('button_ide_large').title =
       BotlyStudio.getLocalStr('uploadSketch');
-  BotlyStudioServer.requestIdeOptions(function(jsonResponse) {
+  BotlyStudioIPC.requestIdeOptions(function(jsonResponse) {
     if (jsonResponse != null) {
       var parsedJson = JSON.parse(jsonResponse);
       // "response_type" : "settings_board",
@@ -274,6 +272,7 @@ BotlyStudio.loadUserXmlFile = function() {
   selectFile.click();
 };
 
+
 /**
  * Creates an XML file containing the blocks from the Blockly workspace and
  * prompts the users to save it into their local file system.
@@ -307,16 +306,16 @@ BotlyStudio.saveTextFileAs = function(fileName, content) {
 };
 
 /**
- * Retrieves the Settings from BotlyStudioServer to populates the form data
+ * Retrieves the Settings from BotlyStudioIPC to populates the form data
  * and opens the Settings modal dialog.
  */
 BotlyStudio.openSettings = function() {
-  BotlyStudioServer.requestCompilerLocation(
+  BotlyStudioIPC.requestCompilerLocation(
       BotlyStudio.setCompilerLocationHtml);
-  BotlyStudioServer.requestSketchLocation(BotlyStudio.setSketchLocationHtml);
-  BotlyStudioServer.requestArduinoBoards(BotlyStudio.setArduinoBoardsHtml);
-  BotlyStudioServer.requestSerialPorts(BotlyStudio.setSerialPortsHtml);
-  BotlyStudioServer.requestIdeOptions(BotlyStudio.setIdeHtml);
+  BotlyStudioIPC.requestSketchLocation(BotlyStudio.setSketchLocationHtml);
+  BotlyStudioIPC.requestArduinoBoards(BotlyStudio.setArduinoBoardsHtml);
+  BotlyStudioIPC.requestSerialPorts(BotlyStudio.setSerialPortsHtml);
+  BotlyStudioIPC.requestIdeOptions(BotlyStudio.setIdeHtml);
   // Language menu only set on page load within BotlyStudio.initLanguage()
   BotlyStudio.openSettingsModal();
 };
@@ -327,7 +326,7 @@ BotlyStudio.openSettings = function() {
  * @return {undefined} Might exit early if response is null.
  */
 BotlyStudio.setCompilerLocationHtml = function(jsonResponse) {
-  var newEl = BotlyStudioServer.createElementFromJson(jsonResponse);
+  var newEl = BotlyStudioIPC.createElementFromJson(jsonResponse);
   var compLocIp = document.getElementById('settings_compiler_location');
   if (compLocIp != null) {
     compLocIp.value = newEl.value;
@@ -339,11 +338,11 @@ BotlyStudio.setCompilerLocationHtml = function(jsonResponse) {
  * @param {element} jsonResponse JSON data coming back from the server.
  * @return {undefined} Might exit early if response is null.
  */
-BotlyStudio.setSketchLocationHtml = function(jsonResponse) {
-  var newEl = BotlyStudioServer.createElementFromJson(jsonResponse);
+BotlyStudio.setSketchLocationHtml = function(location) {
+;
   var sketchLocIp = document.getElementById('settings_sketch_location');
   if (sketchLocIp != null) {
-    sketchLocIp.value = newEl.value;
+    sketchLocIp.value = location;
   }
 };
 
@@ -353,8 +352,9 @@ BotlyStudio.setSketchLocationHtml = function(jsonResponse) {
  * @param {element} jsonResponse JSON data coming back from the server.
  * @return {undefined} Might exit early if response is null.
  */
-BotlyStudio.setArduinoBoardsHtml = function(jsonResponse) {
-  var newEl = BotlyStudioServer.createElementFromJson(jsonResponse);
+BotlyStudio.setArduinoBoardsHtml = function(board) {
+  var newEl = new JSON;
+  newEl.value = board;
   var boardDropdown = document.getElementById('board');
   if (boardDropdown !== null) {
     // Restarting the select elements built by materialize
@@ -374,8 +374,8 @@ BotlyStudio.setArduinoBoardsHtml = function(jsonResponse) {
 BotlyStudio.setBoard = function() {
   var el = document.getElementById('board');
   var boardValue = el.options[el.selectedIndex].value;
-  //TODO: Check how BotlyStudioServer deals with invalid data and sanitise
-  BotlyStudioServer.setArduinoBoard(
+  //TODO: Check how BotlyStudioIPC deals with invalid data and sanitise
+  BotlyStudioIPC.setArduinoBoard(
       boardValue, BotlyStudio.setArduinoBoardsHtml);
   BotlyStudio.changeBlocklyArduinoBoard(
       boardValue.toLowerCase().replace(/ /g, '_'));
@@ -387,8 +387,10 @@ BotlyStudio.setBoard = function() {
  * @param {element} jsonResponse JSON data coming back from the server.
  * @return {undefined} Might exit early if response is null.
  */
-BotlyStudio.setSerialPortsHtml = function(jsonResponse) {
-  var newEl = BotlyStudioServer.createElementFromJson(jsonResponse);
+BotlyStudio.setSerialPortsHtml = function(port) {
+
+  var text =  '{'+'value:'+board+'}';
+  var newEl = JSON.parse();
   var serialDropdown = document.getElementById('serial_port');
   if (serialDropdown !== null) {
     // Restarting the select elements built by materialize
@@ -406,8 +408,8 @@ BotlyStudio.setSerialPortsHtml = function(jsonResponse) {
 BotlyStudio.setSerial = function() {
   var el = document.getElementById('serial_port');
   var serialValue = el.options[el.selectedIndex].value;
-  //TODO: check how BotlyStudioServer deals with invalid data and sanitise
-  BotlyStudioServer.setSerialPort(
+  //TODO: check how BotlyStudioIPC deals with invalid data and sanitise
+  BotlyStudioIPC.setSerialPort(
       serialValue, BotlyStudio.setSerialPortsHtml);
 };
 
@@ -418,7 +420,7 @@ BotlyStudio.setSerial = function() {
  * @return {undefined} Might exit early if response is null.
  */
 BotlyStudio.setIdeHtml = function(jsonResponse) {
-  var newEl = BotlyStudioServer.createElementFromJson(jsonResponse);
+  var newEl = BotlyStudioIPC.createElementFromJson(jsonResponse);
   var ideDropdown = document.getElementById('ide_settings');
   if (ideDropdown !== null) {
     // Restarting the select elements built by materialize
@@ -447,12 +449,12 @@ BotlyStudio.setIdeSettings = function(e, preset) {
     var ideValue = el.options[el.selectedIndex].value;
   }
   BotlyStudio.changeIdeButtons(ideValue);
-  //TODO: check how BotlyStudioServer deals with invalid data and sanitise here
-  BotlyStudioServer.setIdeOptions(ideValue, BotlyStudio.setIdeHtml);
+  //TODO: check how BotlyStudioIPC deals with invalid data and sanitise here
+  BotlyStudioIPC.setIdeOptions(ideValue, BotlyStudio.setIdeHtml);
 };
 
 /**
- * Send the Arduino Code to the BotlyStudioServer to process.
+ * Send the Arduino Code to the BotlyStudioIPC to process.
  * Shows a loader around the button, blocking it (unblocked upon received
  * message from server).
  */
@@ -466,11 +468,11 @@ BotlyStudio.sendCode = function() {
    */
   var sendCodeReturn = function(jsonResponse) {
     BotlyStudio.largeIdeButtonSpinner(false);
-    var dataBack = BotlyStudioServer.createElementFromJson(jsonResponse);
+    var dataBack = BotlyStudioIPC.createElementFromJson(jsonResponse);
     BotlyStudio.arduinoIdeOutput(dataBack);
   };
 
-  BotlyStudioServer.sendSketchToServer(
+  BotlyStudioIPC.sendSketchToServer(
       BotlyStudio.generateArduino(), sendCodeReturn);
 };
 

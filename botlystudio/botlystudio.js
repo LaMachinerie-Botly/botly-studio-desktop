@@ -139,16 +139,6 @@ BotlyStudio.initialiseIdeButtons = function() {
       BotlyStudio.getLocalStr('verifySketch');
   document.getElementById('button_ide_large').title =
       BotlyStudio.getLocalStr('uploadSketch');
-  BotlyStudioIPC.requestIdeOptions(function(jsonResponse) {
-    if (jsonResponse != null) {
-      var parsedJson = JSON.parse(jsonResponse);
-      // "response_type" : "settings_board",
-      //   "element" : "dropdown",
-      //   "options" : [ {"value" : "XXX", "text" : "XXX"}, ...]
-      //   "selected": "selected key"}
-      BotlyStudio.changeIdeButtons(parsedJson.selected);
-    } // else Null: BotlyStudio server is not running, do nothing
-  });
 };
 
 /**
@@ -315,7 +305,6 @@ BotlyStudio.openSettings = function() {
   BotlyStudioIPC.requestSketchLocation(BotlyStudio.setSketchLocationHtml);
   BotlyStudioIPC.requestArduinoBoards(BotlyStudio.setArduinoBoardsHtml);
   BotlyStudioIPC.requestSerialPorts(BotlyStudio.setSerialPortsHtml);
-  BotlyStudioIPC.requestIdeOptions(BotlyStudio.setIdeHtml);
   // Language menu only set on page load within BotlyStudio.initLanguage()
   BotlyStudio.openSettingsModal();
 };

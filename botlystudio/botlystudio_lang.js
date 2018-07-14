@@ -118,31 +118,7 @@ BotlyStudio.updateLanguageText = function() {
  *     be JS file name.
  */
 BotlyStudio.injectLanguageJsSources = function(langKey) {
-  var head = document.getElementsByTagName('head')[0];
 
-  // Retrieve and inject BotlyStudio translations synchronously
-  var appLangJsLoad = document.createElement('script');
-  var request = BotlyStudioIPC.createAjaxRequest();
-  var appLangJdPath = 'msg/' + langKey + '.js';
-  try {
-    request.open('GET', appLangJdPath, false);
-    request.send('');
-    appLangJsLoad.text = request.responseText;
-  } catch (e) {
-    // Display an alert to indicate we cannot load languages
-    BotlyStudio.alertMessage(
-        BotlyStudio.getLocalStr('noServerTitle'),
-        BotlyStudio.getLocalStr('noServerNoLangBody'),
-        false);
-    // But still asynchronous lazy load so at least some text gets translated
-    appLangJsLoad.src = appLangJdPath;
-  }
-  head.appendChild(appLangJsLoad);
-
-  // Retrieve and inject Blockly translations asynchronously
-  var blocklyLangJsLoad = document.createElement('script');
-  blocklyLangJsLoad.src = '../blockly/msg/js/' + langKey + '.js';
-  head.appendChild(blocklyLangJsLoad);
 };
 
 /** Saves the blocks and reloads with a different language. */

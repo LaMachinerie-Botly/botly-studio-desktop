@@ -1,6 +1,4 @@
 //Ardublockly
-
-
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app
@@ -40,13 +38,13 @@ function createWindow () {
 
     initIpc();
   
-
 }
 
 
 
 function initIpc (){
 //Example
+
   ipc.on('openIDE', function(event, arg) {
     master.listSketches(function(list) {
         event.sender.send('sketches',list);
@@ -61,13 +59,27 @@ function initIpc (){
     });
   });
 
-
+  //Event for saving ino file
   ipc.on('code', function(event, arg) {
       var fs = require('fs');
       try { fs.writeFileSync('arduino/sketch/sketch.ino', arg, 'utf-8'); }
       catch(e) { alert('Failed to save the file !'); }
   });
 
+  ipc.on('set-board', function(event, arg) {
+    var fs = require('fs');
+    try { 
+      
+      var setting = fs.readFileSync('settings.ini', arg, 'utf-8'); 
+      var jsonSetting = JSON.parse(setting);
+
+      jsonSetting.board = arg;
+    
+      var setting = JSON.stringify('settings.ini', jsonSetting, 'utf-8');
+      fs.writeFileSync()
+    }
+    catch(e) { alert('Failed to save setting'); }
+  });
 
 
 

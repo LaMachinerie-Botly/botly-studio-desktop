@@ -9,7 +9,7 @@ const electron = require('electron');
 const ipc = electron.ipcRenderer;
 
 
-BotlyStudioIPC.initIPC(){
+BotlyStudioIPC.initIPC = function(){
     ipc.on('compiler-request-response', function(event, arg) {
         
     });
@@ -40,7 +40,7 @@ BotlyStudioIPC.setCompilerLocation = function() {
     var reader = new FileReader();
     reader.onload = function() {
         var result = reader.result;
-        
+
     }
 };
 

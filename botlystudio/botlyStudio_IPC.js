@@ -11,16 +11,24 @@ const ipc = electron.ipcRenderer;
 
 BotlyStudioIPC.initIPC = function(){
     ipc.on('compiler-request-response', function(event, arg) {
-        
-    });
-    ipc.on('sketch-request-response', function(event, arg) {
-        
-    });
-    ipc.on('board-request-response', function(event, arg) {
-
+        var compilerPath = JSON.parse(arg);
+        BotlyStudio.setCompilerLocationHtml(compilerPath);
     });
     ipc.on('port-request-response', function(event, arg) {
-
+        var serialList = JSON.parse(arg);
+            // Drop down list of unknown length with a selected item
+        var element = document.createElement('select');
+        element.name = serialList.response_type;
+        for (var i = 0; i < serialList.options.length; i++) {
+            var option = document.createElement('option');
+            option.value = serialList.options[i].value;
+            option.text = serialList.options[i].display_text;
+            // Check selected option and mark it
+            if (serialList.options[i].value == serialList.selected) {
+                option.selected = true;
+            }
+            element.appendChild(option);
+        }
     });
 }
 
@@ -40,45 +48,11 @@ BotlyStudioIPC.setCompilerLocation = function() {
     var reader = new FileReader();
     reader.onload = function() {
         var result = reader.result;
-
+        ipc.send('set-compiler', result)
     }
 };
 
-/**
- * Gets the current Sketch location from the BotlyStudio Server settings.
- */
-BotlyStudioIPC.requestSketchLocation = function() {
-    ipc.send('sketch-request');
-};
 
-/**
- * Request to the BotlyStudio Server to prompt the user for a new sketch
- * location. Done by the Python server because a 'file browse' triggered by
- * the browser with JS will obscure the user information for security reasons.
- */
-BotlyStudioIPC.setSketchLocation = function() {
-
-};
-
-/**
- * Request to the BotlyStudio Server to return JSON data containing all
- * available target Arduino Boards, and the selected one in the settings.
- * The data is then processed into an HTML element and sent to the callback
- * function as an argument.
- */
-BotlyStudioIPC.requestArduinoBoards = function() {
-    ipc.send('board-request');
-};
-
-/**
- * Sends the inputted Arduino Board type to the BotlyStudio Server Settings.
- * The new settings menu for the Board type is then processed into an HTML
- * element and sent to the callback function as an argument.
- * @param {!string} new_board Indicates which board has been selected.
- */
-BotlyStudioIPC.setArduinoBoard = function(new_board) {
-    ipc.send('set-board', new_board);
-};
 
 /**
  * Request to the BotlyStudio Server to return JSON data containing all

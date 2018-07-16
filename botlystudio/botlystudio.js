@@ -76,14 +76,8 @@ BotlyStudio.bindActionFunctions = function() {
   // Settings modal input field listeners
    
     BotlyStudio.bindClick_('setCompilerLocationButton', function() {
-    BotlyStudioIPC.requestNewCompilerLocation(
-        BotlyStudio.setCompilerLocationHtml);
+    BotlyStudioIPC.setCompilerLocation();
   }); 
-  
-  BotlyStudio.bindClick_('setSketchLocationButton', function() {
-    BotlyStudioIPC.requestNewSketchLocation(
-        BotlyStudio.setSketchLocationHtml);
-  });
 };
 
 /** Sets the BotlyStudio server IDE setting to upload and sends the code. */
@@ -302,8 +296,6 @@ BotlyStudio.saveTextFileAs = function(fileName, content) {
 BotlyStudio.openSettings = function() {
   BotlyStudioIPC.requestCompilerLocation(
       BotlyStudio.setCompilerLocationHtml);
-  BotlyStudioIPC.requestSketchLocation(BotlyStudio.setSketchLocationHtml);
-  BotlyStudioIPC.requestArduinoBoards(BotlyStudio.setArduinoBoardsHtml);
   BotlyStudioIPC.requestSerialPorts(BotlyStudio.setSerialPortsHtml);
   // Language menu only set on page load within BotlyStudio.initLanguage()
   BotlyStudio.openSettingsModal();

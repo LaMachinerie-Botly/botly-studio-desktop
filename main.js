@@ -81,7 +81,20 @@ function initIpc (){
     catch(e) { alert('Failed to save setting'); }
   });
 
+  ipc.on('set-compiler', function(event, arg) {
+    var fs = require('fs');
+    try { 
+      
+      var setting = fs.readFileSync('settings.ini', arg, 'utf-8'); 
+      var jsonSetting = JSON.parse(setting);
 
+      jsonSetting.compiler = arg;
+    
+      var setting = JSON.stringify('settings.ini', jsonSetting, 'utf-8');
+      fs.writeFileSync()
+    }
+    catch(e) { alert('Failed to save setting'); }
+  });
 
 
 }

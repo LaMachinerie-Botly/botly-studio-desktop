@@ -11,8 +11,7 @@ const ipc = electron.ipcRenderer;
 
 BotlyStudioIPC.initIPC = function(){
     ipc.on('compiler-request-response', function(event, arg) {
-        var compilerPath = JSON.parse(arg);
-        BotlyStudio.setCompilerLocationHtml(compilerPath);
+        BotlyStudio.setCompilerLocationHtml(arg);
     });
     ipc.on('port-request-response', function(event, arg) {
         var serialList = JSON.parse(arg);
@@ -32,7 +31,7 @@ BotlyStudioIPC.initIPC = function(){
     });
 }
 
-BotlyStudio.createElementFromJson = function(json_data) {
+BotlyStudioIPC.createElementFromJson = function(json_data) {
     var parsed_json = JSON.parse(json_data);
     var element = null;
   

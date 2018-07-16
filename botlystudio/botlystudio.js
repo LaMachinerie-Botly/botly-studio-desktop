@@ -16,6 +16,7 @@ BotlyStudio.init = function() {
   BotlyStudio.changeToolbox();
   BotlyStudio.initDifficulty();
   BotlyStudio.initOutputLanguage();
+  BotlyStudioIPC.initIPC();
   Turtle.init();
   
   // Inject Blockly into content_blocks and fetch additional blocks

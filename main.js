@@ -91,22 +91,27 @@ function initIpc (){
           console.log("An error ocurred reading the file :" + err.message);
           return;
         }
-
         fileContent = data;
         jsonSetting = null;
-        try {jsonSetting = JSON.parse(fileContent);}catch(e){}
+        try {jsonSetting = JSON.parse(fileContent);}catch(e){console.log(e);}
         if(jsonSetting == null){ 
-          jsonSetting = JSON.parse(`{"compiler":"","serialport":""}`);
+          jsonSetting = {"compiler":"","serialport":""};
         }
+
+        //Open Filebrowser
         const {dialog} = require('electron');
         compilerLocation = dialog.showOpenDialog({properties: ['openFile']});
-        jsonSetting.compiler = compilerLocation;
+
+        jsonSetting = {"compiler": compilerLocation[0],"serialport": jsonSetting.serialport};
         setting = JSON.stringify(jsonSetting);
         fs.writeFile(path, setting, (err) => {
           if(err){
             console.log("An error ocurred creating the file "+ err.message)
           }
-          else event.sender.send('compiler-request-response', setting);
+          else{
+            jsonResponse = {"element":"text_input", "display_text": compilerLocation};
+            event.sender.send('compiler-request-response', JSON.stringify(jsonResponse));
+          }
         });
       });
     }
@@ -114,8 +119,6 @@ function initIpc (){
       console.log(e);
     }
   });
-
-
 }
 
 

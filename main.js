@@ -81,19 +81,38 @@ function initIpc (){
     catch(e) { alert('Failed to save setting'); }
   });
 
-  ipc.on('set-compiler', function(event, arg) {
+  ipc.on('set-compiler', function(event) {
     var fs = require('fs');
-    try { 
-      
-      var setting = fs.readFileSync('settings.ini', arg, 'utf-8'); 
-      var jsonSetting = JSON.parse(setting);
 
-      jsonSetting.compiler = arg;
-    
-      var setting = JSON.stringify('settings.ini', jsonSetting, 'utf-8');
-      fs.writeFileSync()
+    try {
+      var path = 'settings.ini';
+      fs.readFile(path , 'utf-8', (err, data) => {
+        if(err){
+          console.log("An error ocurred reading the file :" + err.message);
+          return;
+        }
+
+        fileContent = data;
+        jsonSetting = null;
+        try {jsonSetting = JSON.parse(fileContent);}catch(e){}
+        if(jsonSetting == null){ 
+          jsonSetting = JSON.parse(`{"compiler":"","serialport":""}`);
+        }
+        const {dialog} = require('electron');
+        compilerLocation = dialog.showOpenDialog({properties: ['openFile']});
+        jsonSetting.compiler = compilerLocation;
+        setting = JSON.stringify(jsonSetting);
+        fs.writeFile(path, setting, (err) => {
+          if(err){
+            console.log("An error ocurred creating the file "+ err.message)
+          }
+          else event.sender.send('compiler-request-response', setting);
+        });
+      });
     }
-    catch(e) { alert('Failed to save setting'); }
+    catch(e) {
+      console.log(e);
+    }
   });
 
 

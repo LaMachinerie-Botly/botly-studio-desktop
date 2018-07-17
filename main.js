@@ -108,8 +108,14 @@ function initIpc (){
     }
   });
 
-
-
+  ipc.on('serial-port-request', function(event) {
+    var SerialPort = require('serialport');
+    SerialPort.list(function (err, ports) {
+      ports.forEach(function(port) {
+        console.log("Serial port found at :" + port.comName)
+      });
+    });
+  });
 
   ipc.on('compiler-request', function(event) {
     var fs = require('fs');

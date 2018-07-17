@@ -66,20 +66,6 @@ function initIpc (){
       catch(e) { alert('Failed to save the file !'); }
   });
 
-  ipc.on('set-board', function(event, arg) {
-    var fs = require('fs');
-    try { 
-      
-      var setting = fs.readFileSync('settings.ini', arg, 'utf-8'); 
-      var jsonSetting = JSON.parse(setting);
-
-      jsonSetting.board = arg;
-    
-      var setting = JSON.stringify('settings.ini', jsonSetting, 'utf-8');
-      fs.writeFileSync()
-    }
-    catch(e) { alert('Failed to save setting'); }
-  });
 
   ipc.on('set-compiler', function(event) {
     var fs = require('fs');
@@ -102,23 +88,57 @@ function initIpc (){
         const {dialog} = require('electron');
         compilerLocation = dialog.showOpenDialog({properties: ['openFile']});
 
-        jsonSetting = {"compiler": compilerLocation[0],"serialport": jsonSetting.serialport};
-        setting = JSON.stringify(jsonSetting);
-        fs.writeFile(path, setting, (err) => {
-          if(err){
-            console.log("An error ocurred creating the file "+ err.message)
-          }
-          else{
-            jsonResponse = {"element":"text_input", "display_text": compilerLocation};
-            event.sender.send('compiler-request-response', JSON.stringify(jsonResponse));
-          }
-        });
+        if(compilerLocation != null){
+          jsonSetting = {"compiler": compilerLocation[0],"serialport": jsonSetting.serialport};
+          setting = JSON.stringify(jsonSetting);
+          fs.writeFile(path, setting, (err) => {
+            if(err){
+              console.log("An error ocurred creating the file "+ err.message)
+            }
+            else{
+              jsonResponse = {"element":"text_input", "display_text": compilerLocation};
+              event.sender.send('compiler-request-response', JSON.stringify(jsonResponse));
+            }
+          });
+        }
       });
     }
     catch(e) {
       console.log(e);
     }
   });
+
+
+
+
+  ipc.on('compiler-request', function(event) {
+    var fs = require('fs');
+    try {
+      var path = 'settings.ini';
+      fs.readFile(path , 'utf-8', (err, data) => {
+        if(err){
+          console.log("An error ocurred reading the file :" + err.message);
+          return;
+        }
+        fileContent = data;
+        jsonSetting = null;
+        try {jsonSetting = JSON.parse(fileContent);}catch(e){console.log(e);}
+        if(jsonSetting == null){ 
+          jsonSetting = {"compiler":"","serialport":""};
+          jsonResponse = {"element":"text_input", "display_text": "Default"};
+        }
+
+
+
+      });
+    }
+    catch(e) {
+      console.log(e);
+    }
+  });
+
+
+
 }
 
 

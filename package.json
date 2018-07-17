@@ -4,7 +4,8 @@
   "description": "Botly-Studio desktop application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "install": "electron-rebuild"
   },
   "repository": "https://github.com/LaMachinerie/BotlyStudio-App",
   "keywords": [
@@ -15,7 +16,8 @@
   "author": "Jules Topart",
   "license": "Public domain",
   "devDependencies": {
-    "electron": "^1.8.4"
+    "electron": "^1.8.4",
+    "electron-rebuild": "^1.8.1"
   },
   "dependencies": {
     "serialport": "^6.2.1"

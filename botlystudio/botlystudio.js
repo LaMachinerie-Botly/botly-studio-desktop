@@ -369,10 +369,10 @@ BotlyStudio.setBoard = function() {
  * @param {element} jsonResponse JSON data coming back from the server.
  * @return {undefined} Might exit early if response is null.
  */
-BotlyStudio.setSerialPortsHtml = function(port) {
+BotlyStudio.setSerialPortsHtml = function(jsonResponse) {
 
-  var text =  '{'+'value:'+board+'}';
-  var newEl = JSON.parse();
+  //if (jsonResponse === null) return BotlyStudio.openNotConnectedModal();
+  var newEl = BotlyStudioIPC.createElementFromJson(jsonResponse);
   var serialDropdown = document.getElementById('serial_port');
   if (serialDropdown !== null) {
     // Restarting the select elements built by materialize

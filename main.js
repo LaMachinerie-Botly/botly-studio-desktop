@@ -108,12 +108,52 @@ function initIpc (){
     }
   });
 
+  //Botly 32u4 info :
+  /*
+        Serial port found:
+            Port: COM9
+            Manufacturer: Arduino LLC (www.arduino.cc)
+            Numero de serie: 5&376aba2d&0&7
+            pnpId: USB\VID_1B4F&PID_9208&MI_00\6&930FC52&0&0000
+            locationId: 0000.0014.0000.007.000.000.000.000.000
+            vendorId: 1B4F
+            productId: 9208
+  */
+
+
   ipc.on('serial-port-request', function(event) {
     var SerialPort = require('serialport');
+    var autoselect = null;
+
+    var jsonResponse = {
+      "selected": "",
+      "element": "dropdown",
+      "response_type": "json",
+      "options": []
+    };
     SerialPort.list(function (err, ports) {
       ports.forEach(function(port) {
-        console.log("Serial port found at :" + port.comName)
+        if(port.manufacturer == "Arduino LLC (www.arduino.cc)" || port.productId == "1B4F"){
+          autoselect = port.comName;
+        }
+
+        jsonResponse['options'].push({"value":port.comName, "display_text": port.comName});
+        
+
       });
+      if(autoselect != null){
+        jsonResponse.selected = autoselect;
+        for (var i = 0; i < jsonResponse.options.length; i++) {
+          if(jsonResponse.selected == jsonResponse.options[i].value){
+            jsonResponse.options[i].display_text = jsonResponse.options[i].value + ' (Botly robot)'
+          }
+        }
+      }
+      else if(jsonResponse.options[0] != null) jsonResponse.selected = jsonResponse.options[0].display_text;
+      else jsonResponse.selected = "default"
+
+      //console.log(jsonResponse);
+      event.sender.send('serial-port-request-response', JSON.stringify(jsonResponse));
     });
   });
 
@@ -144,7 +184,38 @@ function initIpc (){
   });
 
 
+  ipc.on('set-serial-port', function(event, port) {
+    var fs = require('fs');
 
+    try {
+      var path = 'settings.ini';
+      fs.readFile(path , 'utf-8', (err, data) => {
+        if(err){
+          console.log("An error ocurred reading the file :" + err.message);
+          return;
+        }
+        fileContent = data;
+        jsonSetting = null;
+        try {jsonSetting = JSON.parse(fileContent);}catch(e){console.log(e);}
+        if(jsonSetting == null){ 
+          jsonSetting = {"compiler":"","serialport":""};
+        }
+
+        if(port != null){
+          jsonSetting.serialport = port;
+          setting = JSON.stringify(jsonSetting);
+          fs.writeFile(path, setting, (err) => {
+            if(err){
+              console.log("An error ocurred creating the file "+ err.message)
+            }
+          });
+        }
+      });
+    }
+    catch(e) {
+      console.log(e);
+    }
+  });
 }
 
 

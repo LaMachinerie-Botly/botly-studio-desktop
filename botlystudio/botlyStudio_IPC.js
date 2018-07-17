@@ -14,7 +14,8 @@ BotlyStudioIPC.initIPC = function(){
         BotlyStudio.setCompilerLocationHtml(arg);
     });
     ipc.on('serial-port-request-response', function(event, arg) {
-      //BotlyStudio.setCompilerLocationHtml(arg);
+      BotlyStudio.setSerialPortsHtml(arg);
+      BotlyStudio.setSerial();
     });
     ipc.on('port-request-response', function(event, arg) {
         var serialList = JSON.parse(arg);
@@ -32,6 +33,10 @@ BotlyStudioIPC.initIPC = function(){
             element.appendChild(option);
         }
     });
+
+
+    BotlyStudioIPC.requestCompilerLocation();
+    BotlyStudioIPC.requestSerialPorts();
 }
 
 BotlyStudioIPC.createElementFromJson = function(json_data) {
@@ -138,7 +143,7 @@ BotlyStudioIPC.requestSerialPorts = function() {
  * @param {!string} new_port Indicates which port has been selected.
  */
 BotlyStudioIPC.setSerialPort = function(new_port) {
-    ipc.send('set-port', new_port);
+    ipc.send('set-serial-port', new_port);
 };
 
 

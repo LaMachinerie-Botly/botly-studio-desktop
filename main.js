@@ -126,10 +126,10 @@ function initIpc (){
         if(jsonSetting == null){ 
           jsonSetting = {"compiler":"","serialport":""};
           jsonResponse = {"element":"text_input", "display_text": "Default"};
+        }else{
+          jsonResponse = {"element":"text_input", "display_text": jsonSetting.compiler};
         }
-
-
-
+        event.sender.send('compiler-request-response', JSON.stringify(jsonResponse));
       });
     }
     catch(e) {

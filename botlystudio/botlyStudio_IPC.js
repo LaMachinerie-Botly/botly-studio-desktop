@@ -107,6 +107,7 @@ BotlyStudioIPC.requestCompilerLocation = function() {
     ipc.send('compiler-request');
 };
 
+
 /**
  * Request to the BotlyStudio Server to prompt the user for a new compiler 
  * location. Done by the Python server because a 'file browse' triggered by
@@ -115,7 +116,6 @@ BotlyStudioIPC.requestCompilerLocation = function() {
 BotlyStudioIPC.setCompilerLocation = function() {
     ipc.send('set-compiler');
 };
-
 
 
 /**

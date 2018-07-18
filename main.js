@@ -62,8 +62,8 @@ function initIpc (){
   //Event for saving ino file
   ipc.on('code', function(event, arg) {
       var fs = require('fs');
-      try { fs.writeFileSync('arduino/sketch/sketch.ino', arg, 'utf-8'); }
-      catch(e) { alert('Failed to save the file !'); }
+      try { fs.writeFileSync('builder/sketch/sketch.ino', arg, 'utf-8'); }
+      catch(e) { console.log('Failed to save the file !'); }
   });
 
 
@@ -81,7 +81,7 @@ function initIpc (){
         jsonSetting = null;
         try {jsonSetting = JSON.parse(fileContent);}catch(e){console.log(e);}
         if(jsonSetting == null){ 
-          jsonSetting = {"compiler":"","serialport":""};
+          jsonSetting = {"compiler":"Default","serialport":""};
         }
 
         //Open Filebrowser
@@ -102,6 +102,73 @@ function initIpc (){
           });
         }
       });
+    }
+    catch(e) {
+      console.log(e);
+    }
+  });
+
+
+  ipc.on('upload', function(event) {
+    try {
+      var fs = require('fs');
+      var executablePath = "builder/arduino-builder.exe";
+      try {
+        var path = 'settings.ini';
+        fs.readFile(path , 'utf-8', (err, data) => {
+          if(err){
+            console.log("An error ocurred reading the file :" + err.message);
+            return;
+          }
+          fileContent = data;
+          jsonSetting = null;
+          try {jsonSetting = JSON.parse(fileContent);}catch(e){console.log(e);}
+          if(jsonSetting == null){ 
+            jsonSetting = {"compiler":"Default","serialport":""};
+          }
+
+          if(jsonSetting.compiler != "Default"){
+            executablePath = jsonSetting.compiler;
+          }
+        });
+      }catch(e){console.log(e);}
+
+      //builder/hardware/tools/avr/bin/avrdude.exe
+
+      var basepath = app.getAppPath();
+      var child = require('child_process').execFile;
+      var parameters = ["-compile",
+                        "-verbose=false",
+                        "-hardware=" + basepath +"/builder/hardware",
+                        "-build-path=" + basepath +"/builder/sketch/build",
+                        "-tools=" + basepath +"/builder/hardware/tools/avr",
+                        "-tools=" + basepath +"/builder/tools-builder",
+                        "-libraries=" + basepath +"/builder/libraries",
+                        "-fqbn=arduino:avr:LilyPadUSB",
+                        "" + basepath +"/builder/sketch/sketch.ino"];
+
+      child(executablePath, parameters, function(err, data) {
+          console.log(err)
+          console.log(data.toString());
+
+          var Avrgirl = require('avrgirl-arduino');
+          var avrgirl = new Avrgirl({
+            board: 'lilypad-usb',
+            port: jsonSetting.serialport
+          });
+
+          avrgirl.flash('builder/sketch/build/sketch.ino.hex', function (error) {
+            jsonResponse = {"element":"text_input", "display_text": data.toString()};
+            if (error) {
+              console.error(error);
+            } else {
+              console.info('done.');
+            }
+            event.sender.send('upload-response', 'success', JSON.stringify(jsonResponse));
+          });
+      });
+
+
     }
     catch(e) {
       console.log(e);
@@ -170,7 +237,7 @@ function initIpc (){
         jsonSetting = null;
         try {jsonSetting = JSON.parse(fileContent);}catch(e){console.log(e);}
         if(jsonSetting == null){ 
-          jsonSetting = {"compiler":"","serialport":""};
+          jsonSetting = {"compiler":"Default","serialport":""};
           jsonResponse = {"element":"text_input", "display_text": "Default"};
         }else{
           jsonResponse = {"element":"text_input", "display_text": jsonSetting.compiler};
@@ -198,7 +265,7 @@ function initIpc (){
         jsonSetting = null;
         try {jsonSetting = JSON.parse(fileContent);}catch(e){console.log(e);}
         if(jsonSetting == null){ 
-          jsonSetting = {"compiler":"","serialport":""};
+          jsonSetting = {"compiler":"Default","serialport":""};
         }
 
         if(port != null){

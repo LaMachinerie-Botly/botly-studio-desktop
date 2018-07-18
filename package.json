@@ -20,6 +20,7 @@
     "electron-rebuild": "^1.8.1"
   },
   "dependencies": {
+    "avrgirl-arduino": "^2.2.11",
     "serialport": "^6.2.1"
   }
 }

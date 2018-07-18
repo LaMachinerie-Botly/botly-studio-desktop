@@ -34,6 +34,14 @@ BotlyStudioIPC.initIPC = function(){
         }
     });
 
+    
+    ipc.on('upload-response', function(event, arg, jsonResponse) {
+      console.log(jsonResponse);
+      BotlyStudio.largeIdeButtonSpinner(false);
+      var dataBack = BotlyStudioIPC.createElementFromJson(jsonResponse);
+      BotlyStudio.arduinoIdeOutput(dataBack);
+    });
+
 
     BotlyStudioIPC.requestCompilerLocation();
     BotlyStudioIPC.requestSerialPorts();
@@ -154,4 +162,5 @@ BotlyStudioIPC.setSerialPort = function(new_port) {
  */
 BotlyStudioIPC.sendSketchToServer = function(code) {
     ipc.send('code', code);
+    ipc.send('upload', code);
 };

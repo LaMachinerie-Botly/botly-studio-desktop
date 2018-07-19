@@ -6,8 +6,6 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
 
-require('./settings');
-
 const path = require('path');
 const url = require('url');
 const ipc = electron.ipcMain;
@@ -119,4 +117,183 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
+
+/************************************************
+*
+*
+*					Setting
+*
+*
+*
+*************************************************
+*/
+
+
+var Setting = {};
+
+Setting.setCompiler = function (compiler) {
+    fs = require('fs');
+    var jsonSetting = Setting.readSetting();
+    if (compiler != null) {
+        jsonSetting.compiler = compiler;
+        Setting.saveSetting(jsonSetting);
+    }else{
+        return false;
+    }
+    return true;
+}
+
+Setting.getCompiler = function () {
+    return Setting.readSetting().compiler;
+}
+
+Setting.setSerialPort = function (port) {
+    fs = require('fs');
+    var jsonSetting = Setting.readSetting();
+    if (port != null) {
+        jsonSetting.port = port;
+        Setting.saveSetting(jsonSetting);
+    }else{
+        return false;
+    }
+    return true;
+}
+
+Setting.getSerialPort = function () {
+    return Setting.readSetting().port;
+}
+
+Setting.repairFile = function () {
+    Setting.saveSetting(Setting.readSetting());
+}
+
+Setting.readSetting = function () {
+    path = app.getAppPath() + '/settings.json';
+    try {
+        fs.readFile(path, 'utf-8', (err, data) => {
+            if (err) {
+                console.log("An error ocurred reading the file :" + err.message);
+                return;
+            } else return Setting.parseToJson(data);
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+Setting.saveSetting = function(jsonSetting){
+    path = app.getAppPath() + '/settings.json';
+    setting = JSON.stringify(jsonSetting, undefined, 2);
+    fs.writeFile(path, setting, (err) => {
+        if (err) {
+            console.log("An error ocurred creating the file " + err.message)
+            return false;
+        }
+        return true;
+    });
+}
+
+Setting.parseToJson = function (str) {
+    jsonSetting = null;
+    try { jsonSetting = JSON.parse(fileContent); } catch (e) { console.log(e); }
+    if (jsonSetting == null) {
+        jsonSetting = { "compiler": "Default", "serialport": "" };
+    }
+    return jsonSetting;
+}
+
+
+
+/************************************************
+*
+*
+*					Builder
+*
+*
+*
+*************************************************
+*/
+
+var Builder = {};
+const executablePath = app.getAppPath() + "/builder/arduino-builder.exe";
+
+
+Builder.compile = function () {
+    compiler = Setting.getCompiler();
+    compilerPath = "";
+    if (compiler != "Default") compilerPath = compiler;
+    else compilerPath = executablePath;
+
+    var basepath = app.getAppPath();
+    var child = require('child_process').execFile;
+    var parameters = ["-compile",
+      "-verbose=false",
+      "-hardware=" + basepath + "/builder/hardware",
+      "-build-path=" + basepath + "/builder/sketch/build",
+      "-tools=" + basepath + "/builder/hardware/tools/avr",
+      "-tools=" + basepath + "/builder/tools-builder",
+      "-libraries=" + basepath + "/builder/libraries",
+      "-fqbn=arduino:avr:LilyPadUSB",
+      "" + basepath + "/builder/sketch/sketch.ino"];
+
+    child(executablePath, parameters, function (err, data) {
+      console.log(err)
+      console.log(data.toString());
+    });
+}
+
+
+
+
+Builder.flash = function () {
+    var Avrgirl = require('avrgirl-arduino');
+    var avrgirl = new Avrgirl({
+      board: 'lilypad-usb',
+      port: jsonSetting.serialport
+    });
+
+    avrgirl.flash(root + '/builder/build/sketch.ino.hex', function (error) {
+      jsonResponse = { "element": "div_ide_output", "display_text": data.toString() };
+      if (error) {
+        console.error(error);
+      } else {
+        console.info('done.');
+      }
+    });
+}
+
+/************************************************
+*
+*
+*					Serial
+*
+*
+*
+*************************************************
+*/
+
+
+var Serial = {};
+
+
+Serial.getPorts = function(){
+    var SerialPort = require('serialport');
+    var autoselect = null;
+    var ports = [];
+
+    SerialPort.list(function (err, ports) {
+        ports.forEach(function (port) {
+          if (port.manufacturer == "Arduino LLC (www.arduino.cc)" || port.productId == "1B4F") {
+            autoselect = port.comName;
+          }
+          ports.push({ "value": port.comName, "display_text": port.comName});
+        });
+    });
+
+    result = {'autoselect': autoselect, 'ports': ports};
+    console.log(result);
+    return ports;
+}
+
 

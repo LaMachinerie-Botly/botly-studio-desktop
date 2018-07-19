@@ -15,7 +15,7 @@ BotlyStudioIPC.initIPC = function(){
     });
     ipc.on('serial-port-request-response', function(event, arg) {
       BotlyStudio.setSerialPortsHtml(arg);
-      BotlyStudio.setSerial();
+      //BotlyStudio.setSerial();
     });
     ipc.on('port-request-response', function(event, arg) {
         var serialList = JSON.parse(arg);

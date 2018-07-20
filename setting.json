@@ -1,4 +1,4 @@
 {
-  "compiler": "C:\\Program Files (x86)\\Arduino\\arduino.exe",
-  "serialport": ""
+  "compiler": "",
+  "serialport": "/dev/tty.Bluetooth-Incoming-Port"
 }

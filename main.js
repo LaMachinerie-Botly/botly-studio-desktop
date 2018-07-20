@@ -106,9 +106,9 @@ function initIpc() {
 app.on('ready', createWindow)
 
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
+  //if (process.platform !== 'darwin') {
     app.quit()
-  }
+  //}
 })
 
 app.on('activate', function () {
@@ -207,7 +207,7 @@ Setting.parseToJson = function (data) {
 */
 
 var Builder = {};
-const executablePath = app.getAppPath() + "/builder/arduino-builder.exe";
+const executablePath = app.getAppPath() + "/builder/arduino-builder";
 
 
 Builder.compile = function (event, method) {

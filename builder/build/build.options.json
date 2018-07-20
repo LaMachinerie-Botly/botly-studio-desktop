@@ -1,0 +1,10 @@
+{
+  "builtInLibrariesFolders": "",
+  "customBuildProperties": "",
+  "fqbn": "arduino:avr:LilyPadUSB",
+  "hardwareFolders": "/Users/admin/Documents/GitHub/BotlyStudio-App/builder/hardware",
+  "otherLibrariesFolders": "/Users/admin/Documents/GitHub/BotlyStudio-App/builder/libraries",
+  "runtime.ide.version": "10600",
+  "sketchLocation": "/Users/admin/Documents/GitHub/BotlyStudio-App/builder/sketch/sketch.ino",
+  "toolsFolders": "/Users/admin/Documents/GitHub/BotlyStudio-App/builder/hardware/tools/avr,/Users/admin/Documents/GitHub/BotlyStudio-App/builder/tools-builder"
+}

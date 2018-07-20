@@ -34,12 +34,27 @@ BotlyStudioIPC.initIPC = function(){
         }
     });
 
-    
-    ipc.on('upload-response', function(event, arg, jsonResponse) {
+    ipc.on('compile-response', function(event, jsonResponse) {
+      var method = JSON.parse(jsonResponse).method;
+      console.log(method);
+      var dataBack = BotlyStudioIPC.createElementFromJson(jsonResponse);
+      BotlyStudio.arduinoIdeOutput(dataBack);
+      BotlyStudio.shortMessage(BotlyStudio.getLocalStr('arduinoOpVerifiedTitle'));
+      if(method == "compile" )BotlyStudio.largeIdeButtonSpinner(false);
+      else if(method == "upload"){
+        ipc.send('flash');
+        BotlyStudio.shortMessage(BotlyStudio.getLocalStr('uploadingSketch'));
+      }else{
+        BotlyStudio.largeIdeButtonSpinner(false);
+      }
+    });
+
+    ipc.on('upload-response', function(event, jsonResponse) {
       console.log(jsonResponse);
       BotlyStudio.largeIdeButtonSpinner(false);
       var dataBack = BotlyStudioIPC.createElementFromJson(jsonResponse);
       BotlyStudio.arduinoIdeOutput(dataBack);
+      Ardublockly.shortMessage(Ardublockly.getLocalStr('arduinoOpUploadedTitle'));
     });
 
 
@@ -160,7 +175,13 @@ BotlyStudioIPC.setSerialPort = function(new_port) {
  * by the settings.
  * @param {!string} code Arduino code in a single string format.
  */
-BotlyStudioIPC.sendSketchToServer = function(code) {
-    ipc.send('code', code);
-    ipc.send('upload', code);
+BotlyStudioIPC.sendSketchToServer = function(code, flag) {
+  ipc.send('code', code);
+  if(flag == "compile"){
+    ipc.send('compile', flag);
+  }else if(flag == "upload"){
+    ipc.send('compile', flag);
+  }else if(flag == "openIDE"){
+    ipc.send('openIDE');
+  }
 };

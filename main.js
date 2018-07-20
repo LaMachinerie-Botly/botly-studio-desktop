@@ -81,16 +81,23 @@ function initIpc() {
 
 
 
-  ipc.on('compile', function (event) {
-    if (fs.existsSync(root + "/builder/sketch/sketch.ino")) {
-      Buidler.compile();
+  ipc.on('compile', function (event, method) {
+    if (fs.existsSync(app.getAppPath() + "/builder/sketch/sketch.ino")) {
+      Builder.compile(event, method);
     }
   });
 
 
   ipc.on('flash', function (event) {
-    if (fs.existsSync(root + "/builder/build/sketch.ino.hex")) {
-      Buidler.flash();
+    if (fs.existsSync(app.getAppPath() + "/builder/build/sketch.ino.hex")) {
+      Builder.flash(event);
+    }
+  });
+
+
+  ipc.on('openIDE', function (event) {
+    if (fs.existsSync(app.getAppPath() + "/builder/sketch/sketch.ino")) {
+      Builder.open();
     }
   });
 }
@@ -203,47 +210,73 @@ var Builder = {};
 const executablePath = app.getAppPath() + "/builder/arduino-builder.exe";
 
 
-Builder.compile = function () {
-  compiler = Setting.getCompiler();
-  compilerPath = "";
-  if (compiler != "Default") compilerPath = compiler;
-  else compilerPath = executablePath;
+Builder.compile = function (event, method) {
+  compilerPath = executablePath;
+  var method = method;
 
   var basepath = app.getAppPath();
   var child = require('child_process').execFile;
   var parameters = ["-compile",
     "-verbose=false",
     "-hardware=" + basepath + "/builder/hardware",
-    "-build-path=" + basepath + "/builder/sketch/build",
+    "-build-path=" + basepath + "/builder/build",
     "-tools=" + basepath + "/builder/hardware/tools/avr",
     "-tools=" + basepath + "/builder/tools-builder",
     "-libraries=" + basepath + "/builder/libraries",
     "-fqbn=arduino:avr:LilyPadUSB",
     "" + basepath + "/builder/sketch/sketch.ino"];
 
-  child(executablePath, parameters, function (err, data) {
+  child(compilerPath, parameters, function (err, data) {
     console.log(err)
     console.log(data.toString());
+    jsonResponse = {};
+    if (err) {
+      jsonResponse = { "element": "div_ide_output", "output": err, "success": "false", "method": method };
+    } else {
+      jsonResponse = { "element": "div_ide_output", "output": data.toString(), "success": "true", "method": method };
+    }
+    //console.log(jsonResponse);
+    event.sender.send('compile-response', JSON.stringify(jsonResponse));
   });
+}
+
+Builder.open = function () {
+  compiler = Setting.getCompiler();
+  compilerPath = "";
+  if (compiler != "Default") {
+    compilerPath = compiler;
+
+    var basepath = app.getAppPath();
+    var child = require('child_process').execFile;
+    var parameters = [basepath + "/builder/sketch/sketch.ino"];
+
+    child(compilerPath, parameters, function (err, data) {
+      console.log(err)
+      console.log(data.toString());
+    });
+  }
 }
 
 
 
-
-Builder.flash = function () {
+Builder.flash = function (event) {
   var Avrgirl = require('avrgirl-arduino');
   var avrgirl = new Avrgirl({
     board: 'lilypad-usb',
-    port: jsonSetting.serialport
+    port: Setting.getSerialPort(),
+    debug: true
   });
 
-  avrgirl.flash(root + '/builder/build/sketch.ino.hex', function (error) {
-    jsonResponse = { "element": "div_ide_output", "display_text": data.toString() };
+  avrgirl.flash(app.getAppPath() + '/builder/build/sketch.ino.hex', function (error) {
+    jsonResponse = {};
     if (error) {
       console.error(error);
+      jsonResponse = { "element": "div_ide_output", "output": error, "success": "false" };
     } else {
       console.info('done.');
+      jsonResponse = { "element": "div_ide_output", "output": "Téléversement terminé", "success": "true" };
     }
+    event.sender.send('upload-response', JSON.stringify(jsonResponse));
   });
 }
 
@@ -271,13 +304,13 @@ Serial.getPorts = function (callback) {
       if (Setting.getSerialPort() == port.comName) {
         autoselect = port.comName;
         serial.push({ "value": port.comName, "display_text": port.comName });
-      }else if (autoselect == null && (port.manufacturer == "Arduino LLC (www.arduino.cc)" || port.productId == "1B4F")) {
+      } else if (autoselect == null && (port.manufacturer == "Arduino LLC (www.arduino.cc)" || port.productId == "1B4F")) {
         autoselect = port.comName;
-        serial.push({ "value": port.comName, "display_text": port.comName + ' (Botly robot)'});
-      }else{
-        serial.push({ "value": port.comName, "display_text": port.comName});
+        serial.push({ "value": port.comName, "display_text": port.comName + ' (Botly robot)' });
+      } else {
+        serial.push({ "value": port.comName, "display_text": port.comName });
       }
-      
+
     });
     result = { 'autoselect': autoselect, 'ports': serial };
     callback(Serial.parseResponse(result));
@@ -285,8 +318,8 @@ Serial.getPorts = function (callback) {
 }
 
 Serial.parseResponse = function (portList) {
-  console.log("Port:");
-  console.log(portList.ports);
+  //console.log("Port:");
+  //console.log(portList.ports);
   jsonResponse = {
     "selected": "",
     "element": "dropdown",

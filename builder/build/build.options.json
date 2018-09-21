@@ -1,0 +1,10 @@
+{
+  "builtInLibrariesFolders": "",
+  "customBuildProperties": "",
+  "fqbn": "arduino:avr:uno",
+  "hardwareFolders": "C:\\Users\\jtopart\\Documents\\GitHub\\Releases\\BotlyStudio\\resources\\app\\builder\\hardware",
+  "otherLibrariesFolders": "C:\\Users\\jtopart\\Documents\\GitHub\\Releases\\BotlyStudio\\resources\\app\\builder\\libraries",
+  "runtime.ide.version": "10600",
+  "sketchLocation": "C:\\Users\\jtopart\\Documents\\GitHub\\Releases\\BotlyStudio\\resources\\app\\builder\\sketch\\sketch.ino",
+  "toolsFolders": "C:\\Users\\jtopart\\Documents\\GitHub\\Releases\\BotlyStudio\\resources\\app/builder/hardware/tools/avr,C:\\Users\\jtopart\\Documents\\GitHub\\Releases\\BotlyStudio\\resources\\app/builder/tools-builder"
+}

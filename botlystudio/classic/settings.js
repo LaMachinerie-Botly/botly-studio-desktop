@@ -2,7 +2,7 @@
  * @license Licensed under the Apache License, Version 2.0 (the "License"):
  *          http://www.apache.org/licenses/LICENSE-2.0
  *
- * @fileoverview JavaScript for BotlyStudio Server Compiler settings.
+ * @fileoverview JavaScript for Ardublockly Server Compiler settings.
  */
 'use strict';
 
@@ -12,30 +12,30 @@ var ArduinoSettings = {};
 /** Initialize the settings form data on page load. */
 window.addEventListener('load', function() {
   // Populate the form data
-  BotlyStudioServer.requestCompilerLocation(
+  ArdublocklyServer.requestCompilerLocation(
       ArduinoSettings.setCompilerLocationHtml);
-  BotlyStudioServer.requestSketchLocation(
+  ArdublocklyServer.requestSketchLocation(
       ArduinoSettings.setSketchLocationHtml);
-  BotlyStudioServer.requestArduinoBoards(
+  ArdublocklyServer.requestArduinoBoards(
       ArduinoSettings.setArduinoBoardsHtml);
-  BotlyStudioServer.requestSerialPorts(ArduinoSettings.setSerialPortsHtml);
-  BotlyStudioServer.requestIdeOptions(ArduinoSettings.setIdeHtml);
+  ArdublocklyServer.requestSerialPorts(ArduinoSettings.setSerialPortsHtml);
+  ArdublocklyServer.requestIdeOptions(ArduinoSettings.setIdeHtml);
 
   // Binding clicks to the form items
   ArduinoSettings.bindClick_('settings_compiler_location', function() {
-    BotlyStudioServer.requestNewCompilerLocation(
+    ArdublocklyServer.requestNewCompilerLocation(
         ArduinoSettings.setCompilerLocationHtml);
   });
   ArduinoSettings.bindClick_('settings_sketch_location', function() {
-    BotlyStudioServer.requestNewSketchLocation(
+    ArdublocklyServer.requestNewSketchLocation(
         ArduinoSettings.setSketchLocationHtml);
   });
 
   // Check if not running locally (including developer's local network IP)
   if (document.location.hostname != 'localhost' &&
       document.location.hostname != '192.168.0.7') {
-    alert('BotlyStudio not running locally\n\n' +
-          'For BotlyStudio to work correctly, the BotlyStudio server must be' +
+    alert('Ardublockly not running locally\n\n' +
+          'For Ardublockly to work correctly, the Ardublockly server must be' +
           ' running locally on your computer');
   }
 });
@@ -46,7 +46,7 @@ window.addEventListener('load', function() {
  */
 ArduinoSettings.setCompilerLocationHtml = function(jsonResponse) {
   if (jsonResponse != null) {
-    var newEl = BotlyStudioServer.createElementFromJson(jsonResponse);
+    var newEl = ArdublocklyServer.createElementFromJson(jsonResponse);
     var compLocIp = document.getElementById('settings_compiler_location');
     if (compLocIp != null) {
       compLocIp.value = newEl.value;
@@ -60,7 +60,7 @@ ArduinoSettings.setCompilerLocationHtml = function(jsonResponse) {
  */
 ArduinoSettings.setSketchLocationHtml = function(jsonResponse) {
   if (jsonResponse != null) {
-    var newEl = BotlyStudioServer.createElementFromJson(jsonResponse);
+    var newEl = ArdublocklyServer.createElementFromJson(jsonResponse);
     var sketchLocIp = document.getElementById('settings_sketch_location');
     if (sketchLocIp != null) {
       sketchLocIp.value = newEl.value;
@@ -75,7 +75,7 @@ ArduinoSettings.setSketchLocationHtml = function(jsonResponse) {
  */
 ArduinoSettings.setArduinoBoardsHtml = function(jsonResponse) {
   if (jsonResponse != null) {
-    var newEl = BotlyStudioServer.createElementFromJson(jsonResponse);
+    var newEl = ArdublocklyServer.createElementFromJson(jsonResponse);
     var boardDropdown = document.getElementById('board');
     if (boardDropdown != null) {
       newEl.id = 'board';
@@ -91,8 +91,8 @@ ArduinoSettings.setArduinoBoardsHtml = function(jsonResponse) {
 ArduinoSettings.setBoard = function() {
   var el = document.getElementById('board');
   var boardValue = el.options[el.selectedIndex].value;
-  //TODO: check how BotlyStudioServer deals with invalid data and sanitise here
-  BotlyStudioServer.setArduinoBoard(
+  //TODO: check how ArdublocklyServer deals with invalid data and sanitise here
+  ArdublocklyServer.setArduinoBoard(
       boardValue, ArduinoSettings.setArduinoBoardsHtml);
 };
 
@@ -103,7 +103,7 @@ ArduinoSettings.setBoard = function() {
  */
 ArduinoSettings.setSerialPortsHtml = function(jsonResponse) {
   if (jsonResponse != null) {
-    var newEl = BotlyStudioServer.createElementFromJson(jsonResponse);
+    var newEl = ArdublocklyServer.createElementFromJson(jsonResponse);
     var serialDropdown = document.getElementById('serial_port');
     if (serialDropdown != null) {
       newEl.id = 'serial_port';
@@ -117,8 +117,8 @@ ArduinoSettings.setSerialPortsHtml = function(jsonResponse) {
 ArduinoSettings.setSerial = function() {
   var el = document.getElementById('serial_port');
   var serialValue = el.options[el.selectedIndex].value;
-  //TODO: check how BotlyStudioServer deals with invalid data and sanitise
-  BotlyStudioServer.setSerialPort(
+  //TODO: check how ArdublocklyServer deals with invalid data and sanitise
+  ArdublocklyServer.setSerialPort(
       serialValue, ArduinoSettings.setSerialPortsHtml);
 };
 
@@ -129,7 +129,7 @@ ArduinoSettings.setSerial = function() {
  */
 ArduinoSettings.setIdeHtml = function(jsonResponse) {
   if (jsonResponse != null) {
-    var newEl = BotlyStudioServer.createElementFromJson(jsonResponse);
+    var newEl = ArdublocklyServer.createElementFromJson(jsonResponse);
     var ideDropdown = document.getElementById('ide_settings');
     if (ideDropdown != null) {
       newEl.id = 'ide_settings';
@@ -145,8 +145,8 @@ ArduinoSettings.setIdeHtml = function(jsonResponse) {
 ArduinoSettings.setIdeSettings = function() {
   var el = document.getElementById('ide_settings');
   var ideValue = el.options[el.selectedIndex].value;
-  //TODO: check how BotlyStudioServer deals with invalid data and sanitise
-  BotlyStudioServer.setIdeOptions(ideValue, ArduinoSettings.setIdeHtml);
+  //TODO: check how ArdublocklyServer deals with invalid data and sanitise
+  ArdublocklyServer.setIdeOptions(ideValue, ArduinoSettings.setIdeHtml);
 };
 
 /**

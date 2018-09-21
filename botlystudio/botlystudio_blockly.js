@@ -69,7 +69,6 @@ BotlyStudio.bindBlocklyEventListeners = function() {
   window.addEventListener('resize',
       function() {
 		  Blockly.asyncSvgResize(BotlyStudio.workspace);
-		  Turtle.resizeCanvas();
 		}, false);
 };
 
@@ -226,12 +225,9 @@ BotlyStudio.changeBlocklyArduinoBoard = function(newBoard) {
 
 /** Update the toolbox categories language. */
 BotlyStudio.updateToolboxLanguage = function() {
-  /*
-  var categories = ['catScott', 'catLogic', 'catLoops', 'catMath', 'catText',
+  var categories = ['catLogic', 'catLoops', 'catMath', 'catText',
                     'catVariables', 'catFunctions', 'catInputOutput',
                     'catTime', 'catAudio', 'catMotors', 'catComms'];
-  
-  */
   var categoryNodes = BotlyStudio.xmlTree.getElementsByTagName('category');
   for (var i = 0, cat; cat = categoryNodes[i]; i++) {
     var catId = cat.getAttribute('id');

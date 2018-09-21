@@ -1,6 +1,5 @@
 /**
-
-* @license
+ * @license
  * Visual Blocks Editor
  *
  * Copyright 2012 Google Inc.

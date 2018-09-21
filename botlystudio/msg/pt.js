@@ -1,7 +1,7 @@
-var BotlyStudio = BotlyStudio || {};
-BotlyStudio.LOCALISED_TEXT = {
+var Ardublockly = Ardublockly || {};
+Ardublockly.LOCALISED_TEXT = {
   translationLanguage: "Português",
-  title: "BotlyStudio",
+  title: "Ardublockly",
   blocks: "Blocos",
   /* Menu */
   open: "Abrir",
@@ -51,7 +51,7 @@ BotlyStudio.LOCALISED_TEXT = {
   /* Modals */
   noServerTitle: "",
   noServerTitleBody: "",
-  noServerNoLangBody: "Se a aplicação BotlyStudio não está em execução, a língua não pode ser completamente mudada.",
+  noServerNoLangBody: "Se a aplicação Ardublockly não está em execução, a língua não pode ser completamente mudada.",
   addBlocksTitle: "Blocos Adicionais",
   /* Alerts */
   loadNewBlocksTitle: "Carregar novos blocos?",

@@ -15,58 +15,58 @@ BotlyStudio.changeToolbox = function(){
 		BotlyStudio.TOOLBOX_XML =
 		'<xml>' +
 		'  <sep></sep>' +
-		'  <category id="catScott" name="Scott">' +
-		// '    <block type="scott_forward">' +
+		'  <category id="catBotly" name="Botly">' +
+		// '    <block type="botly_forward">' +
 		// '      <value name="VALUE">' +
 		// '        <shadow type="math_number">' +
 		// '          <field name="NUM">10</field>' +
 		// '        </shadow>' +
 		// '      </value>' +
 		// '    </block>' +
-		// '    <block type="scott_backward">' +
+		// '    <block type="botly_backward">' +
 		// '      <value name="VALUE">' +
 		// '        <shadow type="math_number">' +
 		// '          <field name="NUM">10</field>' +
 		// '        </shadow>' +
 		// '      </value>' +
 		// '    </block>' +
-		'    <block type="scott_deplacement">' +
+		'    <block type="botly_deplacement">' +
 		'		<value name="VALUE">' +
 		'       	<shadow type="math_number">' +
 		'          		<field name="NUM">10</field>' +
 		'        	</shadow>' +
 		'		</value>' +
 		'    </block>' +
-		'    <block type="scott_rotation">' +
+		'    <block type="botly_rotation">' +
 		'		<value name="angle">' +
 		'       	<shadow type="math_number">' +
 		'          		<field name="NUM">90</field>' +
 		'        	</shadow>' +
 		'		</value>' +
 		'    </block>' +
-		// '    <block type="scott_right">' +
+		// '    <block type="botly_right">' +
 		// '      <value name="VALUE">' +
 		// '        <shadow type="math_number">' +
 		// '          <field name="NUM">90</field>' +
 		// '        </shadow>' +
 		// '      </value>' +
 		// '    </block>' +
-		// '    <block type="scott_left">' +
+		// '    <block type="botly_left">' +
 		// '      <value name="VALUE">' +
 		// '        <shadow type="math_number">' +
 		// '          <field name="NUM">90</field>' +
 		// '        </shadow>' +
 		// '      </value>' +
 		// '    </block>' +
-		// '    <block type="scott_stop"></block>' +
-		//'    <block type="scott_turn_go"></block>' +
-		'    <block type="scott_crayon"></block>' +
-		// '    <block type="scott_polygone"></block>' +
-		// '    <block type="scott_cercle"></block>' +
-		// '    <block type="scott_ligne"></block>' +
-		// '    <block type="scott_contact"></block>' +
-		// '    <block type="scott_lever_crayon"></block>' +
-		// '    <block type="scott_descendre_crayon"></block>' +
+		// '    <block type="botly_stop"></block>' +
+		//'    <block type="botly_turn_go"></block>' +
+		'    <block type="botly_crayon"></block>' +
+		// '    <block type="botly_polygone"></block>' +
+		// '    <block type="botly_cercle"></block>' +
+		// '    <block type="botly_ligne"></block>' +
+		// '    <block type="botly_contact"></block>' +
+		// '    <block type="botly_lever_crayon"></block>' +
+		// '    <block type="botly_descendre_crayon"></block>' +
 		'  </category>' +
 		'  <sep></sep>' +
 		// '  <category id="catLogic" name="Logic">' +
@@ -235,58 +235,58 @@ BotlyStudio.changeToolbox = function(){
 		BotlyStudio.TOOLBOX_XML =
 		'<xml>' +
 		'  <sep></sep>' +
-		'  <category id="catScott" name="Scott">' +
-		'    <block type="scott_forward">' +
+		'  <category id="catBotly" name="Botly">' +
+		'    <block type="botly_forward">' +
 		'      <value name="VALUE">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">10</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		'    <block type="scott_backward">' +
+		'    <block type="botly_backward">' +
 		'      <value name="VALUE">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">10</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		// '    <block type="scott_deplacement">' +
+		// '    <block type="botly_deplacement">' +
 		// '		<value name="VALUE">' +
 		// '       	<shadow type="math_number">' +
 		// '          		<field name="NUM">90</field>' +
 		// '        	</shadow>' +
 		// '		</value>' +
 		// '    </block>' +
-		// '    <block type="scott_rotation">' +
+		// '    <block type="botly_rotation">' +
 		// '		<value name="angle">' +
 		// '       	<shadow type="math_number">' +
 		// '          		<field name="NUM">90</field>' +
 		// '        	</shadow>' +
 		// '		</value>' +
 		// '    </block>' +
-		'    <block type="scott_right">' +
+		'    <block type="botly_right">' +
 		'      <value name="VALUE">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">90</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		'    <block type="scott_left">' +
+		'    <block type="botly_left">' +
 		'      <value name="VALUE">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">90</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		// '    <block type="scott_stop"></block>' +
-		// '    <block type="scott_turn_go"></block>' +
-		'    <block type="scott_crayon"></block>' +
-		// '    <block type="scott_polygone"></block>' +
-		// '    <block type="scott_cercle"></block>' +
-		// '    <block type="scott_ligne"></block>' +
-		// '    <block type="scott_contact"></block>' +
-		// '    <block type="scott_lever_crayon"></block>' +
-		// '    <block type="scott_descendre_crayon"></block>' +
+		// '    <block type="botly_stop"></block>' +
+		// '    <block type="botly_turn_go"></block>' +
+		'    <block type="botly_crayon"></block>' +
+		// '    <block type="botly_polygone"></block>' +
+		// '    <block type="botly_cercle"></block>' +
+		// '    <block type="botly_ligne"></block>' +
+		// '    <block type="botly_contact"></block>' +
+		// '    <block type="botly_lever_crayon"></block>' +
+		// '    <block type="botly_descendre_crayon"></block>' +
 		'  </category>' +		'  <sep></sep>' +
 		// '  <category id="catLogic" name="Logic">' +
 		// '    <block type="controls_if"></block>' +
@@ -452,58 +452,58 @@ BotlyStudio.changeToolbox = function(){
 		BotlyStudio.TOOLBOX_XML =
 		'<xml>' +
 		'  <sep></sep>' +
-		'  <category id="catScott" name="Scott">' +
-		'    <block type="scott_forward">' +
+		'  <category id="catBotly" name="Botly">' +
+		'    <block type="botly_forward">' +
 		'      <value name="VALUE">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">10</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		'    <block type="scott_backward">' +
+		'    <block type="botly_backward">' +
 		'      <value name="VALUE">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">10</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		'    <block type="scott_deplacement">' +
+		'    <block type="botly_deplacement">' +
 		'		<value name="VALUE">' +
 		'       	<shadow type="math_number">' +
 		'          		<field name="NUM">10</field>' +
 		'        	</shadow>' +
 		'		</value>' +
 		'    </block>' +
-		'    <block type="scott_rotation">' +
+		'    <block type="botly_rotation">' +
 		'		<value name="angle">' +
 		'       	<shadow type="math_number">' +
 		'          		<field name="NUM">90</field>' +
 		'        	</shadow>' +
 		'		</value>' +
 		'    </block>' +
-		'    <block type="scott_right">' +
+		'    <block type="botly_right">' +
 		'      <value name="angle">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">10</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		'    <block type="scott_left">' +
+		'    <block type="botly_left">' +
 		'      <value name="angle">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">10</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		'    <block type="scott_stop"></block>' +
-		'    <block type="scott_turn_go"></block>' +
-		'    <block type="scott_crayon"></block>' +
-		'    <block type="scott_polygone"></block>' +
-		'    <block type="scott_cercle"></block>' +
-		'    <block type="scott_ligne"></block>' +
-		'    <block type="scott_contact"></block>' +
-		'    <block type="scott_lever_crayon"></block>' +
-		'    <block type="scott_descendre_crayon"></block>' +
+		'    <block type="botly_stop"></block>' +
+		'    <block type="botly_turn_go"></block>' +
+		'    <block type="botly_crayon"></block>' +
+		'    <block type="botly_polygone"></block>' +
+		'    <block type="botly_cercle"></block>' +
+		'    <block type="botly_ligne"></block>' +
+		'    <block type="botly_contact"></block>' +
+		'    <block type="botly_lever_crayon"></block>' +
+		'    <block type="botly_descendre_crayon"></block>' +
 		'  </category>' +
 		'  <sep></sep>' +
 		'  <category id="catLogic" name="Logic">' +
@@ -672,58 +672,58 @@ BotlyStudio.changeToolbox = function(){
 		BotlyStudio.TOOLBOX_XML =
 		'<xml>' +
 		'  <sep></sep>' +
-		'  <category id="catScott" name="Scott">' +
-		'    <block type="scott_forward">' +
+		'  <category id="catBotly" name="Botly">' +
+		'    <block type="botly_forward">' +
 		'      <value name="VALUE">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">10</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		'    <block type="scott_backward">' +
+		'    <block type="botly_backward">' +
 		'      <value name="VALUE">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">10</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		'    <block type="scott_deplacement">' +
+		'    <block type="botly_deplacement">' +
 		'		<value name="VALUE">' +
 		'       	<shadow type="math_number">' +
 		'          		<field name="NUM">10</field>' +
 		'        	</shadow>' +
 		'		</value>' +
 		'    </block>' +
-		'    <block type="scott_rotation">' +
+		'    <block type="botly_rotation">' +
 		'		<value name="angle">' +
 		'       	<shadow type="math_number">' +
 		'          		<field name="NUM">90</field>' +
 		'        	</shadow>' +
 		'		</value>' +
 		'    </block>' +
-		'    <block type="scott_right">' +
+		'    <block type="botly_right">' +
 		'      <value name="angle">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">10</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		'    <block type="scott_left">' +
+		'    <block type="botly_left">' +
 		'      <value name="angle">' +
 		'        <shadow type="math_number">' +
 		'          <field name="NUM">10</field>' +
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
-		'    <block type="scott_stop"></block>' +
-		'    <block type="scott_turn_go"></block>' +
-		'    <block type="scott_crayon"></block>' +
-		'    <block type="scott_polygone"></block>' +
-		'    <block type="scott_cercle"></block>' +
-		'    <block type="scott_ligne"></block>' +
-		'    <block type="scott_contact"></block>' +
-		'    <block type="scott_lever_crayon"></block>' +
-		'    <block type="scott_descendre_crayon"></block>' +
+		'    <block type="botly_stop"></block>' +
+		'    <block type="botly_turn_go"></block>' +
+		'    <block type="botly_crayon"></block>' +
+		'    <block type="botly_polygone"></block>' +
+		'    <block type="botly_cercle"></block>' +
+		'    <block type="botly_ligne"></block>' +
+		'    <block type="botly_contact"></block>' +
+		'    <block type="botly_lever_crayon"></block>' +
+		'    <block type="botly_descendre_crayon"></block>' +
 		'  </category>' +
 		'  <sep></sep>' +
 		'  <category id="catLogic" name="Logic">' +

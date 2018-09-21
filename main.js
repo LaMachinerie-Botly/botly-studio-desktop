@@ -42,16 +42,15 @@ function initIpc() {
     compilerLocation = dialog.showOpenDialog({ properties: ['openFile'] });
     Setting.setCompiler(compilerLocation[0]);
 
-    jsonResponse = { element: "text_input", display_text: Setting.getCompiler() };
+    var jsonResponse = { element: "text_input", display_text: Setting.getCompiler() };
     event.sender.send('compiler-request-response', JSON.stringify(jsonResponse));
   });
 
 
   ipc.on('compiler-request', function (event) {
-    jsonResponse = { element: "text_input", display_text: Setting.getCompiler() };
+    var jsonResponse = { element: "text_input", display_text: Setting.getCompiler() };
     event.sender.send('compiler-request-response', JSON.stringify(jsonResponse));
   });
-
 
 
   ipc.on('serial-port-request', function (event) {
@@ -62,7 +61,6 @@ function initIpc() {
   });
 
 
-
   ipc.on('set-serial-port', function (event, port) {
     Setting.setSerialPort(port);
     callback = function (jsonResponse) {
@@ -71,7 +69,17 @@ function initIpc() {
     Serial.getPorts(callback);
   });
 
+  ipc.on('robot-request', function (event) {
+    var jsonResponse = { element: "text_input", display_text: Setting.getRobot() };
+    event.sender.send('robot-request-response', JSON.stringify(jsonResponse));
+  });
 
+  ipc.on('set-robot', function (event, robot) {
+    Setting.setRobot(robot);
+
+    var jsonResponse = { element: "text_input", display_text: Setting.getRobot() };
+    event.sender.send('robot-request-response', JSON.stringify(jsonResponse));
+  });
 
   ipc.on('code', function (event, arg) {
     var fs = require('fs');
@@ -146,6 +154,25 @@ Setting.getCompiler = function () {
   return Setting.readSetting().compiler;
 }
 
+Setting.setRobot = function (robot) {
+  var jsonSetting = Setting.readSetting();
+  if (robot != null) {
+    jsonSetting.robot = robot;
+    Setting.saveSetting(jsonSetting);
+  } else {
+    return false;
+  }
+  return true;
+}
+
+
+
+Setting.getRobot = function () {
+  console.log(this.readSetting().robot);
+  return Setting.readSetting().robot;
+}
+
+
 Setting.setSerialPort = function (port) {
   jsonSetting = Setting.readSetting();
   if (port != null) {
@@ -189,7 +216,7 @@ Setting.parseToJson = function (data) {
     console.log(e);
   }
   if (jsonSetting == null) {
-    jsonSetting = { compiler: "Default", serialport: "" };
+    jsonSetting = { compiler: "", serialport: "", robot: "Botly" };
   }
   return jsonSetting;
 }
@@ -213,6 +240,10 @@ const executablePath = app.getAppPath() + "/builder/arduino-builder.exe";
 Builder.compile = function (event, method) {
   compilerPath = executablePath;
   var method = method;
+  
+  
+  if(Setting.getRobot() == "2") compilerFlag = "avr:uno"
+  else compilerFlag = "avr:LilyPadUSB"
 
   var basepath = app.getAppPath();
   var child = require('child_process').execFile;
@@ -223,13 +254,13 @@ Builder.compile = function (event, method) {
     "-tools=" + basepath + "/builder/hardware/tools/avr",
     "-tools=" + basepath + "/builder/tools-builder",
     "-libraries=" + basepath + "/builder/libraries",
-    "-fqbn=arduino:avr:LilyPadUSB",
+    "-fqbn=arduino:" + compilerFlag,
     "" + basepath + "/builder/sketch/sketch.ino"];
 
   child(compilerPath, parameters, function (err, data) {
     console.log(err)
     console.log(data.toString());
-    jsonResponse = {};
+    var jsonResponse = {};
     if (err) {
       jsonResponse = { "element": "div_ide_output", "output": err, "success": "false", "method": method };
     } else {
@@ -261,23 +292,32 @@ Builder.open = function () {
 
 Builder.flash = function (event) {
   var Avrgirl = require('avrgirl-arduino');
-  var avrgirl = new Avrgirl({
-    board: 'lilypad-usb',
-    port: Setting.getSerialPort(),
-    debug: true
-  });
-
-  avrgirl.flash(app.getAppPath() + '/builder/build/sketch.ino.hex', function (error) {
+  var boardName = "lilypad-usb";
+  if(Setting.getRobot() == 2) var boardName = "uno"
+  try{
+    var avrgirl = new Avrgirl({
+      board: boardName,
+      port: Setting.getSerialPort(),
+      debug: true
+    });
+  
+    avrgirl.flash(app.getAppPath() + '/builder/build/sketch.ino.hex', function (error) {
+      jsonResponse = {};
+      if (error) {
+        console.error(error);
+        jsonResponse = { "element": "div_ide_output", "output": error, "success": "false" };
+      } else {
+        console.info('done.');
+        jsonResponse = { "element": "div_ide_output", "output": "Téléversement terminé", "success": "true" };
+      }
+      event.sender.send('upload-response', JSON.stringify(jsonResponse));
+    });
+  }catch(e){
+    console.log(e);
     jsonResponse = {};
-    if (error) {
-      console.error(error);
-      jsonResponse = { "element": "div_ide_output", "output": error, "success": "false" };
-    } else {
-      console.info('done.');
-      jsonResponse = { "element": "div_ide_output", "output": "Téléversement terminé", "success": "true" };
-    }
+    jsonResponse = { "element": "div_ide_output", "output": error, "success": "false" };
     event.sender.send('upload-response', JSON.stringify(jsonResponse));
-  });
+  }
 }
 
 /************************************************
@@ -301,12 +341,13 @@ Serial.getPorts = function (callback) {
 
   SerialPort.list(function (err, ports) {
     ports.forEach(function (port) {
+	  console.log(port);
       if (Setting.getSerialPort() == port.comName) {
         autoselect = port.comName;
         serial.push({ "value": port.comName, "display_text": port.comName });
-      } else if (autoselect == null && (port.manufacturer == "Arduino LLC (www.arduino.cc)" || port.productId == "1B4F")) {
+      } else if (autoselect == null && (port.manufacturer == "FTDI" || port.productId == "6001")) {
         autoselect = port.comName;
-        serial.push({ "value": port.comName, "display_text": port.comName + ' (Botly robot)' });
+        serial.push({ "value": port.comName, "display_text": port.comName + ' Botly' });
       } else {
         serial.push({ "value": port.comName, "display_text": port.comName });
       }

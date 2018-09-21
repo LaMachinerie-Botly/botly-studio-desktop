@@ -5,6 +5,21 @@
 var BotlyStudioIPC = {};
 const electron = require('electron');
 
+BotlyStudio.ROBOT_VERSION = {
+  1: 'Botly',
+  2: 'Scott'
+};
+
+
+
+BotlyStudio.getRobotRealName = function(i){
+  if(i == 1) return "BOTLY_V1";
+  if(i == 2) return "SCOTT_V4";
+}
+
+
+
+BotlyStudio.ROBOT = 2;
 
 const ipc = electron.ipcRenderer;
 
@@ -12,6 +27,12 @@ const ipc = electron.ipcRenderer;
 BotlyStudioIPC.initIPC = function(){
     ipc.on('compiler-request-response', function(event, arg) {
         BotlyStudio.setCompilerLocationHtml(arg);
+    });
+    ipc.on('robot-request-response', function(event, arg) {
+      var json = JSON.parse(arg);
+      console.log(json)
+      BotlyStudio.ROBOT = json.display_text;
+      BotlyStudio.populateRobotMenu();
     });
     ipc.on('serial-port-request-response', function(event, arg) {
       BotlyStudio.setSerialPortsHtml(arg);
@@ -52,15 +73,42 @@ BotlyStudioIPC.initIPC = function(){
     ipc.on('upload-response', function(event, jsonResponse) {
       console.log(jsonResponse);
       BotlyStudio.largeIdeButtonSpinner(false);
-      var dataBack = BotlyStudioIPC.createElementFromJson(jsonResponse);
-      BotlyStudio.arduinoIdeOutput(dataBack);
-      Ardublockly.shortMessage(Ardublockly.getLocalStr('arduinoOpUploadedTitle'));
+      if(JSON.parse(jsonResponse).success == "false") BotlyStudio.shortMessage("Echec du téléversement");
+      else BotlyStudio.shortMessage("Téléversement réussi");
     });
 
 
     BotlyStudioIPC.requestCompilerLocation();
     BotlyStudioIPC.requestSerialPorts();
 }
+
+
+BotlyStudio.populateRobotMenu = function() {
+  var robotMenu = document.getElementById('robotMenu');
+  robotMenu.options.length = 0;
+  for (var robot in BotlyStudio.ROBOT_VERSION) {
+    var option = new Option(BotlyStudio.ROBOT_VERSION[robot], robot);
+    if (robot == BotlyStudio.ROBOT) {
+      option.selected = true;
+    }
+    robotMenu.options.add(option);
+  }
+  robotMenu.onchange = BotlyStudio.changeRobot;
+};
+
+
+/** Saves the blocks and reloads with a different language. */
+BotlyStudio.changeRobot = function() {
+  var RobotMenu = document.getElementById('robotMenu');
+  var newRobot = encodeURIComponent(
+      RobotMenu.options[RobotMenu.selectedIndex].value);
+  var robot = RobotMenu.options[RobotMenu.selectedIndex].value;
+  BotlyStudio.ROBOT = robot;
+  BotlyStudio.renderContent();
+  BotlyStudioIPC.setRobot(newRobot);
+  return;
+};
+
 
 BotlyStudioIPC.createElementFromJson = function(json_data) {
     var parsed_json = JSON.parse(json_data);
@@ -102,7 +150,8 @@ BotlyStudioIPC.createElementFromJson = function(json_data) {
         el_out.innerHTML = BotlyStudio.getLocalStr(parsed_json.output) ||
                            parsed_json.output.split('\n').join('<br />');
       } else {
-        el_out.innerHTML = parsed_json.output.split('\n').join('<br />');
+        el_out.innerHTML = BotlyStudio.getLocalStr(parsed_json.output) ||
+                           parsed_json.output.split('\n').join('<br />');
       }
   
       element = document.createElement('div');
@@ -146,6 +195,14 @@ BotlyStudioIPC.requestCompilerLocation = function() {
  */
 BotlyStudioIPC.setCompilerLocation = function() {
     ipc.send('set-compiler');
+};
+
+BotlyStudioIPC.requestRobot = function() {
+  ipc.send('robot-request');
+};
+
+BotlyStudioIPC.setRobot = function(robot) {
+  ipc.send('set-robot', robot);
 };
 
 

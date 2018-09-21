@@ -1,8 +1,8 @@
-# Syntax Coloring Map Scott
+# Syntax Coloring Map Botly
 
 # Datatypes (KEYWORD1)
 
-Scott KEYWORD1
+Botly KEYWORD1
 
 # Methods and Functions (KEYWORD2)
 

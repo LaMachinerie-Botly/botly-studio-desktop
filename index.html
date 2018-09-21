@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#000000">
-  <link rel="icon" href="botlystudio/img/favicon.ico">
+  <link rel="icon" href="logo.ico">
   <title class="translatable_title">Botly-Studio</title>
 
   <!-- Materialize, Prettify, and BotlyStudio CSS -->
@@ -16,36 +17,55 @@
   <script src="blockly/blockly_compressed.js"></script>
   <script src="blockly/blocks_compressed.js"></script>
   <script src="blockly/arduino_compressed.js"></script>
-  <script src="blockly/blocks/arduino/scott.js"></script>
-  <script src="blockly/generators/arduino/scott.js"></script>
   <script src="blockly/javascript_compressed.js"></script>
-  <script src="blockly/generators/javascript/scott.js"></script>
   <script src="blockly/python_compressed.js"></script>
-  <script src="blockly/generators/python/scott.js"></script>
 
- <!-- Default language js files, user selection appended to head on load -->
+  <script src="blocks/botly/botly-blocks.js"></script>
+  <script src="blocks/botly/botly-generator.js"></script>
+
+
+  <!-- Default language js files, user selection appended to head on load -->
   <script src="blockly/msg/js/fr.js"></script>
   <script src="botlystudio/msg/fr.js"></script>
 </head>
 
 <body>
   <!-- Horizontal Navigation bar -->
+  <!-- Horizontal Navigation bar -->
   <nav class="nav-fixed arduino_teal">
-    <div class="nav-wrapper container" style="-webkit-app-region: drag">
-      <a class="show-on-large button-collapse" href="#" data-activates="slide-out" id="button-collapse"><i class="mdi-navigation-menu" style="-webkit-app-region: no-drag"></i></a>
+    <div class="nav-wrapper container">
+      <a class="show-on-large button-collapse" href="#" data-activates="slide-out" id="button-collapse">
+        <i class="mdi-navigation-menu"></i>
+      </a>
       <a id="logo-container" class="brand-logo">
         <span class="app_title translatable_title">Botly-Studio</span>
         <!-- Sketch name editable text field -->
-        <span class="sketch_name_wrapper" style="-webkit-app-region: no-drag">
+        <span class="sketch_name_wrapper">
           <i class="mdi-image-edit sketch_name_icon"></i>
           <input id="sketch_name" class="sketch_name" type="text">
         </span>
       </a>
       <!-- Horizontal Navbar links only shown on large resolutions -->
-      <ul id="nav-mobile" class="right hide-on-med-and-down" style="-webkit-app-region: no-drag">
-        <li><a href="#" id="button_load"><span class="translatable_open">Ouvrir</span><i class="mdi-file-file-upload left"></i></a></li>
-        <li><a href="#" id="button_save"><span class="translatable_save">Sauvegarder</span><i class="mdi-file-file-download left"></i></a></li>
-        <li><a href="#" id="button_delete"><span class="translatable_deleteAll">Tout Supprimer</span><i class="mdi-action-delete left"></i></a></li>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
+          <a href="#" id="button_load">
+            <i class="material-icons left">folder</i>
+            <span class="translatable_open">Ouvrir</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" id="button_save">
+            <i class="material-icons left">save</i>
+            <span class="translatable_save">Sauvegarder</span>
+            <!--i class="mdi-file-file-download left"></i-->
+          </a>
+        </li>
+        <li>
+          <a href="#" id="button_delete" hidden>
+            <i class="material-icons left">directions_run</i>
+            <span class="translatable_deleteAll">Tout Supprimer</span>
+          </a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -55,21 +75,57 @@
     <li class="no-padding side-menu-begin">&nbsp;</li>
     <li class="no-padding">
       <ul>
-        <li id="menu_load"><a href="#"><span class="translatable_open">Ouvrir</span><i class="mdi-file-file-upload left"></i></a></li>
-        <li id="menu_save"><a href="#"><span class="translatable_save">Sauvegarder</span><i class="mdi-file-file-download left"></i></a></li>
-        <li id="menu_delete"><a href="#"><span class="translatable_deleteAll">Tout supprimer</span><i class="mdi-action-delete left"></i></a></li>
-        <li id="menu_settings"><a href="#"><span class="translatable_settings">Paramètres</span><i class="mdi-action-settings left"></i></a></li>
-        <li id="menu_bug"><a href="https://github.com/LaMachinerie/BotlyStudio-Scott/wiki" target="_blank"><span class="translatable_documentation">Documentation</span><i class="mdi-action-help left"></i></a></li>
-        <li id="menu_bug"><a href="http://github.com/LaMachinerie/BotlyStudio-JS/issues" target="_blank"><span class="translatable_reportBug">Signaler un Bug</span><i class="mdi-action-bug-report left"></i></a></li>
+        <li id="menu_load">
+          <a href="#">
+            <span class="translatable_open">Ouvrir</span>
+            <i class="medium material-icons left" style="line-height: 2">folder</i>
+          </a>
+        </li>
+        <li id="menu_save">
+          <a href="#">
+            <span class="translatable_save">Sauvegarder</span>
+            <i class="medium material-icons left" style="line-height: 2">save</i>
+          </a>
+        </li>
+        <li id="menu_delete">
+          <a href="#"><span class="translatable_deleteAll">Tout supprimer</span>
+            <i class="mdi-action-delete left"></i>
+          </a>
+        </li>
+        <li id="menu_settings">
+          <a href="#">
+            <span class="translatable_settings">Paramètres</span>
+            <i class="mdi-action-settings left"></i>
+          </a>
+        </li>
+        <li id="menu_bug">
+          <a href="https://github.com/LaMachinerie/BotlyStudio-Scott/wiki" target="_blank">
+            <span class="translatable_documentation">Documentation</span><i class="mdi-action-help left"></i>
+          </a>
+        </li>
+        <li id="menu_bug">
+          <a href="http://github.com/LaMachinerie/BotlyStudio-JS/issues" target="_blank">
+            <span class="translatable_reportBug">Signaler un Bug</span>
+            <i class="mdi-action-bug-report left"></i>
+          </a>
+        </li>
       </ul>
     <li class="no-padding">
       <ul class="collapsible collapsible-accordion">
         <li>
-          <div class="collapsible-header"><span class="translatable_examples">Exemples</span><i class="mdi-navigation-arrow-drop-down"></i></div>
+          <div class="collapsible-header">
+            <span class="translatable_examples">Exemples</span>
+            <i class="medium material-icons left" style="line-height: 2">lightbulb_outline</i>
+            <i class="mdi-navigation-arrow-drop-down right"></i>
+          </div>
           <div class="collapsible-body">
             <ul>
-			  <li id="menu_example_1"><a href="#!">Scott Dessine</a></li>
-              <li id="menu_example_2"><a href="#!">Blink</a></li>
+              <li id="menu_example_1">
+                <a href="#!">Sweep</a>
+              </li>
+              <li id="menu_example_2">
+                <a href="#!">Blink</a>
+              </li>
             </ul>
           </div>
         </li>
@@ -83,47 +139,70 @@
     <div class="row">
       <div class="col s12 m12 l8" style="position:relative">
         <!-- Toolbox visibility button -->
-        <a id="button_toggle_toolbox" class="waves-effect waves-light btn-flat button_toggle_toolbox_off" style="display: none"><i id="button_toggle_toolbox_icon" class="mdi-action-visibility-off"></i></a>
-        <!-- Arduino IDE action buttons -->
-        <div id="ide_buttons_wrapper">
-          <a id="button_ide_left" class="waves-effect waves-light waves-circle btn-floating z-depth-1-half arduino_yellow"><i id="button_ide_left_icon" class="mdi-action-open-in-browser"></i></a>
-          <a id="button_ide_middle" class="waves-effect waves-light waves-circle btn-floating z-depth-1-half arduino_teal"><i id="button_ide_middle_icon" class="mdi-navigation-check"></i></a>
-          <a id="button_ide_large" class="waves-effect waves-light waves-circle btn-floating z-depth-1-half arduino_orange"><i id="button_ide_large_icon" class="mdi-av-play-arrow"></i></a>
-          <div id="button_ide_large_spinner" class="preloader-wrapper active ide_loader" style="display:none">
-            <div class="spinner-layer spinner-orange">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
+        <a id="button_toggle_toolbox" class="waves-effect waves-light btn-flat button_toggle_toolbox_off" style="display: none"><i
+            id="button_toggle_toolbox_icon" class="mdi-action-visibility-off"></i></a>
+
+        <!-- IDE action buttons -->
+        <div style="position: absolute; width: 100%; height: 70px; top: -40px;">
+          <div id="ide_buttons_wrapper" class="fixed-action-btn horizontal direction-left" style="position: absolute; display: inline-block; height: 100%; right: 45px; top: 15px; z-index: 12;">
+            <a id="button_ide_large" class="waves-effect waves-light waves-circle btn-floating btn-large z-depth-1-half arduino_orange">
+              <i style="font-size: 2.4rem !important;" class="large material-icons left">flash_on</i>
+            </a>
+            <ul>
+              <li><a id="button_ide_addon" class="waves-effect waves-light waves-circle btn-floating z-depth-1-half arduino_red"><i
+                    class="material-icons">delete</i></a></li>
+              <li><a id="button_ide_last" class="waves-effect waves-light waves-circle btn-floating z-depth-1-half arduino_blue"><i
+                    class="material-icons">code</i></a></li>
+              <li><a id="button_ide_left" class="waves-effect waves-light waves-circle btn-floating z-depth-1-half arduino_orange"><i
+                    class="material-icons">open_in_browser</i></a></li>
+              <li><a id="button_ide_middle" class="waves-effect waves-light waves-circle btn-floating z-depth-1-half arduino_yellow"><i
+                    class="material-icons">check</i></a></li>
+            </ul>
+
+            <div id="button_ide_large_spinner" class="preloader-wrapper active ide_loader" style="display:none">
+              <div class="spinner-layer spinner-orange">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
               </div>
-            </div>
-            <div class="spinner-layer spinner-dark-teal">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
+              <div class="spinner-layer spinner-dark-teal">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
               </div>
-            </div>
-            <div class="spinner-layer spinner-yellow">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
+              <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
               </div>
-            </div>
-            <div class="spinner-layer spinner-light-teal">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
+              <div class="spinner-layer spinner-light-teal">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -135,82 +214,74 @@
           </div>
         </div>
       </div>
-      <div class="col s12 m12 l4">
-	  	<a id="button_toggle_code" class="waves-effect waves-light btn-flat button_toggle_toolbox_off" style="display: none"><i id="button_toggle_toolbox_icon" class="mdi-action-visibility-off"></i></a>
-        <ul class="collapsible z-depth-1" data-collapsible="accordion">
-          <li>
-            <div class="collapsible-header active">
-              <span class="collapsible_logo">{ }</span>
-              <span class="translatable_arduinoSourceCode">Code Source</span>
-            </div>
-            <div class="collapsible-body">
-              <pre id="content_code" class="content content_height_transition content_arduino_large"></pre>
-            </div>
-          </li>
-          <li>
-            <div class="collapsible-header" id="xml_collapsible_header">
-              <span class="mdi-action-visibility"></span>
-              <span class="translatable_blocksXml">Simulation</span>
-            </div>
-            <div class="collapsible-body" style="position:relative" id="xml_collapsible_body">
-			<textarea  id="content_xml" style="display:none" class="content content_height_transition content_xml_large" wrap="soft"></textarea>
-			  <div id="visualization">
-				<canvas id="scratch" width="400" height="350" style="display: none"></canvas>
-				<canvas id="display" width="400" height="350"></canvas>
-				<a class="waves-effect waves-light waves-circle btn-floating z-depth-1-half arduino_orange" id="button_execute"><i class="mdi-av-play-arrow"></i></a>
-				<a class="waves-effect waves-light waves-circle btn-floating z-depth-1-half arduino_orange" id="button_reset"><i class="mdi-action-delete"></i></a>
-				<svg id="slider" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="150" height="50" class="slider2">
-				  <!-- Slow icon. -->
-				  <clipPath id="slowClipPath"><rect width="26" height="12" x="5" y="14"></rect></clipPath>
-				  <image xlink:href="botlystudio/turtle/icons.png" height="42" width="84" x="-21" y="-10" clip-path="url(#slowClipPath)"></image><!-- Fast icon. -->
-				  <clipPath id="fastClipPath">
-					<rect width="26" height="16" x="120" y="10"></rect>
-				  </clipPath>
-				  <image xlink:href="botlystudio/turtle/icons.png" height="42" width="84" x="120" y="-11" clip-path="url(#fastClipPath)"></image-->
-				  <line class="sliderTrack" x1="10" y1="35" x2="140" y2="35"></line>
-				  <rect style="opacity: 0" x="-10" y="15" width="170" height="40" rx="20" ry="20"></rect>
-				  <path class="sliderKnob" d="m 0,0 l -8,8 v 12 h 16 v -12 z" transform="translate(75,23)"></path>
-				  <circle style="opacity: 0" r="20" cy="35" cx="75"></circle>
-			  </svg>
-            </div>
-          </li>
-        </ul>
+      <div class='col s12 m12 l4'>
+        <div class='card-panel white' style='padding: 0' id="playground">
+          <!-- IDE Output content -->
+          <div class="ide_output_wrapper" id='console'>
+            <ul class="collapsible ide_output_collapsible" data-collapsible="expandable">
+              <li>
+                <div id="console_header" class="collapsible-header ide_output_header_normal">
+                  <i class="mdi-action-swap-vert Medium" style="font-size: 2.2rem;"></i>
+                  <span class="translatable_arduinoOpMainTitle">Console Arduino IDE</span>
+                </div>
+                <div class="collapsible-body">
+                  <div id="content_ide_output" class="content"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- IDE Output content -->
-  <div class="ide_output_wrapper">
-    <ul class="collapsible ide_output_collapsible" data-collapsible="expandable">
+
+
+
+  <div id="code_dialog" class="modal modal-fixed-footer">
+    <pre id="content_code" class="content content_height_transition blocks_panel_large"></pre>
+    <ul class="collapsible z-depth-1" data-collapsible="accordion" hidden>
       <li>
-        <div id="ide_output_collapsible_header" class="collapsible-header ide_output_header_normal">
-          <i class="mdi-action-swap-vert Medium" style="font-size: 2.2rem;"></i>
-          <span class="translatable_arduinoOpMainTitle">Console Arduino IDE</span>
+        <div class="collapsible-header  active" id="ide_output_collapsible_header">
+          <span class="collapsible_logo">{ }</span>
+          <span class="translatable_arduinoSourceCode">Code Source</span>
         </div>
         <div class="collapsible-body">
-          <div id="content_ide_output" class="content"></div>
+          <pre id="content_code" class="content content_height_transition blocks_panel_large"></pre>
+        </div>
+      </li>
+      <li>
+        <div class="collapsible-header" id="xml_collapsible_header">
+          <span class="collapsible_logo">{ }</span>
+          <span class="translatable_blocksXml">Blocks XML</span>
+        </div>
+        <div class="collapsible-body">
+          <textarea id="content_xml" class="content content_height_transition blocks_panel_large" wrap="soft"></textarea>
         </div>
       </li>
     </ul>
   </div>
-  <div id="ide_output_spacer"></div>
 
   <!-- Settings: Displayed as a Materialize Modal -->
   <div id="settings_dialog" class="modal modal-fixed-footer">
     <div class="modal-content">
       <h4><span class="translatable_settings">Paramètres</span></h4>
-	  <div class="modal_section">
+      <div class="modal_section">
         <label><span class="translatable_difficulty">Difficulté</span>:</label>
         <select name="settings_difficulty" id="difficulty"></select>
       </div>
-	  <div class="modal_section">
+      <div class="modal_section">
         <label><span class="translatable_output_language">Langage de programmation</span>:</label>
         <select name="settings_output_language" id="outputLang"></select>
       </div>
       <div class="modal_section">
+        <label><span class="translatable_robot">Version de Botly</span>:</label>
+        <select name="settings_robot" id="robotMenu"></select>
+      </div>
+      <div class="modal_section">
         <label><span class="translatable_compilerLocation">Chemin d'accés au compilateur</span>:</label>
         <input type="text" id="settings_compiler_location" value="Compilateur par défaut" readonly>
-	    	<button id="setCompilerLocationButton"> Parcourir... </button>
+        <button id="setCompilerLocationButton"> Parcourir... </button>
       </div>
       <div class="modal_section">
         <label><span class="translatable_comPort">Ports série (COM)<span>:</label>
@@ -244,8 +315,9 @@
   <!-- General Alert: Content is loaded using JavaScript to display alerts -->
   <div id="gen_alert" class="modal modal_small modal-fixed-footer">
     <div class="modal-content">
-      <h5 id="gen_alert_title">Empty Alert</h4>
-      <p><span id="gen_alert_body">Empty alert text</span></p>
+      <h5 id="gen_alert_title">Empty Alert
+        </h4>
+        <p><span id="gen_alert_body">Empty alert text</span></p>
     </div>
     <div class="modal-footer">
       <a id="gen_alert_ok_link" href="#" class="waves-effect btn-flat modal-close"><span class="translatable_okay">Okay</span></a>
@@ -256,26 +328,24 @@
   <!-- Prompt: Content is loaded using JavaScript to display input prompt -->
   <div id="gen_prompt" class="modal modal_small modal-fixed-footer">
     <div class="modal-content">
-      <p><span id="gen_prompt_message">Prompt message</span></p>
+      <p><span id="gen_prompt_message">Entrée</span></p>
       <p><input id="gen_prompt_input" value="test" /></p>
     </div>
     <div class="modal-footer">
-      <a id="gen_prompt_ok_link" href="#" class="waves-effect btn-flat modal-close"><span class="translatable_okay">Okay</span></a>
-      <a id="gen_prompt_cancel_link" href="#" class="waves-effect btn-flat modal-close"><span class="translatable_cancel">Cancel</span></a>
+      <a id="gen_prompt_ok_link" href="#" class="waves-effect btn-flat modal-close"><span class="translatable_okay">Valider</span></a>
+      <a id="gen_prompt_cancel_link" href="#" class="waves-effect btn-flat modal-close"><span class="translatable_cancel">Annuler</span></a>
     </div>
   </div>
 
   <!-- Desktop version of BotlyStudio JS, needs to be loaded first. -->
-  
+
   <script>
     window.$ = window.jQuery = require('./botlystudio/js_libs/jquery-2.1.3.min.js');
     window.Hammer = require('./botlystudio/js_libs/hammer.min.js');
     window.JsDiff = require('./botlystudio/js_libs/diff.js');
   </script>
-  
-  
-  
-  <!--script src="botlystudio/botlystudio_desktop.js"></script-->
+
+
   <!-- jQuery and Materialize JS -->
   <script src="botlystudio/js_libs/jquery-2.1.3.min.js"></script>
   <script src="botlystudio/materialize/materialize.js"></script>
@@ -283,30 +353,26 @@
   <script src="botlystudio/js_libs/FileSaver.min.js"></script>
   <!-- JS Diff -->
   <script src="botlystudio/js_libs/diff.js"></script>
-    <!-- JS Diff -->
-  <script src="botlystudio/js_libs/slider.js"></script>
   <!-- Prettify JS -->
   <script src="botlystudio/prettify/prettify.js"></script>
+  <!-- Interpreter -->
+  <script src="botlystudio/JS-Interpreter/compiled.js"></script>
+
   <!-- BotlyStudio app -->
-  <script src="botlystudio/botlystudio_IPC.js"></script>
   <script src="botlystudio/botlystudio_lang.js"></script>
   <script src="botlystudio/botlystudio_design.js"></script>
   <script src="botlystudio/botlystudio_toolbox.js"></script>
   <script src="botlystudio/botlystudio_blockly.js"></script>
   <script src="botlystudio/botlystudio_difficulty.js"></script>
   <script src="botlystudio/botlystudio_outputLang.js"></script>
+  <!-- BotlyStudio main class -->
   <script src="botlystudio/botlystudio.js"></script>
+  <!-- BotlyStudio server class -->
+  <script src="botlystudio/botlystudio_IPC.js"></script>
+  <!-- BotlyStudio plugin class -->
+  <script src="botlystudio/botlystudio_plugins.js"></script>
 
 
-  <!-- BotlyStudio ad-on -->
-  <script src="botlystudio/turtle.js"></script>
-  <script src="botlystudio/JS-Interpreter/compiled.js"></script>
-  <!-- BotlyStudio ad-on Libs -->
-  <!--script src="js_libs/BlocklyGames/js-blocks.js"></script>
-  <script src="js_libs/BlocklyGames/lib-dialogs.js"></script>
-  <script src="js_libs/BlocklyGames/lib-games.js"></script>
-  <script src="js_libs/BlocklyGames/lib-interface.js"></script>
-  <script src="js_libs/BlocklyGames/slider.js"></script-->
   <script>
     window.addEventListener('load', function load(event) {
       window.removeEventListener('load', load, false);
@@ -314,4 +380,5 @@
     });
   </script>
 </body>
+
 </html>

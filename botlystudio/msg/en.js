@@ -1,7 +1,7 @@
-var BotlyStudio = BotlyStudio || {};
-BotlyStudio.LOCALISED_TEXT = {
+var Ardublockly = Ardublockly || {};
+Ardublockly.LOCALISED_TEXT = {
   translationLanguage: "English",
-  title: "BotlyStudio",
+  title: "Ardublockly",
   blocks: "Blocks",
   /* Menu */
   open: "Open",
@@ -49,12 +49,12 @@ BotlyStudio.LOCALISED_TEXT = {
   arduinoOpErrorIdeBoardBody: "The Arduino Board has not been set.<br>" +
                               "Please select the appropriate Arduino Board from the settings.",
   /* Modals */
-  noServerTitle: "BotlyStudio app not running",
-  noServerTitleBody: "<p>For all the BotlyStudio features to be enabled, the BotlyStudio desktop application must be running locally on your computer.</p>" +
+  noServerTitle: "Ardublockly app not running",
+  noServerTitleBody: "<p>For all the Ardublockly features to be enabled, the Ardublockly desktop application must be running locally on your computer.</p>" +
                      "<p>If you are using an online version you will not be able to configure the settings nor load the blocks code into an Arduino.</p>" +
-                     "<p>Installation instruction can be found in the <a href=\"https://github.com/carlosperate/ardublockly\">BotlyStudio repository</a>.</p>" +
-                     "<p>If you have BotlyStudio already installed, make sure the application is running correctly.</p>",
-  noServerNoLangBody: "If the BotlyStudio application is not running the language cannot be fully changed.",
+                     "<p>Installation instruction can be found in the <a href=\"https://github.com/carlosperate/ardublockly\">Ardublockly repository</a>.</p>" +
+                     "<p>If you have Ardublockly already installed, make sure the application is running correctly.</p>",
+  noServerNoLangBody: "If the Ardublockly application is not running the language cannot be fully changed.",
   addBlocksTitle: "Additional Blocks",
   /* Alerts */
   loadNewBlocksTitle: "Load new blocks?",
@@ -92,6 +92,5 @@ BotlyStudio.LOCALISED_TEXT = {
   catTime: "Time",
   catAudio: "Audio",
   catMotors: "Motors",
-  catScott: "Scott",
   catComms: "Comms",
 };

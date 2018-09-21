@@ -48,7 +48,7 @@ Blockly.Arduino['io_digitalread'] = function(block) {
   Blockly.Arduino.reservePin(
       block, pin, Blockly.Arduino.PinTypes.INPUT, 'Digital Read');
 
-  var pinSetupCode = 'pinMode(' + pin + ', INPUT);';
+  var pinSetupCode = 'pinMode(' + pin + ', INPUT_PULLUP);';
   Blockly.Arduino.addSetup('io_' + pin, pinSetupCode, false);
 
   var code = 'digitalRead(' + pin + ')';

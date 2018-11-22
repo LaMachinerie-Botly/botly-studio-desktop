@@ -1,2 +1,2 @@
-C:\Users\jtopart\Documents\GitHub\Releases\BotlyStudio\resources\app\builder\build\libraries\IRremote\irPronto.cpp.o: \
- C:\Users\jtopart\Documents\GitHub\Releases\BotlyStudio\resources\app\builder\libraries\IRremote\irPronto.cpp
+C:\Users\jules\Documents\GitHub\BotlyStudio-App\builder\build\libraries\IRremote\irPronto.cpp.o: \
+ C:\Users\jules\Documents\GitHub\BotlyStudio-App\builder\libraries\IRremote\irPronto.cpp

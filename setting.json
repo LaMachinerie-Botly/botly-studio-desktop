@@ -1,5 +1,5 @@
 {
   "compiler": "C:\\Program Files (x86)\\Arduino\\arduino.exe",
-  "serialport": "COM3",
+  "serialport": "",
   "robot": "2"
 }

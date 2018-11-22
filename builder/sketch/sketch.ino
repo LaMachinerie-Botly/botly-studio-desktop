@@ -1,5 +1,7 @@
 #include <Botly.h>
 
+int _C3_A9l_C3_A9ment;
+
 Botly robot(SCOTT_V4);
 
 void setup() {
@@ -8,7 +10,11 @@ void setup() {
 }
 
 void loop() {
-  robot.avancer(10);
-  robot.tournerGauche(90);
+  _C3_A9l_C3_A9ment = 5;
+  for (int count = 0; count < 60; count++) {
+    robot.avancer(_C3_A9l_C3_A9ment);
+    robot.tournerGauche(120);
+    _C3_A9l_C3_A9ment = _C3_A9l_C3_A9ment + 5;
+  }
 
 }

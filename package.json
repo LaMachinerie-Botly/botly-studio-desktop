@@ -16,11 +16,11 @@
   "author": "Jules Topart",
   "license": "Public domain",
   "devDependencies": {
-    "electron": "^2.0.8",
     "electron-rebuild": "^1.8.2"
   },
   "dependencies": {
-    "avrgirl-arduino": "^2.2.11",
+    "avrgirl-arduino": "^3.0.0",
+    "electron": "^3.0.10",
     "serialport": "^7.0.2"
   }
 }

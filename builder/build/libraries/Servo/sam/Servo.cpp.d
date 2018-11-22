@@ -1,2 +1,2 @@
-C:\Users\jtopart\Documents\GitHub\Releases\BotlyStudio\resources\app\builder\build\libraries\Servo\sam\Servo.cpp.o: \
- C:\Users\jtopart\Documents\GitHub\Releases\BotlyStudio\resources\app\builder\libraries\Servo\src\sam\Servo.cpp
+C:\Users\jules\Documents\GitHub\BotlyStudio-App\builder\build\libraries\Servo\sam\Servo.cpp.o: \
+ C:\Users\jules\Documents\GitHub\BotlyStudio-App\builder\libraries\Servo\src\sam\Servo.cpp

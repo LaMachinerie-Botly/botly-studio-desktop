@@ -9,8 +9,7 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path');
 const url = require('url');
 const ipc = electron.ipcMain;
-const root = app.getAppPath();
-
+const dataPath = app.getPath('documents') + "/Botly-Studio";
 
 let mainWindow
 
@@ -30,6 +29,7 @@ function createWindow() {
   })
 
 
+  Setting.createUserData();
   Setting.repairFile();
   initIpc();
 }
@@ -83,28 +83,28 @@ function initIpc() {
 
   ipc.on('code', function (event, arg) {
     var fs = require('fs');
-    try { fs.writeFileSync(app.getAppPath() + '/builder/sketch/sketch.ino', arg, 'utf-8'); }
+    try { fs.writeFileSync(dataPath + '/sketch/sketch.ino', arg, 'utf-8'); }
     catch (e) { console.log('Failed to save the file !'); }
   });
 
 
 
   ipc.on('compile', function (event, method) {
-    if (fs.existsSync(app.getAppPath() + "/builder/sketch/sketch.ino")) {
+    if (fs.existsSync(dataPath + "/sketch/sketch.ino")) {
       Builder.compile(event, method);
     }
   });
 
 
   ipc.on('flash', function (event) {
-    if (fs.existsSync(app.getAppPath() + "/builder/build/sketch.ino.hex")) {
+    if (fs.existsSync(dataPath + "/build/sketch.ino.hex")) {
       Builder.flash(event);
     }
   });
 
 
   ipc.on('openIDE', function (event) {
-    if (fs.existsSync(app.getAppPath() + "/builder/sketch/sketch.ino")) {
+    if (fs.existsSync(dataPath + "/sketch/sketch.ino")) {
       Builder.open();
     }
   });
@@ -165,13 +165,10 @@ Setting.setRobot = function (robot) {
   return true;
 }
 
-
-
 Setting.getRobot = function () {
   console.log(this.readSetting().robot);
   return Setting.readSetting().robot;
 }
-
 
 Setting.setSerialPort = function (port) {
   jsonSetting = Setting.readSetting();
@@ -185,10 +182,28 @@ Setting.setSerialPort = function (port) {
 }
 
 Setting.getSerialPort = function () {
-  return Setting.readSetting().serialport;
+  out = Setting.readSetting().serialport;
+  if(out == null || out == ""){
+    
+  }
+  return out;
 }
 
+Setting.createUserData =function(){
+  var directory = dataPath;
+  Setting.checkDirectorySync( directory);
+  Setting.checkDirectorySync( directory + "/build");
+  Setting.checkDirectorySync( directory + "/sketch");
+}
 
+Setting.checkDirectorySync = function(directory){
+  fs =  require('fs');
+  try {
+    fs.statSync(directory);
+  } catch(e) {
+    fs.mkdirSync(directory);
+  }
+}
 
 Setting.repairFile = function () {
   Setting.saveSetting(Setting.readSetting());
@@ -196,15 +211,20 @@ Setting.repairFile = function () {
 
 Setting.readSetting = function () {
   fs = require('fs');
-  spath = app.getAppPath() + "/setting.json";
-  content = fs.readFileSync(spath, 'utf-8')
+  spath = dataPath + "/setting.json";
+  content = "";
+  try{
+    content = fs.readFileSync(spath, 'utf-8')
+  }catch(e){
+    content = '{ "compiler": "", "serialport": "", "robot": "Botly" }';
+  }
   json = Setting.parseToJson(content);
   return json;
 }
 
 Setting.saveSetting = function (jsonSetting) {
   fs = require('fs');
-  spath = app.getAppPath() + "/setting.json";
+  spath = dataPath + "/setting.json";
   setting = JSON.stringify(jsonSetting, undefined, 2);
   fs.writeFileSync(spath, setting);
 }
@@ -250,12 +270,12 @@ Builder.compile = function (event, method) {
   var parameters = ["-compile",
     "-verbose=false",
     "-hardware=" + basepath + "/builder/hardware",
-    "-build-path=" + basepath + "/builder/build",
+    "-build-path=" + dataPath + "/build",
     "-tools=" + basepath + "/builder/hardware/tools/avr",
     "-tools=" + basepath + "/builder/tools-builder",
     "-libraries=" + basepath + "/builder/libraries",
     "-fqbn=arduino:" + compilerFlag,
-    "" + basepath + "/builder/sketch/sketch.ino"];
+    "" + dataPath + "/sketch/sketch.ino"];
 
   child(compilerPath, parameters, function (err, data) {
     console.log(err)
@@ -277,9 +297,8 @@ Builder.open = function () {
   if (compiler != "Default") {
     compilerPath = compiler;
 
-    var basepath = app.getAppPath();
     var child = require('child_process').execFile;
-    var parameters = [basepath + "/builder/sketch/sketch.ino"];
+    var parameters = [dataPath + "/sketch/sketch.ino"];
 
     child(compilerPath, parameters, function (err, data) {
       console.log(err)
@@ -301,7 +320,7 @@ Builder.flash = function (event) {
       debug: true
     });
   
-    avrgirl.flash(app.getAppPath() + '/builder/build/sketch.ino.hex', function (error) {
+    avrgirl.flash(dataPath + '/build/sketch.ino.hex', function (error) {
       jsonResponse = {};
       if (error) {
         console.error(error);
@@ -345,16 +364,18 @@ Serial.getPorts = function (callback) {
       if (Setting.getSerialPort() == port.comName) {
         autoselect = port.comName;
         serial.push({ "value": port.comName, "display_text": port.comName });
-      } else if (autoselect == null && (port.manufacturer == "FTDI" || port.productId == "6001")) {
+      } else if (autoselect == null && (port.manufacturer == "SparkFun" || port.productId == "9208") && Setting.getRobot() == 1 || 
+                  autoselect == null && (port.manufacturer == "FTDI" || port.productId == "6001") && Setting.getRobot() == 2) {
         autoselect = port.comName;
-        serial.push({ "value": port.comName, "display_text": port.comName + ' Botly' });
+        serial.push({ "value": port.comName, "display_text": port.comName + ((Setting.getRobot() == 1) ? " Botly" : " Scott") });
       } else {
         serial.push({ "value": port.comName, "display_text": port.comName });
       }
 
     });
     result = { 'autoselect': autoselect, 'ports': serial };
-    callback(Serial.parseResponse(result));
+    if(autoselect != null) Setting.setSerialPort(autoselect);
+    return callback(Serial.parseResponse(result));
   });
 }
 

@@ -1,6 +1,4 @@
-node_modules/
-node_modules
+node_modules/*
 node_modules.zip
-builder/build/
-builder/build
+builder/build/*
 npm-debug.log

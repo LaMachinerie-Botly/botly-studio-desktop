@@ -854,61 +854,66 @@ Turtle.resetButtonClick = function(e) {
  * @param {!Interpreter} interpreter The JS Interpreter.
  * @param {!Interpreter.Object} scope Global scope.
  */
+
 Turtle.initInterpreter = function(interpreter, scope) {
   // API
   var wrapper;
-  wrapper = function(distance) {
+  wrapper = function(distance, id) {
+    BotlyStudio.workspace.highlightBlock(id);
     Turtle.move(distance);
   };
   interpreter.setProperty(scope, 'Avancer',
       interpreter.createNativeFunction(wrapper));
-  wrapper = function(distance) {
+  wrapper = function(distance, id) {
+    BotlyStudio.workspace.highlightBlock(id);
     Turtle.move(-distance);
+    
   };
   interpreter.setProperty(scope, 'Reculer',
       interpreter.createNativeFunction(wrapper));
 
-  wrapper = function(angle) {
+  wrapper = function(angle, id) {
+    BotlyStudio.workspace.highlightBlock(id);
     Turtle.turn(angle);
   };
   interpreter.setProperty(scope, 'droite',
       interpreter.createNativeFunction(wrapper));
-  wrapper = function(angle) {
+  wrapper = function(angle, id) {
     Turtle.turn(-angle);
   };
   interpreter.setProperty(scope, 'gauche',
       interpreter.createNativeFunction(wrapper));
 
-  wrapper = function() {
+  wrapper = function(id) {
     Turtle.penDown(false);
   };
   interpreter.setProperty(scope, 'Lever',
       interpreter.createNativeFunction(wrapper));
-  wrapper = function() {
+  wrapper = function(id) {
     Turtle.penDown(true);
   };
   interpreter.setProperty(scope, 'Descendre',
       interpreter.createNativeFunction(wrapper));
 
-    wrapper = function(angle, distance, ) {
+    wrapper = function(angle, distance, id) {
     Turtle.turnGo(angle,distance);
   };
   interpreter.setProperty(scope, 'turnGo',
       interpreter.createNativeFunction(wrapper));
 
-  wrapper = function(width) {
+  wrapper = function(width, id) {
     Turtle.penWidth(width);
   };
   interpreter.setProperty(scope, 'penWidth',
       interpreter.createNativeFunction(wrapper));
 
-  wrapper = function(colour) {
+  wrapper = function(colour, id) {
     Turtle.penColour(colour);
   };
   interpreter.setProperty(scope, 'penColour',
       interpreter.createNativeFunction(wrapper));
 
-  wrapper = function() {
+  wrapper = function(id) {
     Turtle.isVisible(false);
   };
   interpreter.setProperty(scope, 'hideTurtle',
@@ -919,19 +924,19 @@ Turtle.initInterpreter = function(interpreter, scope) {
   interpreter.setProperty(scope, 'showTurtle',
       interpreter.createNativeFunction(wrapper));
 
-  wrapper = function(text) {
+  wrapper = function(text, id) {
     Turtle.drawPrint(text);
   };
   interpreter.setProperty(scope, 'print',
       interpreter.createNativeFunction(wrapper));
 
-  wrapper = function(font, size, style) {
+  wrapper = function(font, size, style, id) {
     Turtle.drawFont(font, size, style);
   };
   interpreter.setProperty(scope, 'font',
       interpreter.createNativeFunction(wrapper));
 
-    wrapper = function() {
+  wrapper = function(id) {
     console.log("Not implemented");
   };
   interpreter.setProperty(scope, 'none',

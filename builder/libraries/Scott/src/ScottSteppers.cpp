@@ -1,20 +1,19 @@
-#include "BotlySteppers.h"
+#include "ScottSteppers.h"
 
 /*****************************************************
  *      	    Méthodes et Constructeur               *
- *                   BotlySteppers                   *
+ *                   ScottSteppers                   *
  *                                                   *
  *****************************************************/
 
-BotlySteppers::BotlySteppers()
-{
-    SStepper droite(BotlyDroitB2, BotlyDroitA2, BotlyDroitB1, BotlyDroitA1);
-    SStepper gauche(BotlyGaucheB2, BotlyGaucheA2, BotlyGaucheB1, BotlyGaucheA1);
+ScottSteppers::ScottSteppers(){
+    SStepper droite(ScottDroitB2, ScottDroitA2, ScottDroitB1, ScottDroitA1);
+    SStepper gauche(ScottGaucheB2, ScottGaucheA2, ScottGaucheB1, ScottGaucheA1);
     _stepperD = droite;
     _stepperG = gauche;
 }
 
-bool BotlySteppers::run()
+bool ScottSteppers::run()
 {
 	uint8_t i;
   bool ret = false;
@@ -32,18 +31,18 @@ bool BotlySteppers::run()
 }
 
 
-void BotlySteppers::runSpeedToPosition()
+void ScottSteppers::runSpeedToPosition()
 {
     while (run())
 	;
 }
 
-void BotlySteppers::setPositions(){
+void ScottSteppers::setPositions(){
 	_stepperD.setCurrentPosition(0);
 	_stepperG.setCurrentPosition(0);
 }
 
-void BotlySteppers::moveTo(long absoluteD, long absoluteG){
+void ScottSteppers::moveTo(long absoluteD, long absoluteG){
 	// First find the stepper that will take the longest time to move
     float longestTime = 0.0;
 
@@ -81,7 +80,7 @@ void BotlySteppers::moveTo(long absoluteD, long absoluteG){
 	}
 }
 
-void BotlySteppers::move(long relativeD, long relativeG){
+void ScottSteppers::move(long relativeD, long relativeG){
 	//float thisSpeed = _stepperD.maxSpeed();
 	_stepperD.move(relativeD); // New target position (resets speed)
 	//_stepperD.setSpeed(thisSpeed); // New speed
@@ -91,44 +90,44 @@ void BotlySteppers::move(long relativeD, long relativeG){
 	//_stepperG.setSpeed(thisSpeed); // New speed
 }
 
-float BotlySteppers::getMaxSpeed(int i){
+float ScottSteppers::getMaxSpeed(int i){
 	if(i == 1) return _stepperD.maxSpeed();
 	if(i == 2) return _stepperG.maxSpeed();
 	return 0;
 }
 
-float BotlySteppers::getSpeed(int i){
+float ScottSteppers::getSpeed(int i){
 	if(i == 1) return _stepperD.speed();
 	if(i == 2) return _stepperG.speed();
 	return 0;
 }
 
 
-void BotlySteppers::setMaxSpeed(float vitesse){
+void ScottSteppers::setMaxSpeed(float vitesse){
 	setMaxSpeed(vitesse, vitesse);
 }
 
-void BotlySteppers::setSpeed(float vitesse){
+void ScottSteppers::setSpeed(float vitesse){
 	setSpeed(vitesse, vitesse);
 }
 
-void BotlySteppers::setMaxSpeed(float vitesseDroite, float vitesseGauche){
+void ScottSteppers::setMaxSpeed(float vitesseDroite, float vitesseGauche){
 	_stepperD.setMaxSpeed(vitesseDroite);
 	_stepperG.setMaxSpeed(vitesseGauche);
 }
 
-void BotlySteppers::setSpeed(float vitesseDroite, float vitesseGauche){
+void ScottSteppers::setSpeed(float vitesseDroite, float vitesseGauche){
 	_stepperD.setSpeed(vitesseDroite);
 	_stepperG.setSpeed(vitesseGauche);
 }
 
 
-void BotlySteppers::disable(){
+void ScottSteppers::disable(){
 	_stepperD.disableOutputs();
 	_stepperG.disableOutputs();
 }
 
-void BotlySteppers::enable(){
+void ScottSteppers::enable(){
 	_stepperD.enableOutputs();
 	_stepperG.enableOutputs();
 }
@@ -137,7 +136,7 @@ void BotlySteppers::enable(){
 
 
 
-//Fin de la class BotlySteppers
+//Fin de la class ScottSteppers
 
 
 

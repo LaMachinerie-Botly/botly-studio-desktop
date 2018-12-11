@@ -13,13 +13,13 @@ BotlyStudio.ROBOT_VERSION = {
 
 
 BotlyStudio.getRobotRealName = function(i){
-  if(i == 1) return "BOTLY_V1";
-  if(i == 2) return "SCOTT_V4";
+  if(i == 1) return "Botly";
+  if(i == 2) return "Scott";
 }
 
 
 
-BotlyStudio.ROBOT = 2;
+BotlyStudio.ROBOT = 1;
 
 const ipc = electron.ipcRenderer;
 

@@ -22,9 +22,9 @@
      Constantes de calibrations
  *********************************/
 
-#define BOTLY_MM_TO_STEP 345
-#define BOTLY_RAD_TO_STEP 1861
-#define BOTLY_DELTA_ARC 47
+#define SCOTT_MM_TO_STEP 260.76
+#define SCOTT_RAD_TO_STEP 1210
+#define SCOTT_DELTA_ARC 47.5
 
 
 /*********************
@@ -33,28 +33,18 @@
 #include <Servo.h>
 #include <Arduino.h>
 
-#include <IRremote.h>
-#include <avr/power.h>
-#include <avr/sleep.h>
-#include <avr/interrupt.h>
-
-#include "BotlySteppers.h"
+#include "ScottSteppers.h"
 
 void pin2_isr();
 
-class Botly{
+class Scott{
 public:
 
   Servo crayon;
-  IRsend irsend;
-  decode_results results;
 
-  int pin = 9;
-  IRrecv irrecv = new IRrecv(pin);
+  Scott();
 
-  Botly();
-
-  Botly(int version);
+  Scott(int version);
 
   void init();
 
@@ -109,42 +99,42 @@ public:
   void bougerCrayon(int angle);
 
   // ----------------------------
-  // Fonctions dédiées à BotlyV1
+  // Fonctions dédiées à ScottV4
   // ----------------------------
 
-  void isIRDataReceived();
+  unsigned int lectureDistance();
 
-  void initIRcom();
+  unsigned int lectureLigne();
 
-  void sonyCode(byte data);
+  unsigned int lectureLumiere();
 
-  bool proximite(int i = 10, int seuil = 5);
-
-  int mesureBatterie();
-
-  void sleepNow();
-
-  void sleepWakeup();
+  unsigned char lectureContact();
 
 private:
 
-  int _pinBotlyServo= 11  ; // Pin servo pour BotlyV1
+  int _pinScottServo= 3   ; // Pin servo pour ScottV4
 
-  // Définition des pins à partir de la version BotlyV1
-  int _pinTsop = 9;
-  int _pinBotlyIrEmetteur = 13 ;
-  int _pinMesureBatterie = A5;
-  int _pinBuzzer = 7;
-  BotlySteppers *Steppers;
+  // Définition des pins à partir de la version ScottV4
+  int _pinSwitchDroite = 4 ;
+  int _pinSwitchGauche = 5 ;
+  int _pinLigneDroite = A1 ;
+  int _pinLigneGauche = A0 ;
+  int _pinLumiereDroite = A7 ;
+  int _pinLumiereGauche = A6 ;
+  int _pinDistDroite = A2 ;
+  int _pinDistGauche = A3 ;
+  int _pinScottIrEmetteur = 2 ;
 
+  ScottSteppers *Steppers;
   // Variable capteur de distance
   int _distDroite;
   int _distGauche;
 
   // Variable Crayon
-  // Version Botly
-  int _botlyBas = 90;
-  int _botlyHaut = 50;
+
+  // Version Scott
+  int _scottBas = -35; // A modifier
+  int _scottHaut = 10;
 
   // Variables de calibration des deplacements
   int _mmToStep = 0;

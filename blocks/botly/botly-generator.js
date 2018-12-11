@@ -9,10 +9,10 @@ Blockly.Arduino['botly_forward'] = function(block) {
   var forward_distance = Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_ATOMIC);
 
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n robot.init();';
+  var setupCode = 'robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
   var code = 'robot.avancer('+ forward_distance +');\n';
@@ -23,10 +23,10 @@ Blockly.Arduino['botly_backward'] = function(block) {
   var backward_distance = Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_ATOMIC);
 
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n robot.init();';
+  var setupCode = 'robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
   var code = 'robot.reculer('+ backward_distance +');\n';
@@ -37,10 +37,10 @@ Blockly.Arduino['botly_right'] = function(block) {
   var right_angle = Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_ATOMIC);
 
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n robot.init();';
+  var setupCode = 'robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
   var code = 'robot.tournerDroite('+ right_angle +');\n';
@@ -51,10 +51,10 @@ Blockly.Arduino['botly_left'] = function(block) {
   var left_angle = Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_ATOMIC);
 
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n robot.init();';
+  var setupCode = 'robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
   var code = 'robot.tournerGauche('+ left_angle +');\n';
@@ -66,10 +66,10 @@ Blockly.Arduino['botly_turn_go'] = function(block) {
   var turn_go_angle = block.getFieldValue('angle');
   var turn_go_distance = block.getFieldValue('distance');
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n  robot.init();';
+  var setupCode = ' robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
   var code = 'robot.turnGoDegree('+ turn_go_angle +','+ turn_go_distance +');\n';
@@ -80,10 +80,10 @@ Blockly.Arduino['botly_polygone'] = function(block) {
   var number_nbr_cote = block.getFieldValue('nbr_cote');
   var number_taille = block.getFieldValue('taille');
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n  robot.init();';
+  var setupCode = ' robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
   var code = 'robot.polygone('+ number_nbr_cote +','+ number_taille +');\n';
@@ -93,10 +93,10 @@ Blockly.Arduino['botly_polygone'] = function(block) {
 Blockly.Arduino['botly_cercle'] = function(block) {
   var cercle_diametre = block.getFieldValue('diametre');
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n  robot.init();';
+  var setupCode = ' robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
   var code = 'robot.cercle('+ cercle_diametre +');\n';
@@ -105,10 +105,10 @@ Blockly.Arduino['botly_cercle'] = function(block) {
 
 Blockly.Arduino['botly_ligne'] = function(block) {
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n  robot.init();';
+  var setupCode = ' robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
   var code = 'robot.lectureLigne()';
@@ -117,10 +117,10 @@ Blockly.Arduino['botly_ligne'] = function(block) {
 
 Blockly.Arduino['botly_contact'] = function(block) {
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n  robot.init();';
+  var setupCode = ' robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
   var code = 'robot.lectureContact()';
@@ -133,10 +133,10 @@ Blockly.Arduino['botly_deplacement'] = function(block) {
   var dropdown_type = block.getFieldValue('DIR');
   var code;
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n  robot.init();';
+  var setupCode = ' robot.init();';
     Blockly.Arduino.addSetup('Botly', setupCode, true);
     //-------------------------------------------------------------------
   switch (dropdown_type) {
@@ -155,10 +155,10 @@ Blockly.Arduino['botly_rotation'] = function(block) {
   var dropdown_type = block.getFieldValue('DIR');
   var code;
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n  robot.init();';
+  var setupCode = ' robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
   switch (dropdown_type) {
@@ -176,10 +176,10 @@ Blockly.Arduino['botly_crayon'] = function(block) {
   var dropdown_type = block.getFieldValue('PEN');
   var code;
   //-------------------------------------------------------------------
-  Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
-  Blockly.Arduino.addDeclaration('Botly', 'Botly robot(' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ');');
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
-  var setupCode = 'robot.setSpeed(35);\n  robot.init();';
+  var setupCode = ' robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
   switch (dropdown_type) {
@@ -345,20 +345,20 @@ Blockly.JavaScript['botly_deplacement'] = function(block) {
   // Generate JavaScript for moving forward or backwards.
   var value = block.getFieldValue('VALUE');
   return block.getFieldValue('DIR') +
-      '(' + value + ');\n';
+      '(' + value + ', "' + block.id + '");\n';
 };
 
 Blockly.JavaScript['botly_rotation'] = function(block) {
   // Generate JavaScript for turning left or right.
   var value = block.getFieldValue('VALUE');
   return block.getFieldValue('DIR') +
-      '(' + value + ');\n';
+      '(' + value + ', "' + block.id + '");\n';
 };
 
 Blockly.JavaScript['botly_crayon'] = function(block) {
   // Generate JavaScript for pen up/down.
   return block.getFieldValue('PEN') +
-      '(' + ');\n';
+      '("' + block.id + '");\n';
 };
 
  Blockly.JavaScript['botly_forward'] = function(block) {
@@ -367,7 +367,7 @@ Blockly.JavaScript['botly_crayon'] = function(block) {
       Blockly.JavaScript.ORDER_NONE) || '0';
   var func = "Avancer";
   return func +
-      '(' + value + ');\n';
+      '(' + value + ', "' + block.id + '");\n';
 };
 
 Blockly.JavaScript['botly_backward'] = function(block) {
@@ -376,7 +376,7 @@ Blockly.JavaScript['botly_backward'] = function(block) {
       Blockly.JavaScript.ORDER_NONE) || '0';
   var func = "Reculer";
   return func +
-      '(' + value + ');\n';
+      '(' + value + ', "' + block.id + '");\n';
 };
 
 Blockly.JavaScript['botly_right'] = function(block) {
@@ -385,7 +385,7 @@ Blockly.JavaScript['botly_right'] = function(block) {
       Blockly.JavaScript.ORDER_NONE) || '0';
   var func = 'droite';
   return func +
-      '(' + value + ');\n';
+      '(' + value + ', "' + block.id + '");\n';
 };
 
 Blockly.JavaScript['botly_left'] = function(block) {
@@ -394,50 +394,76 @@ Blockly.JavaScript['botly_left'] = function(block) {
       Blockly.JavaScript.ORDER_NONE) || '0';
   var func = 'gauche';
   return func +
-      '(' + value + ');\n';
+      '(' + value + ', "' + block.id + '");\n';
 };
 
 
 Blockly.JavaScript['botly_lever_crayon'] = function(block) {
   return  'Lever'+
-      '(' + ');\n';
+      '("' + block.id + '");\n';
 };
 
 Blockly.JavaScript['botly_descendre_crayon'] = function(block)  {
   return  'Descendre'+
-      '(' + ');\n';
+      '("' + block.id + '");\n';
 };
 
 Blockly.JavaScript['botly_turn_go'] = function(block) {
   // Generate JavaScript for pen up/down.
   return  'turnGo' +
-      '(' + block.getFieldValue('angle') + ', ' + block.getFieldValue('distance') + ');\n';
+      '(' + block.getFieldValue('angle') + ', ' + block.getFieldValue('distance') + ', "' + block.id + '");\n';
 
 };
 
 Blockly.JavaScript['botly_stop'] = function(block){
   return 'none' +
-      '(' + ');\n';
+      '("' + block.id + '");\n';
 };
 
 
 Blockly.JavaScript['botly_polygone'] = function(block){
   return 'none' +
-      '(' + ');\n';
+      '("' + block.id + '");\n';
 };
 
 
 Blockly.JavaScript['botly_cercle'] = function(block){
   return 'none' +
-      '(' + ');\n';
+      '("' + block.id + '");\n';
 };
 
 Blockly.JavaScript['botly_ligne'] = function(block){
   return 'none' +
-      '(' + ');\n';
+      '("' + block.id + '");\n';
 };
 
 Blockly.JavaScript['botly_contact'] = function(block){
   return 'none' +
-      '(' + ');\n';
+      '("' + block.id + '");\n';
+};
+
+
+Blockly.JavaScript['arduino_functions'] = function(block){
+  var branch = Blockly.JavaScript.statementToCode(block, 'SETUP_FUNC');
+  var code = '';
+  if(branch){
+    code += '//Setup :\n' + branch;
+  }
+  
+  branch = Blockly.JavaScript.statementToCode(block, 'LOOP_FUNC');
+  
+  if(branch){
+	code += '//Loop :\nwhile(true){\n' + branch + '}';
+  }
+  return code + '\n';
+};
+
+/**
+ * Code generator for the wait forever (end of program) block
+ * Arduino code: loop { while(true); }
+ * @param {!Blockly.Block} block Block to generate the code from.
+ * @return {string} Completed code.
+ */
+ Blockly.JavaScript['infinite_loop'] = function(block) {
+  return 'while(true);\n';
 };

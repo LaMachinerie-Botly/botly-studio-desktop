@@ -2,7 +2,7 @@
 
 # Datatypes (KEYWORD1)
 
-Botly KEYWORD1
+Scott KEYWORD1
 
 # Methods and Functions (KEYWORD2)
 
@@ -31,3 +31,11 @@ leverCrayon		KEYWORD2
 poserCrayon		KEYWORD2
 bougerCrayon	KEYWORD2
 lectureDistance	KEYWORD2
+lectureLigne	KEYWORD2
+lectureLumiere	KEYWORD2
+lectureContact	KEYWORD2
+
+# Constants (LITERAL1)
+
+ORIGINAL 		LITERAL1
+DIY 			LITERAL1

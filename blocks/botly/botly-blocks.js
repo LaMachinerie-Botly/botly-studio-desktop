@@ -262,3 +262,49 @@ Blockly.Blocks['botly_crayon'] = {
  this.setHelpUrl("");
   }
 };
+
+
+
+/** Common HSV hue for all blocks in this category. */
+Blockly.Blocks.procedures.HUE = 290;
+
+Blockly.Blocks['arduino_functions'] = {
+  /**
+   * Block for defining the Arduino setup() and loop() functions.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.appendDummyInput()
+        .appendField(Blockly.Msg.ARD_FUN_RUN_SETUP);
+    this.appendStatementInput('SETUP_FUNC');
+    this.appendDummyInput()
+        .appendField(Blockly.Msg.ARD_FUN_RUN_LOOP);
+    this.appendStatementInput('LOOP_FUNC');
+    this.setInputsInline(false);
+    this.setColour(Blockly.Blocks.procedures.HUE);
+    this.setTooltip(Blockly.Msg.ARD_FUN_RUN_TIP);
+    this.setHelpUrl('https://arduino.cc/en/Reference/Loop');
+    this.contextMenu = false;
+  },
+  /** @return {!boolean} True if the block instance is in the workspace. */
+  getArduinoLoopsInstance: function() {
+    return true;
+  }
+};
+
+Blockly.Blocks.time.HUE = 140;
+Blockly.Blocks['infinite_loop'] = {
+  /**
+   * Waits forever, end of program.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setHelpUrl('');
+    this.setColour(Blockly.Blocks.time.HUE);
+    this.appendDummyInput()
+        .appendField(Blockly.Msg.ARD_TIME_INF);
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setTooltip(Blockly.Msg.ARD_TIME_INF_TIP);
+  }
+};

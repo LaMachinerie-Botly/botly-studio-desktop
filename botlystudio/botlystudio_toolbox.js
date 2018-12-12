@@ -11,6 +11,7 @@ var BotlyStudio = BotlyStudio || {};
 BotlyStudio.TOOLBOX_XML = null;
 
 BotlyStudio.changeToolbox = function(){
+	
 	if(BotlyStudio.DIFFICULTY == 1){
 		BotlyStudio.TOOLBOX_XML =
 		'<xml>' +
@@ -453,6 +454,7 @@ BotlyStudio.changeToolbox = function(){
 		'<xml>' +
 		'  <sep></sep>' +
 		'  <category id="catBotly" name="Botly">' +
+		'    <block type="botly_calibration"></block>' +	
 		'    <block type="botly_forward">' +
 		'      <value name="VALUE">' +
 		'        <shadow type="math_number">' +
@@ -494,7 +496,7 @@ BotlyStudio.changeToolbox = function(){
 		'          <field name="NUM">10</field>' +
 		'        </shadow>' +
 		'      </value>' +
-		'    </block>' +
+		'    </block>' +	
 		'    <block type="botly_stop"></block>' +
 		'    <block type="botly_turn_go"></block>' +
 		'    <block type="botly_crayon"></block>' +
@@ -715,15 +717,12 @@ BotlyStudio.changeToolbox = function(){
 		'        </shadow>' +
 		'      </value>' +
 		'    </block>' +
+		'    <block type="botly_calibration"></block>' +
 		'    <block type="botly_stop"></block>' +
 		'    <block type="botly_turn_go"></block>' +
 		'    <block type="botly_crayon"></block>' +
 		'    <block type="botly_polygone"></block>' +
 		'    <block type="botly_cercle"></block>' +
-		'    <block type="botly_ligne"></block>' +
-		'    <block type="botly_contact"></block>' +
-		'    <block type="botly_lever_crayon"></block>' +
-		'    <block type="botly_descendre_crayon"></block>' +
 		'  </category>' +
 		'  <sep></sep>' +
 		'  <category id="catLogic" name="Logic">' +
@@ -887,5 +886,4 @@ BotlyStudio.changeToolbox = function(){
 		'  </category>' +
 		'</xml>';
 	}
-
 }

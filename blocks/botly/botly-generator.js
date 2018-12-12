@@ -194,7 +194,19 @@ Blockly.Arduino['botly_crayon'] = function(block) {
 };
 
 
+Blockly.Arduino['botly_calibration'] = function(block) {
+  var number_mm_to_step = block.getFieldValue('MM_TO_STEP');
+  var number_rad_to_step = block.getFieldValue('RAD_TO_STEP');
+  var code;
+  //-------------------------------------------------------------------
+  Blockly.Arduino.addInclude('Botly', '#include <' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + '.h>');
+  Blockly.Arduino.addDeclaration('Botly', '' + BotlyStudio.getRobotRealName(BotlyStudio.ROBOT) + ' robot;');
 
+  var setupCode = ' robot.init();\n'+'robot.setCalibration('+ number_mm_to_step +','+ number_rad_to_step +');\n';
+  Blockly.Arduino.addSetup('Botly', setupCode, true);
+
+  return code;
+};
 
 
 

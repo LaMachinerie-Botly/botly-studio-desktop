@@ -272,7 +272,7 @@ Blockly.Blocks['botly_calibration'] = {
         .appendField("pas/mm ")
         .appendField(new Blockly.FieldNumber(1861), "RAD_TO_STEP")
         .appendField("pas/rad");
-    this.setNextStatement(true, null);
+    this.setNextStatement(false, null);
     this.setColour(300);
  this.setTooltip("");
  this.setHelpUrl("");

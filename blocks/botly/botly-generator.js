@@ -449,6 +449,12 @@ Blockly.JavaScript['botly_ligne'] = function(block){
       '("' + block.id + '");\n';
 };
 
+
+Blockly.JavaScript['botly_calibration'] = function(block){
+  return 'none' +
+      '("' + block.id + '");\n';
+};
+
 Blockly.JavaScript['botly_contact'] = function(block){
   return 'none' +
       '("' + block.id + '");\n';

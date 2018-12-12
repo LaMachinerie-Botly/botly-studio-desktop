@@ -144,7 +144,7 @@ private:
   // Variable Crayon
   // Version Botly
   int _botlyBas = 90;
-  int _botlyHaut = 50;
+  int _botlyHaut = 20;
 
   // Variables de calibration des deplacements
   int _mmToStep = 0;

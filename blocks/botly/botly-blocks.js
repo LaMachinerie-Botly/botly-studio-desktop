@@ -264,6 +264,22 @@ Blockly.Blocks['botly_crayon'] = {
 };
 
 
+Blockly.Blocks['botly_calibration'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Calibrer le robot :")
+        .appendField(new Blockly.FieldNumber(345, 0), "MM_TO_STEP")
+        .appendField("pas/mm ")
+        .appendField(new Blockly.FieldNumber(1861), "RAD_TO_STEP")
+        .appendField("pas/rad");
+    this.setNextStatement(true, null);
+    this.setColour(300);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+
 
 /** Common HSV hue for all blocks in this category. */
 Blockly.Blocks.procedures.HUE = 290;

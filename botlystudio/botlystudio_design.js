@@ -172,10 +172,12 @@ BotlyStudio.showExtraIdeButtons = function(show) {
 BotlyStudio.largeIdeButtonSpinner = function (active) {
   var spinner = document.getElementById('button_ide_large_spinner');
   var buttonIdeLarge = document.getElementById('button_ide_large');
+
   var buttonClass = buttonIdeLarge.className;
   if (active) {
     spinner.style.display = 'block';
     buttonIdeLarge.className = buttonIdeLarge.className + ' grey';
+    setTimeout(function(){ BotlyStudio.largeIdeButtonSpinner(false);}, 60000);
   } else {
     spinner.style.display = 'none';
     buttonIdeLarge.className = buttonClass.replace(' grey', '');

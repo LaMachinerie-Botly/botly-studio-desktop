@@ -279,10 +279,10 @@ Builder.compile = function (event, method) {
 
   child(compilerPath, parameters, function (err, data) {
     console.log(err)
-    console.log(data.toString());
+    //console.log(data.toString());
     var jsonResponse = {};
     if (err) {
-      jsonResponse = { "element": "div_ide_output", "output": err, "success": "false", "method": method };
+      jsonResponse = { "element": "div_ide_output", "output": err.toString() , "success": "false", "method": method };
     } else {
       jsonResponse = { "element": "div_ide_output", "output": data.toString(), "success": "true", "method": method };
     }
@@ -395,8 +395,8 @@ Serial.parseResponse = function (portList) {
     jsonResponse.selected = portList.ports[0].value;
     //jsonResponse.options = [{ display_text: portList.ports[0].value, value: portList.ports[0].value }];
   } else {
-    jsonResponse.selected = "No Serial port"
-    jsonResponse.options = [{ display_text: "No serial port", value: "" }];
+    jsonResponse.selected = "Pas de port série"
+    jsonResponse.options = [{ display_text: "Pas de port série", value: "NONE" }];
   }
   return jsonResponse;
 }

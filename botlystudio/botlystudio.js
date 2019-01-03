@@ -265,7 +265,6 @@ BotlyStudio.openSettings = function() {
   BotlyStudioIPC.requestCompilerLocation(
     BotlyStudio.setCompilerLocationHtml);
   BotlyStudioIPC.requestSerialPorts(BotlyStudio.setSerialPortsHtml);
-  BotlyStudioIPC.requestRobot();
   // Language menu only set on page load within BotlyStudio.initLanguage()
   BotlyStudio.openSettingsModal();
 };

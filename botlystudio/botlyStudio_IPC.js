@@ -5,7 +5,6 @@
 var BotlyStudioIPC = {};
 const electron = require('electron');
 
-
 const ipc = electron.ipcRenderer;
 
 
@@ -13,6 +12,7 @@ BotlyStudioIPC.initIPC = function(){
     ipc.on('compiler-request-response', function(event, arg) {
         BotlyStudio.setCompilerLocationHtml(arg);
     });
+
     ipc.on('serial-port-request-response', function(event, arg) {
       BotlyStudio.setSerialPortsHtml(arg);
       //BotlyStudio.setSerial();
@@ -36,31 +36,41 @@ BotlyStudioIPC.initIPC = function(){
 
     ipc.on('compile-response', function(event, jsonResponse) {
       var method = JSON.parse(jsonResponse).method;
-      console.log(method);
-      var dataBack = BotlyStudioIPC.createElementFromJson(jsonResponse);
-      BotlyStudio.arduinoIdeOutput(dataBack);
-      BotlyStudio.shortMessage(BotlyStudio.getLocalStr('arduinoOpVerifiedTitle'));
-      if(method == "compile" )BotlyStudio.largeIdeButtonSpinner(false);
-      else if(method == "upload"){
-        ipc.send('flash');
-        BotlyStudio.shortMessage(BotlyStudio.getLocalStr('uploadingSketch'));
-      }else{
-        BotlyStudio.largeIdeButtonSpinner(false);
+      var success = JSON.parse(jsonResponse).success;
+      var dataBack;
+      try{
+        dataBack = BotlyStudioIPC.createElementFromJson(jsonResponse);
+      }catch(e){
+        console.log(e);
       }
+
+      BotlyStudio.arduinoIdeOutput(dataBack);
+      if(success == "true"){
+        BotlyStudio.shortMessage(BotlyStudio.getLocalStr('arduinoOpVerifiedTitle'));
+        if(method == "upload"){
+          ipc.send('flash');
+          BotlyStudio.shortMessage(BotlyStudio.getLocalStr('uploadingSketch'));
+        }
+      }else{
+        BotlyStudio.shortMessage("Echec de la compilation");
+      }
+      BotlyStudio.largeIdeButtonSpinner(false)
     });
 
     ipc.on('upload-response', function(event, jsonResponse) {
       console.log(jsonResponse);
       BotlyStudio.largeIdeButtonSpinner(false);
-      var dataBack = BotlyStudioIPC.createElementFromJson(jsonResponse);
-      BotlyStudio.arduinoIdeOutput(dataBack);
-      Ardublockly.shortMessage(Ardublockly.getLocalStr('arduinoOpUploadedTitle'));
+      if(JSON.parse(jsonResponse).success == "false") BotlyStudio.shortMessage("Echec du téléversement");
+      else BotlyStudio.shortMessage("Téléversement réussi");
     });
 
 
     BotlyStudioIPC.requestCompilerLocation();
     BotlyStudioIPC.requestSerialPorts();
 }
+
+
+
 
 BotlyStudioIPC.createElementFromJson = function(json_data) {
     var parsed_json = JSON.parse(json_data);
@@ -88,7 +98,7 @@ BotlyStudioIPC.createElementFromJson = function(json_data) {
     } else if (parsed_json.element == 'div_ide_output') {
       // Formatted text for the Arduino IDE CLI output
       var el_title = document.createElement('h4');
-      el_title.innerHTML = BotlyStudio.getLocalStr(parsed_json.conclusion);
+      el_title.innerHTML = "Echec du téléversement"
       if (parsed_json.success == true) {
         el_title.className = 'arduino_dialog_success';
       } else {
@@ -99,10 +109,12 @@ BotlyStudioIPC.createElementFromJson = function(json_data) {
       el_out.className = 'arduino_dialog_out';
       // If larger than 50 characters then don't bother looking for language key
       if (parsed_json.output.length < 50) {
-        el_out.innerHTML = BotlyStudio.getLocalStr(parsed_json.output) ||
-                           parsed_json.output.split('\n').join('<br />');
+        console.log(JSON.parse(parsed_json.output));
+        el_out.innerHTML = parsed_json.output;
+                           
       } else {
-        el_out.innerHTML = parsed_json.output.split('\n').join('<br />');
+        console.log(parsed_json.output);
+        el_out.innerHTML = parsed_json.output;
       }
   
       element = document.createElement('div');

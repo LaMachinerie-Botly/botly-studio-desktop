@@ -1,7 +1,7 @@
-var BotlyStudio = BotlyStudio || {};
-BotlyStudio.LOCALISED_TEXT = {
+var Ardublockly = Ardublockly || {};
+Ardublockly.LOCALISED_TEXT = {
   translationLanguage: "Nederlands",
-  title: "BotlyStudio",
+  title: "Ardublockly",
   blocks: "Blocks",
   /* Menu */
   open: "Open",

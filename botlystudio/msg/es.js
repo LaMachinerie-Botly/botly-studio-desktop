@@ -1,5 +1,5 @@
-var BotlyStudio = BotlyStudio || {};
-BotlyStudio.LOCALISED_TEXT = {
+var Ardublockly = Ardublockly || {};
+Ardublockly.LOCALISED_TEXT = {
   translationLanguage: 'Español',
   title: "Botly Studio",
   blocks: "Bloques",
@@ -49,12 +49,12 @@ BotlyStudio.LOCALISED_TEXT = {
   arduinoOpErrorIdeBoardBody: "La placa de Arduino no ha sido seleccionada.<br>" +
                               "Por favor, selecciona la placa adecuada en las Opciones.",
   /* Modals */
-  noServerTitle: "Aplicación BotlyStudio sin ejecutar",
-  noServerTitleBody: "<p>Para que todas las funciones de BotlyStudio estén disponibles, la aplicación de escritorio de BotlyStudio debe de estar ejecutándose en su ordenador.</p>" +
+  noServerTitle: "Aplicación Ardublockly sin ejecutar",
+  noServerTitleBody: "<p>Para que todas las funciones de Ardublockly estén disponibles, la aplicación de escritorio de Ardublockly debe de estar ejecutándose en su ordenador.</p>" +
                      "<p>Si estas usando una versión online no seras capaz de configurar las opciones o cargar el código de los bloques en un Arduino.</p>" +
-                     "<p>Puedes encontrar las instrucciones de instalación en el <a href=\"https://github.com/carlosperate/ardublockly\">repositorio de BotlyStudio</a>.</p>" +
-                     "<p>Si ya tienes BotlyStudio instalado, asegurate de que la aplicación este ejecutándose de forma correcta.</p>",
-  noServerNoLangBody: "Si la aplicación de BotlyStudio no esta ejecutándose el lenguaje no puede cargarse de forma completa.",
+                     "<p>Puedes encontrar las instrucciones de instalación en el <a href=\"https://github.com/carlosperate/ardublockly\">repositorio de Ardublockly</a>.</p>" +
+                     "<p>Si ya tienes Ardublockly instalado, asegurate de que la aplicación este ejecutándose de forma correcta.</p>",
+  noServerNoLangBody: "Si la aplicación de Ardublockly no esta ejecutándose el lenguaje no puede cargarse de forma completa.",
   addBlocksTitle: "Bloques Adicionales",
   /* Alerts */
   loadNewBlocksTitle: "¿Cargar bloques nuevos?",

@@ -1,0 +1,230 @@
+\hypertarget{class_scott}{}\section{Scott Class Reference}
+\label{class_scott}\index{Scott@{Scott}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_scott_a0d23c88c6a37d559e21dae63315d0649}{}\label{class_scott_a0d23c88c6a37d559e21dae63315d0649} 
+{\bfseries Scott} (int version)
+\item 
+void \hyperlink{class_scott_a03810d284564569d63f6afd3548f1504}{set\+Pin} (int Droit\+A1, int Droit\+A2, int Droit\+B1, int Droit\+B2, int Gauche\+A1, int Gauche\+A2, int Gauche\+B1, int Gauche\+B2)
+\item 
+void \hyperlink{class_scott_a3aa3b335480673414064df483075e26b}{set\+Pin} ()
+\item 
+void \hyperlink{class_scott_a30f235072b621cfa3995232b2e9ce8d2}{stop} ()
+\item 
+void \hyperlink{class_scott_accece4d18e1a5b28b0dc36f5fbbe0757}{stop} (unsigned int temps)
+\item 
+void \hyperlink{class_scott_a5773db050c4798913a84a429bd57e87a}{gauche} ()
+\item 
+void \hyperlink{class_scott_a7f52564ed11006cdb8c2e6346d1db58a}{gauche} (unsigned int pas)
+\item 
+void \hyperlink{class_scott_aa3619ee2b7866d3274818347f10578ed}{droite} ()
+\item 
+void \hyperlink{class_scott_a459a0036b30c72a47ec84dd1e9e8023b}{droite} (unsigned int pas)
+\item 
+void \hyperlink{class_scott_aba59b4c4ed89d7c2ce178498a177f5ed}{avant} ()
+\item 
+void \hyperlink{class_scott_ae7e476d962f7e2ecc8dc6daeb5d96445}{avant} (unsigned int pas)
+\item 
+void \hyperlink{class_scott_aa61eeb821a3dcbaa8785f69ead328d99}{arriere} ()
+\item 
+void \hyperlink{class_scott_a9588bb8f527008d129612593cdf4b3c7}{arriere} (unsigned int pas)
+\item 
+void \hyperlink{class_scott_ae74032c88526e506b0107417ab609ce9}{set\+Speed} (unsigned int vitesse)
+\item 
+void \hyperlink{class_scott_a01aa6dd0028cad19003380dd8915fb01}{set\+Calibration} (int ligne\+Factor, int angle\+Factor)
+\item 
+void \hyperlink{class_scott_ad8d8c12ec3cb4c2cc79534657edbd59e}{turn\+Go} (float angle, int ligne)
+\item 
+void \hyperlink{class_scott_a848ec37dc368c290c3bab1345310bbf1}{turn\+Go\+Degree} (float angle, int ligne)
+\item 
+void \hyperlink{class_scott_ac14ba7d931832ec51632fd47fec2ce00}{go\+Position} (int X\+Position, int Y\+Position)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_scott_aa61eeb821a3dcbaa8785f69ead328d99}{}\label{class_scott_aa61eeb821a3dcbaa8785f69ead328d99} 
+\index{Scott@{Scott}!arriere@{arriere}}
+\index{arriere@{arriere}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{arriere()}{arriere()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Scott\+::arriere (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{[}Fait avancer le robot d\textquotesingle{}un pas vers l\textquotesingle{}arriere\mbox{]} \hypertarget{class_scott_a9588bb8f527008d129612593cdf4b3c7}{}\label{class_scott_a9588bb8f527008d129612593cdf4b3c7} 
+\index{Scott@{Scott}!arriere@{arriere}}
+\index{arriere@{arriere}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{arriere()}{arriere()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Scott\+::arriere (\begin{DoxyParamCaption}\item[{unsigned int}]{pas }\end{DoxyParamCaption})}
+
+\mbox{[}Fait avancer le robot d\textquotesingle{}un nombre de pas définis vers l\textquotesingle{}arriere. Surcharge de la fonction \hyperlink{class_scott_aa61eeb821a3dcbaa8785f69ead328d99}{arriere()}. Attention, la fonction bloque le programme tant que le nombre de pas à atteindre n\textquotesingle{}est pas achevé.\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em pas} & \mbox{[}Nombre de pas\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_scott_aba59b4c4ed89d7c2ce178498a177f5ed}{}\label{class_scott_aba59b4c4ed89d7c2ce178498a177f5ed} 
+\index{Scott@{Scott}!avant@{avant}}
+\index{avant@{avant}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{avant()}{avant()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Scott\+::avant (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{[}Fait avancer le robot d\textquotesingle{}un pas vers l\textquotesingle{}avant\mbox{]} \hypertarget{class_scott_ae7e476d962f7e2ecc8dc6daeb5d96445}{}\label{class_scott_ae7e476d962f7e2ecc8dc6daeb5d96445} 
+\index{Scott@{Scott}!avant@{avant}}
+\index{avant@{avant}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{avant()}{avant()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Scott\+::avant (\begin{DoxyParamCaption}\item[{unsigned int}]{pas }\end{DoxyParamCaption})}
+
+\mbox{[}Fait avancer le robot d\textquotesingle{}un nombre de pas définis vers l\textquotesingle{}avant. Surcharge de la fonction \hyperlink{class_scott_aba59b4c4ed89d7c2ce178498a177f5ed}{avant()}. Attention, la fonction bloque le programme tant que le nombre de pas à atteindre n\textquotesingle{}est pas achevé.\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em pas} & \mbox{[}Nombre de pas\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_scott_aa3619ee2b7866d3274818347f10578ed}{}\label{class_scott_aa3619ee2b7866d3274818347f10578ed} 
+\index{Scott@{Scott}!droite@{droite}}
+\index{droite@{droite}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{droite()}{droite()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Scott\+::droite (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{[}Fait tourner le robot d\textquotesingle{}un pas sur lui même dans le sens horaire.\mbox{]} \hypertarget{class_scott_a459a0036b30c72a47ec84dd1e9e8023b}{}\label{class_scott_a459a0036b30c72a47ec84dd1e9e8023b} 
+\index{Scott@{Scott}!droite@{droite}}
+\index{droite@{droite}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{droite()}{droite()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Scott\+::droite (\begin{DoxyParamCaption}\item[{unsigned int}]{pas }\end{DoxyParamCaption})}
+
+\mbox{[}Fait tourner le robot d\textquotesingle{}un nombre de pas définis sur lui même dans le sens horaire. Surcharge de la fonction void \hyperlink{class_scott_aa3619ee2b7866d3274818347f10578ed}{droite()}. Attention, la fonction bloque le programme tant que le nombre de pas à atteindre n\textquotesingle{}est pas achevé. \mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em pas} & \mbox{[}Nombre de pas\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_scott_a5773db050c4798913a84a429bd57e87a}{}\label{class_scott_a5773db050c4798913a84a429bd57e87a} 
+\index{Scott@{Scott}!gauche@{gauche}}
+\index{gauche@{gauche}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{gauche()}{gauche()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Scott\+::gauche (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{[}Fait tourner le robot d\textquotesingle{}un pas sur lui même dans le sens anti-\/horaire.\mbox{]} \hypertarget{class_scott_a7f52564ed11006cdb8c2e6346d1db58a}{}\label{class_scott_a7f52564ed11006cdb8c2e6346d1db58a} 
+\index{Scott@{Scott}!gauche@{gauche}}
+\index{gauche@{gauche}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{gauche()}{gauche()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Scott\+::gauche (\begin{DoxyParamCaption}\item[{unsigned int}]{pas }\end{DoxyParamCaption})}
+
+\mbox{[}Fait tourner le robot d\textquotesingle{}un nombre de pas définis sur lui même dans le sens anti-\/horaire. Surcharge de la fonction void \hyperlink{class_scott_a5773db050c4798913a84a429bd57e87a}{gauche()}. Attention, la fonction bloque le programme tant que le nombre de pas à atteindre n\textquotesingle{}est pas achevé. \mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em pas} & \mbox{[}Nombre de pas\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_scott_ac14ba7d931832ec51632fd47fec2ce00}{}\label{class_scott_ac14ba7d931832ec51632fd47fec2ce00} 
+\index{Scott@{Scott}!go\+Position@{go\+Position}}
+\index{go\+Position@{go\+Position}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{go\+Position()}{goPosition()}}
+{\footnotesize\ttfamily void Scott\+::go\+Position (\begin{DoxyParamCaption}\item[{int}]{X\+Position,  }\item[{int}]{Y\+Position }\end{DoxyParamCaption})}
+
+\mbox{[}Demande au robot d\textquotesingle{}aller à la position \char`\"{}\+X,\+Y\char`\"{} par rapport à la position 0 du démarrage du robot. Positionnement relatif du robot par rapport à son repere d\textquotesingle{}origine. Attention, le programme est bloqué pendant toute la durée de l\textquotesingle{}opération.\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em X\+Position} & \mbox{[}Position en X souhaité\mbox{]} \\
+\hline
+{\em Y\+Position} & \mbox{[}Position en Y souhaité\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_scott_a01aa6dd0028cad19003380dd8915fb01}{}\label{class_scott_a01aa6dd0028cad19003380dd8915fb01} 
+\index{Scott@{Scott}!set\+Calibration@{set\+Calibration}}
+\index{set\+Calibration@{set\+Calibration}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{set\+Calibration()}{setCalibration()}}
+{\footnotesize\ttfamily void Scott\+::set\+Calibration (\begin{DoxyParamCaption}\item[{int}]{ligne\+Factor,  }\item[{int}]{angle\+Factor }\end{DoxyParamCaption})}
+
+\mbox{[}Met à jour les parametres de calibration des déplacements.\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em ligne\+Factor} & \mbox{[}Facteur de calibration pour les déplacements linéaires\mbox{]} \\
+\hline
+{\em angle\+Factor} & \mbox{[}Facteur de déplacement pour les rotations\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_scott_a03810d284564569d63f6afd3548f1504}{}\label{class_scott_a03810d284564569d63f6afd3548f1504} 
+\index{Scott@{Scott}!set\+Pin@{set\+Pin}}
+\index{set\+Pin@{set\+Pin}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{set\+Pin()}{setPin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Scott\+::set\+Pin (\begin{DoxyParamCaption}\item[{int}]{Droit\+A1,  }\item[{int}]{Droit\+A2,  }\item[{int}]{Droit\+B1,  }\item[{int}]{Droit\+B2,  }\item[{int}]{Gauche\+A1,  }\item[{int}]{Gauche\+A2,  }\item[{int}]{Gauche\+B1,  }\item[{int}]{Gauche\+B2 }\end{DoxyParamCaption})}
+
+\mbox{[}Définie les pin de sortie pour les moteurs pas-\/à-\/pas. Permet de définir des pin personnalisé si la version du robot \hyperlink{class_scott}{Scott} utilisé à été modifiée.\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em Droit\+A1} & \mbox{[}Pin A1 du moteur droit\mbox{]} \\
+\hline
+{\em Droit\+A2} & \mbox{[}Pin A2 du moteur droit\mbox{]} \\
+\hline
+{\em Droit\+B1} & \mbox{[}Pin B1 du moteur droit\mbox{]} \\
+\hline
+{\em Droit\+B2} & \mbox{[}Pin B2 du moteur droit\mbox{]} \\
+\hline
+{\em Gauche\+A1} & \mbox{[}Pin A1 du moteur gauche\mbox{]} \\
+\hline
+{\em Gauche\+A2} & \mbox{[}Pin A2 du moteur gauche\mbox{]} \\
+\hline
+{\em Gauche\+B1} & \mbox{[}Pin B1 du moteur gauche\mbox{]} \\
+\hline
+{\em Gauche\+B2} & \mbox{[}Pin B2 du moteur gauche\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_scott_a3aa3b335480673414064df483075e26b}{}\label{class_scott_a3aa3b335480673414064df483075e26b} 
+\index{Scott@{Scott}!set\+Pin@{set\+Pin}}
+\index{set\+Pin@{set\+Pin}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{set\+Pin()}{setPin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Scott\+::set\+Pin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{[}Surcharge de la fonction \hyperlink{class_scott_a03810d284564569d63f6afd3548f1504}{set\+Pin(int Droit\+A1,int Droit\+A2,int Droit\+B1,int Droit\+B2, int Gauche\+A1,int Gauche\+A2,int Gauche\+B1,int Gauche\+B2)}. la fonction utilise les pin déja entrée par défaut dans la bibliothéque et les déclare comme sortie.\mbox{]} \hypertarget{class_scott_ae74032c88526e506b0107417ab609ce9}{}\label{class_scott_ae74032c88526e506b0107417ab609ce9} 
+\index{Scott@{Scott}!set\+Speed@{set\+Speed}}
+\index{set\+Speed@{set\+Speed}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{set\+Speed()}{setSpeed()}}
+{\footnotesize\ttfamily void Scott\+::set\+Speed (\begin{DoxyParamCaption}\item[{unsigned int}]{vitesse }\end{DoxyParamCaption})}
+
+\mbox{[}Change la vitesse de déplacement du robot.\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em vitesse} & \mbox{[}vitesse du robot en °/seconde. Maxi = 35°/sec.\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_scott_a30f235072b621cfa3995232b2e9ce8d2}{}\label{class_scott_a30f235072b621cfa3995232b2e9ce8d2} 
+\index{Scott@{Scott}!stop@{stop}}
+\index{stop@{stop}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{stop()}{stop()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Scott\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{[}Stop le robot immediatement\mbox{]} \hypertarget{class_scott_accece4d18e1a5b28b0dc36f5fbbe0757}{}\label{class_scott_accece4d18e1a5b28b0dc36f5fbbe0757} 
+\index{Scott@{Scott}!stop@{stop}}
+\index{stop@{stop}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{stop()}{stop()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Scott\+::stop (\begin{DoxyParamCaption}\item[{unsigned int}]{temps }\end{DoxyParamCaption})}
+
+\mbox{[}Stop le robot immédiatement et rest stoppé pendnat un temps défini. Attention, la fonction bloque le programme pendnat le temps d\textquotesingle{}attente.\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em temps} & \mbox{[}Temps d\textquotesingle{}attente en millisecondes\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_scott_ad8d8c12ec3cb4c2cc79534657edbd59e}{}\label{class_scott_ad8d8c12ec3cb4c2cc79534657edbd59e} 
+\index{Scott@{Scott}!turn\+Go@{turn\+Go}}
+\index{turn\+Go@{turn\+Go}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{turn\+Go()}{turnGo()}}
+{\footnotesize\ttfamily void Scott\+::turn\+Go (\begin{DoxyParamCaption}\item[{float}]{angle,  }\item[{int}]{ligne }\end{DoxyParamCaption})}
+
+\mbox{[}Fonction de \char`\"{}turn and go\char`\"{}. Le robot va d\textquotesingle{}abord tourner de l\textquotesingle{}angle désiré, puis se déplacer de la distance souhaité. Attention, le programme est bloqué pendant toute la durée de l\textquotesingle{}opération.\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em angle} & \mbox{[}Angle de rotation en radians\mbox{]} \\
+\hline
+{\em ligne} & \mbox{[}Distance de déplacement en mm\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_scott_a848ec37dc368c290c3bab1345310bbf1}{}\label{class_scott_a848ec37dc368c290c3bab1345310bbf1} 
+\index{Scott@{Scott}!turn\+Go\+Degree@{turn\+Go\+Degree}}
+\index{turn\+Go\+Degree@{turn\+Go\+Degree}!Scott@{Scott}}
+\subsubsection{\texorpdfstring{turn\+Go\+Degree()}{turnGoDegree()}}
+{\footnotesize\ttfamily void Scott\+::turn\+Go\+Degree (\begin{DoxyParamCaption}\item[{float}]{angle,  }\item[{int}]{ligne }\end{DoxyParamCaption})}
+
+\mbox{[}Surcharge de \hyperlink{class_scott_ad8d8c12ec3cb4c2cc79534657edbd59e}{turn\+Go(float angle, int ligne)}. L\textquotesingle{}angle est en degrés\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em angle} & \mbox{[}Angle de rotation en degrés\mbox{]} \\
+\hline
+{\em ligne} & \mbox{[}Distance de déplacement en mm\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Scott.\+h\item 
+Scott.\+cpp\end{DoxyCompactItemize}

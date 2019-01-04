@@ -9,8 +9,7 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path');
 const url = require('url');
 const ipc = electron.ipcMain;
-const root = app.getAppPath();
-
+const dataPath = app.getPath('documents') + "/Botly-Studio";
 
 let mainWindow
 
@@ -30,6 +29,7 @@ function createWindow() {
   })
 
 
+  Setting.createUserData();
   Setting.repairFile();
   initIpc();
 }
@@ -42,16 +42,15 @@ function initIpc() {
     compilerLocation = dialog.showOpenDialog({ properties: ['openFile'] });
     Setting.setCompiler(compilerLocation[0]);
 
-    jsonResponse = { element: "text_input", display_text: Setting.getCompiler() };
+    var jsonResponse = { element: "text_input", display_text: Setting.getCompiler() };
     event.sender.send('compiler-request-response', JSON.stringify(jsonResponse));
   });
 
 
   ipc.on('compiler-request', function (event) {
-    jsonResponse = { element: "text_input", display_text: Setting.getCompiler() };
+    var jsonResponse = { element: "text_input", display_text: Setting.getCompiler() };
     event.sender.send('compiler-request-response', JSON.stringify(jsonResponse));
   });
-
 
 
   ipc.on('serial-port-request', function (event) {
@@ -62,7 +61,6 @@ function initIpc() {
   });
 
 
-
   ipc.on('set-serial-port', function (event, port) {
     Setting.setSerialPort(port);
     callback = function (jsonResponse) {
@@ -71,32 +69,42 @@ function initIpc() {
     Serial.getPorts(callback);
   });
 
+  ipc.on('robot-request', function (event) {
+    var jsonResponse = { element: "text_input", display_text: Setting.getRobot() };
+    event.sender.send('robot-request-response', JSON.stringify(jsonResponse));
+  });
 
+  ipc.on('set-robot', function (event, robot) {
+    Setting.setRobot(robot);
+
+    var jsonResponse = { element: "text_input", display_text: Setting.getRobot() };
+    event.sender.send('robot-request-response', JSON.stringify(jsonResponse));
+  });
 
   ipc.on('code', function (event, arg) {
     var fs = require('fs');
-    try { fs.writeFileSync(app.getAppPath() + '/builder/sketch/sketch.ino', arg, 'utf-8'); }
+    try { fs.writeFileSync(dataPath + '/sketch/sketch.ino', arg, 'utf-8'); }
     catch (e) { console.log('Failed to save the file !'); }
   });
 
 
 
   ipc.on('compile', function (event, method) {
-    if (fs.existsSync(app.getAppPath() + "/builder/sketch/sketch.ino")) {
+    if (fs.existsSync(dataPath + "/sketch/sketch.ino")) {
       Builder.compile(event, method);
     }
   });
 
 
   ipc.on('flash', function (event) {
-    if (fs.existsSync(app.getAppPath() + "/builder/build/sketch.ino.hex")) {
+    if (fs.existsSync(dataPath + "/build/sketch.ino.hex")) {
       Builder.flash(event);
     }
   });
 
 
   ipc.on('openIDE', function (event) {
-    if (fs.existsSync(app.getAppPath() + "/builder/sketch/sketch.ino")) {
+    if (fs.existsSync(dataPath + "/sketch/sketch.ino")) {
       Builder.open();
     }
   });
@@ -106,9 +114,9 @@ function initIpc() {
 app.on('ready', createWindow)
 
 app.on('window-all-closed', function () {
-  //if (process.platform !== 'darwin') {
+  if (process.platform !== 'darwin') {
     app.quit()
-  //}
+  }
 })
 
 app.on('activate', function () {
@@ -146,6 +154,22 @@ Setting.getCompiler = function () {
   return Setting.readSetting().compiler;
 }
 
+Setting.setRobot = function (robot) {
+  var jsonSetting = Setting.readSetting();
+  if (robot != null) {
+    jsonSetting.robot = robot;
+    Setting.saveSetting(jsonSetting);
+  } else {
+    return false;
+  }
+  return true;
+}
+
+Setting.getRobot = function () {
+  console.log(this.readSetting().robot);
+  return Setting.readSetting().robot;
+}
+
 Setting.setSerialPort = function (port) {
   jsonSetting = Setting.readSetting();
   if (port != null) {
@@ -158,10 +182,28 @@ Setting.setSerialPort = function (port) {
 }
 
 Setting.getSerialPort = function () {
-  return Setting.readSetting().serialport;
+  out = Setting.readSetting().serialport;
+  if(out == null || out == ""){
+    
+  }
+  return out;
 }
 
+Setting.createUserData =function(){
+  var directory = dataPath;
+  Setting.checkDirectorySync( directory);
+  Setting.checkDirectorySync( directory + "/build");
+  Setting.checkDirectorySync( directory + "/sketch");
+}
 
+Setting.checkDirectorySync = function(directory){
+  fs =  require('fs');
+  try {
+    fs.statSync(directory);
+  } catch(e) {
+    fs.mkdirSync(directory);
+  }
+}
 
 Setting.repairFile = function () {
   Setting.saveSetting(Setting.readSetting());
@@ -169,15 +211,20 @@ Setting.repairFile = function () {
 
 Setting.readSetting = function () {
   fs = require('fs');
-  spath = app.getAppPath() + "/setting.json";
-  content = fs.readFileSync(spath, 'utf-8')
+  spath = dataPath + "/setting.json";
+  content = "";
+  try{
+    content = fs.readFileSync(spath, 'utf-8')
+  }catch(e){
+    content = '{ "compiler": "", "serialport": "", "robot": "Botly" }';
+  }
   json = Setting.parseToJson(content);
   return json;
 }
 
 Setting.saveSetting = function (jsonSetting) {
   fs = require('fs');
-  spath = app.getAppPath() + "/setting.json";
+  spath = dataPath + "/setting.json";
   setting = JSON.stringify(jsonSetting, undefined, 2);
   fs.writeFileSync(spath, setting);
 }
@@ -189,7 +236,7 @@ Setting.parseToJson = function (data) {
     console.log(e);
   }
   if (jsonSetting == null) {
-    jsonSetting = { compiler: "Default", serialport: "" };
+    jsonSetting = { compiler: "", serialport: "", robot: "Botly" };
   }
   return jsonSetting;
 }
@@ -206,32 +253,37 @@ Setting.parseToJson = function (data) {
 *************************************************
 */
 
-var Builder = {};
 const executablePath = app.getAppPath() + "/builder/arduino-builder";
 
+var Builder = {};
 
 Builder.compile = function (event, method) {
   compilerPath = executablePath;
   var method = method;
+
+  
+  if(Setting.getRobot() == "2") compilerFlag = "avr:uno"
+  else compilerFlag = "avr:LilyPadUSB"
 
   var basepath = app.getAppPath();
   var child = require('child_process').execFile;
   var parameters = ["-compile",
     "-verbose=false",
     "-hardware=" + basepath + "/builder/hardware",
-    "-build-path=" + basepath + "/builder/build",
+    "-build-path=" + dataPath + "/build",
     "-tools=" + basepath + "/builder/hardware/tools/avr",
     "-tools=" + basepath + "/builder/tools-builder",
     "-libraries=" + basepath + "/builder/libraries",
     "-fqbn=arduino:avr:LilyPadUSB",
-    "" + basepath + "/builder/sketch/sketch.ino"];
+    "" + dataPath + "/sketch/sketch.ino"];
 
+    
   child(compilerPath, parameters, function (err, data) {
     console.log(err)
-    console.log(data.toString());
-    jsonResponse = {};
+    //console.log(data.toString());
+    var jsonResponse = {};
     if (err) {
-      jsonResponse = { "element": "div_ide_output", "output": err, "success": "false", "method": method };
+      jsonResponse = { "element": "div_ide_output", "output": err.toString() , "success": "false", "method": method };
     } else {
       jsonResponse = { "element": "div_ide_output", "output": data.toString(), "success": "true", "method": method };
     }
@@ -246,9 +298,8 @@ Builder.open = function () {
   if (compiler != "Default") {
     compilerPath = compiler;
 
-    var basepath = app.getAppPath();
     var child = require('child_process').execFile;
-    var parameters = [basepath + "/builder/sketch/sketch.ino"];
+    var parameters = [dataPath + "/sketch/sketch.ino"];
 
     child(compilerPath, parameters, function (err, data) {
       console.log(err)
@@ -261,23 +312,32 @@ Builder.open = function () {
 
 Builder.flash = function (event) {
   var Avrgirl = require('avrgirl-arduino');
-  var avrgirl = new Avrgirl({
-    board: 'lilypad-usb',
-    port: Setting.getSerialPort(),
-    debug: true
-  });
-
-  avrgirl.flash(app.getAppPath() + '/builder/build/sketch.ino.hex', function (error) {
+  var boardName = "lilypad-usb";
+  if(Setting.getRobot() == 2) var boardName = "uno"
+  try{
+    var avrgirl = new Avrgirl({
+      board: boardName,
+      port: Setting.getSerialPort(),
+      debug: true
+    });
+  
+    avrgirl.flash(dataPath + '/build/sketch.ino.hex', function (error) {
+      jsonResponse = {};
+      if (error) {
+        console.error(error);
+        jsonResponse = { "element": "div_ide_output", "output": error, "success": "false" };
+      } else {
+        console.info('done.');
+        jsonResponse = { "element": "div_ide_output", "output": "Téléversement terminé", "success": "true" };
+      }
+      event.sender.send('upload-response', JSON.stringify(jsonResponse));
+    });
+  }catch(e){
+    console.log(e);
     jsonResponse = {};
-    if (error) {
-      console.error(error);
-      jsonResponse = { "element": "div_ide_output", "output": error, "success": "false" };
-    } else {
-      console.info('done.');
-      jsonResponse = { "element": "div_ide_output", "output": "Téléversement terminé", "success": "true" };
-    }
+    jsonResponse = { "element": "div_ide_output", "output": error, "success": "false" };
     event.sender.send('upload-response', JSON.stringify(jsonResponse));
-  });
+  }
 }
 
 /************************************************
@@ -301,19 +361,22 @@ Serial.getPorts = function (callback) {
 
   SerialPort.list(function (err, ports) {
     ports.forEach(function (port) {
+	  console.log(port);
       if (Setting.getSerialPort() == port.comName) {
         autoselect = port.comName;
         serial.push({ "value": port.comName, "display_text": port.comName });
-      } else if (autoselect == null && (port.manufacturer == "Arduino LLC (www.arduino.cc)" || port.productId == "1B4F")) {
+      } else if (autoselect == null && (port.manufacturer == "SparkFun" || port.productId == "9208") && Setting.getRobot() == 1 || 
+                  autoselect == null && (port.manufacturer == "FTDI" || port.productId == "6001") && Setting.getRobot() == 2) {
         autoselect = port.comName;
-        serial.push({ "value": port.comName, "display_text": port.comName + ' (Botly robot)' });
+        serial.push({ "value": port.comName, "display_text": port.comName + ((Setting.getRobot() == 1) ? " Botly" : " Scott") });
       } else {
         serial.push({ "value": port.comName, "display_text": port.comName });
       }
 
     });
     result = { 'autoselect': autoselect, 'ports': serial };
-    callback(Serial.parseResponse(result));
+    if(autoselect != null) Setting.setSerialPort(autoselect);
+    return callback(Serial.parseResponse(result));
   });
 }
 
@@ -333,8 +396,8 @@ Serial.parseResponse = function (portList) {
     jsonResponse.selected = portList.ports[0].value;
     //jsonResponse.options = [{ display_text: portList.ports[0].value, value: portList.ports[0].value }];
   } else {
-    jsonResponse.selected = "No Serial port"
-    jsonResponse.options = [{ display_text: "No serial port", value: "" }];
+    jsonResponse.selected = "Pas de port série"
+    jsonResponse.options = [{ display_text: "Pas de port série", value: "NONE" }];
   }
   return jsonResponse;
 }

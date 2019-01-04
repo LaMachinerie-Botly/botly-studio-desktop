@@ -53,8 +53,8 @@ BotlyStudio.LOCALISED_TEXT = {
   /* Alerts */
   loadNewBlocksTitle: "",
   loadNewBlocksBody: "",
-  discardBlocksTitle: "",
-  discardBlocksBody: "",
+  discardBlocksTitle: "Attention !",
+  discardBlocksBody: "En cliquant sur oui, vous allez perdre tout votre travail !",
   invalidXmlTitle: "",
   invalidXmlBody: "",
   /* Tooltips */
@@ -67,7 +67,7 @@ BotlyStudio.LOCALISED_TEXT = {
   notImplemented: "",
   /* Prompts */
   ok: "OK",
-  okay: "Okay",
+  okay: "Valider",
   cancel: "Annuler",
   return: "Retour",
   /* Cards */

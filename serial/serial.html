@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Serial terminal</title>
+    <link rel="stylesheet" href="serial.css">
+    <script src="terminal.js"></script>
+    <script src="serial.js"></script>
+  </head>
+  <body>
+    <script>
+			var t1 = new Terminal()
+			t1.setHeight("300px")
+			t1.setWidth('100%')
+			t1.input('Enter un truc :', () => {
+				t1.print("Merci !")
+			);
+			document.body.appendChild(t1.html)
+    </script>
+  </body>
+</html>

@@ -225,6 +225,7 @@ ul.side-nav li.side-menu-begin {
 }
 */
 .playground_panel_large {
+  cursor: "grab";
   height: -moz-calc(100vh - 170px - 45px);     /* Firefox  */
   height: -webkit-calc(100vh - 170px - 45px);  /* WebKit   */
   height: -o-calc(100vh - 170px - 45px);       /* Opera    */

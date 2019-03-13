@@ -33,24 +33,12 @@ Turtle.html =
   "        </clipPath>" +
   "        <image xlink:href='botlystudio/plugins/turtle/icons.png' height='42' width='84' x='120' y='-11' clip-path='url(#fastClipPath)'></image>" +
   "      </svg>" +
-  /*"      <svg id='zoom_slider' xmlns='http://www.w3.org/2000/svg' xmlns:svg='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'" +
-  "        version='1.1' width='150' height='50' class='slider2'>" +
-  "        <!-- Slow icon. -->" +
-  "        <clipPath id='slowClipPath'>" +
-  "          <rect width='26' height='12' x='5' y='14'></rect>" +
-  "          <image src='botlystudio/plugins/turtle/icons2.svg' height='42' width='84' x='120' y='-11' clip-path='url(#slowClipPath)'></image>" +
-  "        </clipPath>" +
-  "       <!-- Fast icon. -->" +
-  "        <clipPath id='fastClipPath'>" +
-  "          <rect width='26' height='16' x='120' y='10'></rect>" +
-  "          <image src='botlystudio/plugins/turtle/icons2.png' height='42' width='84' x='120' y='-11' clip-path='url(#fastClipPath)'></image>" +
-  "        </clipPath>" +
-  "       </svg>" +*/
   "     </div>" +
   "   </div>";
 
 Turtle.css =
   "#content_display {" +
+  "  cursor: 'grab';" +
   "  resize: none;" +
   "  outline: none;" +
   "  border: none;" +
@@ -63,6 +51,7 @@ Turtle.css =
   "}" +
   ".content_display_large {" +
   "  height: 100%;" +
+  "  cursor: 'grab';" +
   "  /*padding-bottom: 98%;*/" +
   "  overflow: auto;" +
   "  min-height: 300px;" +
@@ -74,6 +63,7 @@ Turtle.css =
   "  height: 100%;" +
   "  /*padding-bottom: 98%;*/" +
   "  overflow: auto;" +
+  "  cursor: 'grab';" +
   "  min-height: 300px;" +
   "  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);" +
   "  -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);" +
@@ -88,6 +78,7 @@ Turtle.css =
   "  border-width: 1px;" +
   "  border-color: black;" +
   "  border-style: inset;" +
+  "  cursor: 'grab';" +
   "}" +
   ".scrollbar {" +
   "  float: left;" +
@@ -96,6 +87,7 @@ Turtle.css =
   "  background: #ffffff;" +
   "  overflow-y: auto;" +
   "  overflow-x: hidden;" +
+  "  cursor: 'grab';" +
   "}" +
   "#style-10::-webkit-scrollbar {" +
   "  width: 11px;" +
@@ -208,6 +200,9 @@ BotlyStudio.changeToolbox = function () {
       '    <block type="math_number"></block>' +
       '  </category>' +
       '  <sep></sep>' +
+      '  <category id="catTime" name="Time">' +
+      '    <block type="infinite_loop"></block>' +
+      '  </category>' +
       '</xml>';
   }
   if (BotlyStudio.DIFFICULTY == 2) {
@@ -244,6 +239,7 @@ BotlyStudio.changeToolbox = function () {
       '      </value>' +
       '    </block>' +
       '    <block type="botly_crayon"></block>' +
+      '    <block type="botly_change_pen"></block>' +
       '  </category>' + '  <sep></sep>' +
       '  <category id="catLoops" name="Loops">' +
       '    <block type="controls_repeat_ext">' +
@@ -289,6 +285,7 @@ BotlyStudio.changeToolbox = function () {
       '  <sep></sep>' +
       '  <category id="catTime" name="Time">' +
       '    <block type="infinite_loop"></block>' +
+      '  </category>' +
       '</xml>';
   }
   if (BotlyStudio.DIFFICULTY == 3) {
@@ -339,6 +336,7 @@ BotlyStudio.changeToolbox = function () {
       '		   </value>' +
       '    </block>' +
       '    <block type="botly_crayon"></block>' +
+      '    <block type="botly_change_pen"></block>' +
       '    <block type="botly_calibration"></block>' +
       '  </category>' +
       '  <sep></sep>' +
@@ -483,11 +481,11 @@ BotlyStudio.changeToolbox = function () {
       '		   </value>' +
       '    </block>' +
       '    <block type="botly_crayon"></block>' +
+      '    <block type="botly_change_pen"></block>' +
       '    <block type="botly_stop"></block>' +
       '    <block type="botly_calibration"></block>' +
       '    <block type="botly_polygone"></block>' +
       '    <block type="botly_cercle"></block>' +
-      '    <block type="botly_contact"></block>' +
       '  </category>' +
       '  <sep></sep>' +
       '  <category id="catLoops" name="Loops">' +
@@ -801,6 +799,19 @@ Turtle.resetButtonClick = function(e) {
 };
 
 
+Turtle.drawPolygon = function(cote, taille, direction){
+  var angle = 360/cote;
+  if(direction != "right") angle = -angle;
+  for(var i = 0; i < cote; i++){
+    Turtle.move(taille);
+    Turtle.turn(angle);
+  }
+}
+
+Turtle.drawCircle = function(taille, direction){
+  Turtle.drawPolygon(20,taille, direction);
+}
+
 /**
  * Inject the Turtle API into a JavaScript interpreter.
  * @param {!Interpreter} interpreter The JS Interpreter.
@@ -841,6 +852,7 @@ Turtle.initInterpreter = function(interpreter, scope) {
   };
   interpreter.setProperty(scope, 'Lever',
       interpreter.createNativeFunction(wrapper));
+
   wrapper = function(id) {
     Turtle.penDown(true);
   };
@@ -859,6 +871,18 @@ Turtle.initInterpreter = function(interpreter, scope) {
   interpreter.setProperty(scope, 'penWidth',
       interpreter.createNativeFunction(wrapper));
 
+  wrapper = function(delayInMilliseconds, id) {
+    
+  };
+  interpreter.setProperty(scope, 'delay',
+      interpreter.createNativeFunction(wrapper));
+
+  wrapper = function(delayInMilliseconds, id) {
+
+  };
+  interpreter.setProperty(scope, 'millis',
+      interpreter.createNativeFunction(wrapper));
+
   wrapper = function(colour, id) {
     Turtle.penColour(colour);
   };
@@ -870,6 +894,8 @@ Turtle.initInterpreter = function(interpreter, scope) {
   };
   interpreter.setProperty(scope, 'hideTurtle',
       interpreter.createNativeFunction(wrapper));
+
+
   wrapper = function(id) {
     Turtle.isVisible(true);
   };
@@ -887,6 +913,20 @@ Turtle.initInterpreter = function(interpreter, scope) {
   };
   interpreter.setProperty(scope, 'font',
       interpreter.createNativeFunction(wrapper));
+
+
+  wrapper = function(diam, direction, id) {
+    Turtle.drawCircle(diam, direction)
+  };
+  interpreter.setProperty(scope, 'cercle',
+      interpreter.createNativeFunction(wrapper));
+
+  wrapper = function(cote, taille, direction, id) {
+    Turtle.drawPolygon(cote, taille, direction)
+  };
+  interpreter.setProperty(scope, 'polygone',
+      interpreter.createNativeFunction(wrapper));
+
 
   wrapper = function(id) {
     console.log("Not implemented");

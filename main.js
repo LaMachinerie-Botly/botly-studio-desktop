@@ -12,11 +12,15 @@ const ipc = electron.ipcMain;
 const dataPath = app.getPath('documents') + "/Botly-Studio";
 
 let mainWindow
+let serialWidget;
+let updateWidget;
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 1280, height: 720, frame: true });
-
+  mainWindow = new BrowserWindow({ show: false, width: 1280, height: 720, frame: true, backgroundColor: '#2e2c29'});
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  })
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -26,12 +30,53 @@ function createWindow() {
 
   mainWindow.on('closed', function () {
     mainWindow = null
+    if(serialWidget != undefined)
+      serialWidget.close();
+    serialWidget = null;
+    if(updateWidget != undefined)
+      updateWidget.close();
+    updateWidget = null;
   })
 
+  //openSerial();
 
   Setting.createUserData();
   Setting.repairFile();
   initIpc();
+}
+
+
+function openSerial(){
+  // Create the browser window.
+  serialWidget = new BrowserWindow({ width: 720, height: 380, frame: true});
+
+  // and load the index.html of the app.
+  serialWidget.loadURL(url.format({
+    pathname: path.join(__dirname, 'serial/serial.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  serialWidget.on('closed', function () {
+    serialWidget = null
+  })
+    
+}
+
+function openUpdate(){
+  // Create the browser window.
+  updateWidget = new BrowserWindow({ width: 720, height: 380, frame: true});
+
+  // and load the index.html of the app.
+  updateWidget.loadURL(url.format({
+    pathname: path.join(__dirname, 'serial/serial.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  updateWidget.on('closed', function () {
+    updateWidget = null
+  })
 }
 
 function initIpc() {
@@ -46,6 +91,9 @@ function initIpc() {
     event.sender.send('compiler-request-response', JSON.stringify(jsonResponse));
   });
 
+  ipc.on('open-serial', function (event) {
+    openSerial();
+  });
 
   ipc.on('compiler-request', function (event) {
     var jsonResponse = { element: "text_input", display_text: Setting.getCompiler() };

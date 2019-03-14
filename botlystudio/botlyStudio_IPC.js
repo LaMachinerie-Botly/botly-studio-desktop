@@ -100,7 +100,7 @@ BotlyStudioIPC.createElementFromJson = function(json_data) {
       // Formatted text for the Arduino IDE CLI output
       var el_title = document.createElement('h4');
       if (parsed_json.success == "true") {
-        el_title.innerHTML = "Compilation réussite"
+        el_title.innerHTML = "Compilation réussit"
         el_title.className = 'arduino_dialog_success';
       } else {
         el_title.innerHTML = "Echec de la compilation"

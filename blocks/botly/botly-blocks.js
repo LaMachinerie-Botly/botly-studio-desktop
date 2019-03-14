@@ -135,7 +135,7 @@ Blockly.Blocks['botly_polygone'] = {
                 '10', Blockly.FieldTextInput.numberValidator),
             'taille')
         .appendField("mm vers la")
-        .appendField(new Blockly.FieldDropdown([["droite","right"], ["gauche","left"]]), 'DIR');
+        .appendField(new Blockly.FieldDropdown([["droite","DIR_RIGHT"], ["gauche","DIR_LEFT"]]), 'DIR');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(230);
@@ -154,7 +154,7 @@ Blockly.Blocks['botly_cercle'] = {
                 '10', Blockly.FieldTextInput.numberValidator),
             'diametre')
         .appendField("mm vers la")
-        .appendField(new Blockly.FieldDropdown([["droite","right"], ["gauche","left"]]), 'DIR');
+        .appendField(new Blockly.FieldDropdown([["droite","DIR_RIGHT"], ["gauche","DIR_LEFT"]]), 'DIR');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(230);

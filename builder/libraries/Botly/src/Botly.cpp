@@ -148,10 +148,11 @@ void Botly::reculer(long distanceMillimeter){
 	turnGoDegree(0, -distanceMillimeter);
 }
 
-void Botly::polygone(unsigned int nbrCote, unsigned int longueur){
+void Botly::polygone(unsigned int nbrCote, unsigned int longueur, unsigned int direction){
 	if (nbrCote >=3)
 	{
 		float polyAngle = 360 / nbrCote;
+		if(direction != DIR_RIGHT) polyAngle = -polyAngle;
 		turnGoDegree(0,longueur);
 		for (unsigned int i=1 ; i<nbrCote ; i++)
 		{
@@ -173,10 +174,10 @@ void Botly::carre(unsigned int longueur){
 	rectangle(longueur,longueur);
 }
 
-void Botly::cercle(unsigned int diametre){
+void Botly::cercle(unsigned int diametre, unsigned int direction){
 	float angleCercle = 11 * DEG_TO_RAD ; // Passage en radians
 	unsigned int corde = (diametre * angleCercle )/2 ;
-	polygone(32,corde * 1.25); // 33=arrondi de 360/11
+	polygone(36,corde * 1.25, direction); // 33=arrondi de 360/11
 }
 
 void Botly::arc( float rayon,float angle){

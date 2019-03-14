@@ -26,6 +26,8 @@
 #define BOTLY_RAD_TO_STEP 1861
 #define BOTLY_DELTA_ARC 47
 
+#define DIR_RIGHT 1
+#define DIR_LEFT 2
 
 /*********************
 	 Dependances
@@ -92,13 +94,13 @@ public:
 
   void turnGoDegree(float angle, long ligne);
 
-  void polygone(unsigned int nbrCote, unsigned int longueur);
+  void polygone(unsigned int nbrCote, unsigned int longueur, unsigned int dir = DIR_RIGHT);
 
   void rectangle(unsigned int largeur, unsigned int longueur);
 
   void carre(unsigned int longueur);
 
-  void cercle(unsigned int diametre);
+  void cercle(unsigned int diametre, unsigned int dir = DIR_RIGHT);
 
   void arc(float rayon,float angle);
 

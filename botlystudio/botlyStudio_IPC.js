@@ -12,27 +12,6 @@ BotlyStudioIPC.initIPC = function(){
         BotlyStudio.setCompilerLocationHtml(arg);
     });
 
-    ipc.on('serial-port-request-response', function(event, arg) {
-      BotlyStudio.setSerialPortsHtml(arg);
-      //BotlyStudio.setSerial();
-    });
-    ipc.on('port-request-response', function(event, arg) {
-        var serialList = JSON.parse(arg);
-            // Drop down list of unknown length with a selected item
-        var element = document.createElement('select');
-        element.name = serialList.response_type;
-        for (var i = 0; i < serialList.options.length; i++) {
-            var option = document.createElement('option');
-            option.value = serialList.options[i].value;
-            option.text = serialList.options[i].display_text;
-            // Check selected option and mark it
-            if (serialList.options[i].value == serialList.selected) {
-                option.selected = true;
-            }
-            element.appendChild(option);
-        }
-    });
-
     ipc.on('compile-response', function(event, jsonResponse) {
       var method = JSON.parse(jsonResponse).method;
       var success = JSON.parse(jsonResponse).success;
@@ -67,7 +46,6 @@ BotlyStudioIPC.initIPC = function(){
 
 
     BotlyStudioIPC.requestCompilerLocation();
-    BotlyStudioIPC.requestSerialPorts();
 }
 
 
@@ -160,27 +138,6 @@ BotlyStudioIPC.requestCompilerLocation = function() {
  */
 BotlyStudioIPC.setCompilerLocation = function() {
     ipc.send('set-compiler');
-};
-
-
-/**
- * Request to the BotlyStudio Server to return JSON data containing all
- * available serial ports in the computer, and the selected one in the
- * settings. The data is then processed into an HTML element and sent to the
- * callback function as an argument.
- */
-BotlyStudioIPC.requestSerialPorts = function() {
-    ipc.send('serial-port-request');
-};
-
-/**
- * Sends the inputted Serial Port to the BotlyStudio Server Settings. The new
- * settings menu for the Serial Port is then processed into an HTML element
- * and sent to the callback function as an argument.
- * @param {!string} new_port Indicates which port has been selected.
- */
-BotlyStudioIPC.setSerialPort = function(new_port) {
-    ipc.send('set-serial-port', new_port);
 };
 
 

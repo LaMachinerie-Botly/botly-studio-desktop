@@ -264,7 +264,6 @@ BotlyStudio.saveTextFileAs = function(fileName, content) {
 BotlyStudio.openSettings = function() {
   BotlyStudioIPC.requestCompilerLocation(
     BotlyStudio.setCompilerLocationHtml);
-  BotlyStudioIPC.requestSerialPorts(BotlyStudio.setSerialPortsHtml);
   // Language menu only set on page load within BotlyStudio.initLanguage()
   BotlyStudio.openSettingsModal();
 };
@@ -283,114 +282,6 @@ BotlyStudio.setCompilerLocationHtml = function (jsonResponse) {
 };
 
 
-/**
- * Replaces the Arduino Boards form data with a new HTMl element.
- * Ensures there is a change listener to call 'setSerialPort' function
- * @param {element} jsonResponse JSON data coming back from the server.
- * @return {undefined} Might exit early if response is null.
- */
-BotlyStudio.setArduinoBoardsHtml = function (board) {
-  var newEl = new JSON;
-  newEl.value = board;
-  var boardDropdown = document.getElementById('board');
-  if (boardDropdown !== null) {
-    // Restarting the select elements built by materialize
-    $('select').material_select('destroy');
-    newEl.name = 'settings_board';
-    newEl.id = 'board';
-    newEl.onchange = BotlyStudio.setBoard;
-    boardDropdown.parentNode.replaceChild(newEl, boardDropdown);
-    // Refresh the materialize select menus
-    $('select').material_select();
-  }
-};
-
-
-/**
- * Sets the Arduino Board type with the selected user input from the drop down.
- */
-BotlyStudio.setBoard = function () {
-  var el = document.getElementById('board');
-  var boardValue = el.options[el.selectedIndex].value;
-  //TODO: Check how BotlyStudioIPC deals with invalid data and sanitise
-  BotlyStudioIPC.setArduinoBoard(
-    boardValue, BotlyStudio.setArduinoBoardsHtml);
-  BotlyStudio.changeBlocklyArduinoBoard(
-    boardValue.toLowerCase().replace(/ /g, '_'));
-};
-
-/**
- * Replaces the Serial Port form data with a new HTMl element.
- * Ensures there is a change listener to call 'setSerialPort' function
- * @param {element} jsonResponse JSON data coming back from the server.
- * @return {undefined} Might exit early if response is null.
- */
-BotlyStudio.setSerialPortsHtml = function (jsonResponse) {
-
-  //if (jsonResponse === null) return BotlyStudio.openNotConnectedModal();
-  var newEl = BotlyStudioIPC.createElementFromJson(jsonResponse);
-  var serialDropdown = document.getElementById('serial_port');
-  if (serialDropdown !== null) {
-    // Restarting the select elements built by materialize
-    $('select').material_select('destroy');
-    newEl.name = 'settings_serial';
-    newEl.id = 'serial_port';
-    newEl.onchange = BotlyStudio.setSerial;
-    serialDropdown.parentNode.replaceChild(newEl, serialDropdown);
-    // Refresh the materialize select menus
-    $('select').material_select();
-  }
-};
-
-
-/** Sets the Serial Port with the selected user input from the drop down. */
-BotlyStudio.setSerial = function () {
-  var el = document.getElementById('serial_port');
-  var serialValue = el.options[el.selectedIndex].value;
-  //TODO: check how BotlyStudioIPC deals with invalid data and sanitise
-  BotlyStudioIPC.setSerialPort(
-    serialValue, BotlyStudio.setSerialPortsHtml);
-};
-
-/**
- * Replaces IDE options form data with a new HTMl element.
- * Ensures there is a change listener to call 'setIdeSettings' function
- * @param {element} jsonResponse JSON data coming back from the server.
- * @return {undefined} Might exit early if response is null.
- */
-BotlyStudio.setIdeHtml = function (jsonResponse) {
-  var newEl = BotlyStudioIPC.createElementFromJson(jsonResponse);
-  var ideDropdown = document.getElementById('ide_settings');
-  if (ideDropdown !== null) {
-    // Restarting the select elements built by materialize
-    $('select').material_select('destroy');
-    newEl.name = 'settings_ide';
-    newEl.id = 'ide_settings';
-    newEl.onchange = BotlyStudio.setIdeSettings;
-    ideDropdown.parentNode.replaceChild(newEl, ideDropdown);
-    // Refresh the materialize select menus
-    $('select').material_select();
-  }
-};
-
-/**
- * Sets the IDE settings data with the selected user input from the drop down.
- * @param {Event} e Event that triggered this function call. Required for link
- *     it to the listeners, but not used.
- * @param {string} preset A value to set the IDE settings bypassing the drop
- *     down selected value. Valid data: 'upload', 'verify', or 'open'.
- */
-BotlyStudio.setIdeSettings = function (e, preset) {
-  if (preset !== undefined) {
-    var ideValue = preset;
-  } else {
-    var el = document.getElementById('ide_settings');
-    var ideValue = el.options[el.selectedIndex].value;
-  }
-  BotlyStudio.changeIdeButtons(ideValue);
-  //TODO: check how BotlyStudioIPC deals with invalid data and sanitise here
-  BotlyStudioIPC.setIdeOptions(ideValue, BotlyStudio.setIdeHtml);
-};
 
 /** Populate the workspace blocks with the XML written in the XML text area. */
 BotlyStudio.XmlTextareaToBlocks = function() {

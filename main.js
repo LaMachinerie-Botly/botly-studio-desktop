@@ -101,22 +101,6 @@ function initIpc() {
   });
 
 
-  ipc.on('serial-port-request', function (event) {
-    callback = function (jsonResponse) {
-      event.sender.send('serial-port-request-response', JSON.stringify(jsonResponse));
-    }
-    Serial.getPorts(callback);
-  });
-
-
-  ipc.on('set-serial-port', function (event, port) {
-    Setting.setSerialPort(port);
-    callback = function (jsonResponse) {
-      event.sender.send('serial-port-request-response', JSON.stringify(jsonResponse));
-    }
-    Serial.getPorts(callback);
-  });
-
   ipc.on('robot-request', function (event) {
     var jsonResponse = { element: "text_input", display_text: Setting.getRobot() };
     event.sender.send('robot-request-response', JSON.stringify(jsonResponse));
@@ -218,24 +202,6 @@ Setting.getRobot = function () {
   return Setting.readSetting().robot;
 }
 
-Setting.setSerialPort = function (port) {
-  jsonSetting = Setting.readSetting();
-  if (port != null) {
-    jsonSetting.serialport = port;
-    Setting.saveSetting(jsonSetting);
-  } else {
-    return false;
-  }
-  return true;
-}
-
-Setting.getSerialPort = function () {
-  out = Setting.readSetting().serialport;
-  if(out == null || out == ""){
-    
-  }
-  return out;
-}
 
 Setting.createUserData =function(){
   var directory = dataPath;
@@ -264,7 +230,7 @@ Setting.readSetting = function () {
   try{
     content = fs.readFileSync(spath, 'utf-8')
   }catch(e){
-    content = '{ "compiler": "", "serialport": "", "robot": "Botly" }';
+    content = '{ "compiler": "", "robot": "Botly" }';
   }
   json = Setting.parseToJson(content);
   return json;
@@ -284,7 +250,7 @@ Setting.parseToJson = function (data) {
     console.log(e);
   }
   if (jsonSetting == null) {
-    jsonSetting = { compiler: "", serialport: "", robot: "Botly" };
+    jsonSetting = { compiler: "", robot: "Botly" };
   }
   return jsonSetting;
 }
@@ -364,7 +330,6 @@ Builder.flash = function (event) {
   try{
     var avrgirl = new Avrgirl({
       board: boardName,
-      port: Setting.getSerialPort(),
       debug: true
     });
   
@@ -385,66 +350,4 @@ Builder.flash = function (event) {
     jsonResponse = { "element": "div_ide_output", "output": error, "success": "false" };
     event.sender.send('upload-response', JSON.stringify(jsonResponse));
   }
-}
-
-/************************************************
-*
-*
-*					Serial
-*
-*
-*
-*************************************************
-*/
-
-
-var Serial = {};
-
-
-Serial.getPorts = function (callback) {
-  SerialPort = require('serialport');
-  autoselect = null;
-  serial = [];
-
-  SerialPort.list(function (err, ports) {
-    ports.forEach(function (port) {
-	  console.log(port);
-      if (Setting.getSerialPort() == port.comName) {
-        autoselect = port.comName;
-        serial.push({ "value": port.comName, "display_text": port.comName });
-      } else if (autoselect == null && (port.manufacturer == "SparkFun" || port.productId == "9208") && Setting.getRobot() == 1 || 
-                  autoselect == null && (port.manufacturer == "FTDI" || port.productId == "6001") && Setting.getRobot() == 2) {
-        autoselect = port.comName;
-        serial.push({ "value": port.comName, "display_text": port.comName + ((Setting.getRobot() == 1) ? " Botly" : " Scott") });
-      } else {
-        serial.push({ "value": port.comName, "display_text": port.comName });
-      }
-
-    });
-    result = { 'autoselect': autoselect, 'ports': serial };
-    if(autoselect != null) Setting.setSerialPort(autoselect);
-    return callback(Serial.parseResponse(result));
-  });
-}
-
-Serial.parseResponse = function (portList) {
-  //console.log("Port:");
-  //console.log(portList.ports);
-  jsonResponse = {
-    "selected": "",
-    "element": "dropdown",
-    "response_type": "json",
-    "options": portList.ports
-  };
-
-  if (portList.autoselect != null) {
-    jsonResponse.selected = portList.autoselect;
-  } else if (portList.ports.length > 0) {
-    jsonResponse.selected = portList.ports[0].value;
-    //jsonResponse.options = [{ display_text: portList.ports[0].value, value: portList.ports[0].value }];
-  } else {
-    jsonResponse.selected = "Pas de port série"
-    jsonResponse.options = [{ display_text: "Pas de port série", value: "NONE" }];
-  }
-  return jsonResponse;
 }

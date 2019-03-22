@@ -4,7 +4,6 @@
 /** Create a name space for the application. */
 var BotlyStudioIPC = {};
 const electron = require('electron');
-
 const ipc = electron.ipcRenderer;
 
 
@@ -50,11 +49,13 @@ BotlyStudioIPC.initIPC = function(){
         if(method == "upload"){
           ipc.send('flash');
           BotlyStudio.shortMessage(BotlyStudio.getLocalStr('uploadingSketch'));
-        }
+        }else
+          BotlyStudio.largeIdeButtonSpinner(false);
       }else{
+        BotlyStudio.largeIdeButtonSpinner(false)
         BotlyStudio.shortMessage("Echec de la compilation");
       }
-      BotlyStudio.largeIdeButtonSpinner(false)
+
     });
 
     ipc.on('upload-response', function(event, jsonResponse) {
@@ -98,10 +99,11 @@ BotlyStudioIPC.createElementFromJson = function(json_data) {
     } else if (parsed_json.element == 'div_ide_output') {
       // Formatted text for the Arduino IDE CLI output
       var el_title = document.createElement('h4');
-      el_title.innerHTML = "Echec du téléversement"
-      if (parsed_json.success == true) {
+      if (parsed_json.success == "true") {
+        el_title.innerHTML = "Compilation réussie"
         el_title.className = 'arduino_dialog_success';
       } else {
+        el_title.innerHTML = "Echec de la compilation"
         el_title.className = 'arduino_dialog_failure';
       }
   

@@ -79,6 +79,7 @@ Blockly.Arduino['botly_turn_go'] = function(block) {
 Blockly.Arduino['botly_polygone'] = function(block) {
   var number_nbr_cote = block.getFieldValue('nbr_cote');
   var number_taille = block.getFieldValue('taille');
+  var direction = block.getFieldValue('DIR');
   //-------------------------------------------------------------------
   Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
   Blockly.Arduino.addDeclaration('Botly', 'Botly robot;');
@@ -86,12 +87,13 @@ Blockly.Arduino['botly_polygone'] = function(block) {
   var setupCode = ' robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
-  var code = 'robot.polygone('+ number_nbr_cote +','+ number_taille +');\n';
+  var code = 'robot.polygone('+ number_nbr_cote +','+ number_taille + ',' + direction + ');\n';
   return code;
 };
 
 Blockly.Arduino['botly_cercle'] = function(block) {
   var cercle_diametre = block.getFieldValue('diametre');
+  var direction = block.getFieldValue('DIR');
   //-------------------------------------------------------------------
   Blockly.Arduino.addInclude('Botly', '#include <Botly.h>');
   Blockly.Arduino.addDeclaration('Botly', 'Botly robot;');
@@ -99,7 +101,7 @@ Blockly.Arduino['botly_cercle'] = function(block) {
   var setupCode = ' robot.init();';
   Blockly.Arduino.addSetup('Botly', setupCode, true);
   //-------------------------------------------------------------------
-  var code = 'robot.cercle('+ cercle_diametre +');\n';
+  var code = 'robot.cercle('+ cercle_diametre + ',' + direction + ');\n';
   return code;
 };
 
@@ -209,6 +211,11 @@ Blockly.Arduino['botly_calibration'] = function(block) {
 };
 
 
+Blockly.Arduino['botly_change_pen'] = function(block) {
+  var code = 'robot.leverCrayon();\n'+ 'delay(20000);\n' + 'robot.poserCrayon();\n';
+  return code;
+};
+
 
 /*************************************
  *                                   *
@@ -284,7 +291,7 @@ Blockly.Python['botly_contact'] = function(block) {
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-
+/*
 Blockly.Python['botly_lever_crayon'] = function(block) {
   var code = 'leverCrayon();\n';
   return code;
@@ -295,6 +302,7 @@ Blockly.Python['botly_descendre_crayon'] = function(block) {
   return code;
 };
 
+*/
 
 Blockly.Python['botly_deplacement'] = function(block) {
   var value_distance = block.getFieldValue('VALUE');
@@ -340,6 +348,12 @@ Blockly.Python['botly_crayon'] = function(block) {
   return code;
 };
 
+Blockly.Python['botly_change_pen'] = function(block) {
+  var color = block.getFieldValue('COLOR');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'penColour('+ color+');\nposerCrayon();\n';
+  return code;
+};
 
 /*************************************
  *                                   *
@@ -358,6 +372,13 @@ Blockly.JavaScript['botly_deplacement'] = function(block) {
   var value = block.getFieldValue('VALUE');
   return block.getFieldValue('DIR') +
       '(' + value + ', "' + block.id + '");\n';
+};
+
+Blockly.JavaScript['botly_change_pen'] = function(block) {
+  var color = block.getFieldValue('COLOR');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'penColour("'+ color+'");\nDescendre();\n';
+  return code;
 };
 
 Blockly.JavaScript['botly_rotation'] = function(block) {
@@ -433,16 +454,28 @@ Blockly.JavaScript['botly_stop'] = function(block){
 };
 
 
-Blockly.JavaScript['botly_polygone'] = function(block){
-  return 'none' +
-      '("' + block.id + '");\n';
+
+Blockly.JavaScript['botly_polygone'] = function(block) {
+  var number_nbr_cote = block.getFieldValue('nbr_cote');
+  var number_taille = block.getFieldValue('taille');
+  var direction = block.getFieldValue('DIR');
+
+  //-------------------------------------------------------------------
+  var code = 'polygone('+ number_nbr_cote +','+ number_taille + ',"' + direction + '");\n';
+  return code;
+};
+
+Blockly.JavaScript['botly_cercle'] = function(block) {
+  var cercle_diametre = block.getFieldValue('diametre');
+  var direction = block.getFieldValue('DIR');
+
+  //-------------------------------------------------------------------
+  var code = 'cercle('+ cercle_diametre + ',"' + direction + '");\n';
+  return code;
 };
 
 
-Blockly.JavaScript['botly_cercle'] = function(block){
-  return 'none' +
-      '("' + block.id + '");\n';
-};
+
 
 Blockly.JavaScript['botly_ligne'] = function(block){
   return 'none' +
@@ -484,4 +517,52 @@ Blockly.JavaScript['arduino_functions'] = function(block){
  */
  Blockly.JavaScript['infinite_loop'] = function(block) {
   return 'while(true);\n';
+};
+
+/**
+ * Code generator for the delay Arduino block.
+ * Arduino code: loop { delay(X); }
+ * @param {!Blockly.Block} block Block to generate the code from.
+ * @return {string} Completed code.
+ */
+Blockly.JavaScript['time_delay'] = function(block) {
+  var delayTime = Blockly.Arduino.valueToCode(
+      block, 'DELAY_TIME_MILI', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var code = 'delay(' + delayTime + ');\n';
+  return code;
+};
+
+/**
+ * Code generator for the delayMicroseconds block.
+ * Arduino code: loop { delayMicroseconds(X); }
+ * @param {!Blockly.Block} block Block to generate the code from.
+ * @return {string} Completed code.
+ */
+ Blockly.JavaScript['time_delaymicros'] = function(block) {
+  var delayTimeMs = Blockly.Arduino.valueToCode(
+      block, 'DELAY_TIME_MICRO', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var code = 'delayMicroseconds(' + delayTimeMs + ');\n';
+  return code;
+};
+
+/**
+ * Code generator for the elapsed time in milliseconds block.
+ * Arduino code: loop { millis() }
+ * @param {!Blockly.Block} block Block to generate the code from.
+ * @return {array} Completed code with order of operation.
+ */
+ Blockly.JavaScript['time_millis'] = function(block) {
+  var code = 'millis()';
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+/**
+ * Code generator for the elapsed time in microseconds block.
+ * Arduino code: loop { micros() }
+ * @param {!Blockly.Block} block Block to generate the code from.
+ * @return {array} Completed code with order of operation.
+ */
+ Blockly.JavaScript['time_micros'] = function(block) {
+  var code = 'micros()';
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };

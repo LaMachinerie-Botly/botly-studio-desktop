@@ -134,7 +134,8 @@ Blockly.Blocks['botly_polygone'] = {
             new Blockly.FieldTextInput(
                 '10', Blockly.FieldTextInput.numberValidator),
             'taille')
-        .appendField("mm");
+        .appendField("mm vers la")
+        .appendField(new Blockly.FieldDropdown([["droite","DIR_RIGHT"], ["gauche","DIR_LEFT"]]), 'DIR');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(230);
@@ -152,7 +153,8 @@ Blockly.Blocks['botly_cercle'] = {
             new Blockly.FieldTextInput(
                 '10', Blockly.FieldTextInput.numberValidator),
             'diametre')
-        .appendField("mm");
+        .appendField("mm vers la")
+        .appendField(new Blockly.FieldDropdown([["droite","DIR_RIGHT"], ["gauche","DIR_LEFT"]]), 'DIR');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(230);
@@ -161,57 +163,19 @@ Blockly.Blocks['botly_cercle'] = {
   }
 };
 
-
-Blockly.Blocks['botly_ligne'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Position de la ligne");
-    this.setOutput(true, "Number");
-    this.setColour(105);
- this.setTooltip("=50 : ligne au centre / >50 : ligne à gauche / <50 : ligne à droite");
- this.setHelpUrl("");
-  }
-};
 
 
 Blockly.Blocks['botly_contact'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Position de l'objet en contact");
+        .appendField("Distance de l'objet en face");
     this.setOutput(true, "Number");
     this.setColour(105);
- this.setTooltip("=0 : pas de contact / 1 : contact à droite / 2 : contact à gauche / 3 : contact à gauche et à droite");
+ this.setTooltip("retourne la ");
  this.setHelpUrl("");
   }
 };
 
-
-Blockly.Blocks['botly_lever_crayon'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Lever le crayon");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(230);
- this.setTooltip("");
- this.setHelpUrl("");
-  }
-};
-
-
-Blockly.Blocks['botly_descendre_crayon'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Poser le crayon");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(230);
- this.setTooltip("");
- this.setHelpUrl("");
-  }
-};
 
 
 Blockly.Blocks['botly_deplacement'] = {
@@ -229,6 +193,18 @@ Blockly.Blocks['botly_deplacement'] = {
     this.setColour(230);
  this.setTooltip("");
  this.setHelpUrl("");
+  }
+};
+
+
+Blockly.Blocks['botly_change_pen'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Changer de crayon")
+        .appendField(new Blockly.FieldColour("#ff0000"), "COLOR");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(270);
   }
 };
 

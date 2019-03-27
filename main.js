@@ -324,12 +324,9 @@ Builder.open = function () {
 
 
 Builder.flash = function (event) {
-  var Avrgirl = require('avrgirl-arduino');
-  var boardName = "lilypad-usb";
-  if(Setting.getRobot() == 2) var boardName = "uno"
+  var Avrgirl = require('lite-avrgirl-lilypad');
   try{
     var avrgirl = new Avrgirl({
-      board: boardName,
       debug: true
     });
   

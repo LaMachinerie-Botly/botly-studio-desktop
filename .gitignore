@@ -1,5 +1,4 @@
-node_modules/*
-node_modules.zip
-builder/build/*
+node_modules
+builder/build
 npm-debug.log
 .DS_Store

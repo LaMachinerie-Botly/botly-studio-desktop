@@ -15,7 +15,6 @@ BotlyStudio.init = function() {
   // Inject Blockly into content_blocks and fetch additional blocks
   BotlyStudio.injectBlockly(document.getElementById('content_blocks'),
                             BotlyStudio.TOOLBOX_XML, 'blockly/');
-  //BotlyStudio.importExtraBlocks();
 
   BotlyStudio.designJsInit();
   BotlyStudio.initialiseIdeButtons();
